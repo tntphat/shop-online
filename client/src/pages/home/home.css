@@ -1,0 +1,15 @@
+.vl {
+  height: 30vh;
+  background-color: red;
+  position: absolute;
+}
+
+.hero {
+  background-image: url("../../images/coffee-983955_1920.jpg");
+  height: 100vh;
+  background-size: 100% 100%;
+}
+
+.blank {
+  height: 100vh;
+}

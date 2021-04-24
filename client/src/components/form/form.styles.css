@@ -1,0 +1,27 @@
+form {
+  margin: 0 auto;
+}
+
+.form {
+  background: #0e101c;
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+.error-msg {
+  color: #bf1650;
+}
+
+.error-msg::before {
+  display: inline;
+  content: "⚠ ";
+}
+
+.App {
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+hr {
+  margin-top: 30px;
+}
