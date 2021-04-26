@@ -2,11 +2,7 @@ const Category = require("../models/Category");
 
 class CategoryController {
   async getCategory(req, res) {
-    const categories = await Category.find().populate({
-      path: "sub_categories",
-      select: "_id name",
-    });
-    console.log(categories);
+    const categories = await Category.find().populate("sub_categories");
     if (categories) res.status(200).send(categories);
     else res.status(400).send("fail");
   }

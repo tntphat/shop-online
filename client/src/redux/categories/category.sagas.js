@@ -10,6 +10,8 @@ import {
   editCategoryFailure,
   deleteCategorySuccess,
   deleteCategoryFailure,
+  addSubCategoryFailure,
+  addSubCategorySuccess,
   fetchCategoriesSuccess,
   fetchCategoriesFailure,
 } from "./category.actions";
@@ -54,6 +56,17 @@ export function* deleteCategory({ payload }) {
   }
 }
 
+export function* addSubCategory({ payload }) {
+  try {
+    console.log("helo from saga SUB CATEGORY ADD", payload);
+    const { data } = yield axiosInstance.post("/sub-categories/add", payload);
+    console.log(data);
+    yield put(addSubCategorySuccess(data));
+  } catch (error) {
+    yield put(addSubCategoryFailure(error.response.data));
+  }
+}
+
 export function* fetchCategories() {
   try {
     console.log("helo from saga FETCH CATEGORIESS");
@@ -81,11 +94,16 @@ export function* onFetchCategoriesStart() {
   yield takeLatest(CategoryActionTypes.FETCH_CATEGORIES_START, fetchCategories);
 }
 
+export function* onAddSubCategoryStart() {
+  yield takeLatest(CategoryActionTypes.ADD_SUBCATEGORY_START, addSubCategory);
+}
+
 export function* categorySagas() {
   yield all([
     call(onAddCategoryStart),
     call(onEditCategoryStart),
     call(onDeleteCategoryStart),
+    call(onAddSubCategoryStart),
     call(onFetchCategoriesStart),
   ]);
 }

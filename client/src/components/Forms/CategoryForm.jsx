@@ -7,6 +7,7 @@ import Control from "../../components/controls/Control";
 import {
   addCategoryStart,
   editCategoryStart,
+  addSubCategoryStart,
 } from "../../redux/categories/category.actions";
 
 const useStyles = makeStyles((theme) => ({
@@ -23,7 +24,9 @@ const useStyles = makeStyles((theme) => ({
 const AdminCategoryAdd = ({
   addCategoryStart,
   editCategoryStart,
+  addSubCategoryStart,
   setOpenPopup,
+  addSub,
   targetRow,
 }) => {
   const { register, handleSubmit, errors } = useForm({
@@ -32,9 +35,12 @@ const AdminCategoryAdd = ({
   const classes = useStyles();
   const onSubmit = (data) => {
     console.log(data, targetRow);
-
-    if (targetRow) editCategoryStart({ ...data, _id: targetRow._id });
-    else addCategoryStart(data);
+    if (addSub) {
+      addSubCategoryStart({ category_id: addSub, ...data });
+    } else {
+      if (targetRow) editCategoryStart({ ...data, _id: targetRow._id });
+      else addCategoryStart(data);
+    }
     setOpenPopup(false);
   };
 
@@ -63,6 +69,8 @@ const AdminCategoryAdd = ({
 const mapDispatchToProp = (dispatch) => ({
   addCategoryStart: (category) => dispatch(addCategoryStart(category)),
   editCategoryStart: (category) => dispatch(editCategoryStart(category)),
+  addSubCategoryStart: (subCategory) =>
+    dispatch(addSubCategoryStart(subCategory)),
 });
 
 export default connect(null, mapDispatchToProp)(AdminCategoryAdd);

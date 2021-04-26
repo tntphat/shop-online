@@ -21,7 +21,7 @@ class CategoryController {
 
       await Category.updateOne(
         { _id: req.body.category_id },
-        { $push: { sub_categories: { sub_id: subCategory._id } } }
+        { $push: { sub_categories: subCategory._id } }
       );
 
       res.status(200).send(subCategory);

@@ -1,5 +1,7 @@
 import CategoryActionTypes from "./category.types";
 
+import { addSubCategory } from "./category.utils";
+
 const INITIAL_STATE = {
   categories: [],
   error: null,
@@ -56,6 +58,20 @@ const mailReducer = (state = INITIAL_STATE, action) => {
         categories: action.payload,
         error: null,
       };
+
+    case CategoryActionTypes.ADD_SUBCATEGORY_SUCCESS:
+      return {
+        ...state,
+        categories: addSubCategory(state.categories, action.payload),
+        error: null,
+      };
+
+    case CategoryActionTypes.ADD_SUBCATEGORY_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
     case CategoryActionTypes.FETCH_CATEGORIES_FAILURE:
       return {
         ...state,

@@ -45,6 +45,19 @@ export const deleteCategoryFailure = (error) => ({
   payload: error,
 });
 
+export const addSubCategoryStart = (subCategory) => ({
+  type: CategoryActionTypes.ADD_SUBCATEGORY_START,
+  payload: subCategory,
+});
+export const addSubCategorySuccess = (subCategory) => ({
+  type: CategoryActionTypes.ADD_SUBCATEGORY_SUCCESS,
+  payload: subCategory,
+});
+export const addSubCategoryFailure = (error) => ({
+  type: CategoryActionTypes.ADD_SUBCATEGORY_FAILURE,
+  payload: error,
+});
+
 export const fetchCategoriesStart = () => ({
   type: CategoryActionTypes.FETCH_CATEGORIES_START,
 });

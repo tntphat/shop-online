@@ -23,6 +23,7 @@ import { deleteCategoryStart } from "../redux/categories/category.actions";
 import Popup from "./popUp";
 import ConfirmDialog from "./ConfirmDialog";
 import Notification from "./Notification";
+import { useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AccordionItem = ({ name }) => {
+const AccordionItem = ({ subCategory }) => {
   const classes = useStyles();
   return (
     <>
@@ -53,7 +54,7 @@ const AccordionItem = ({ name }) => {
           justifyContent="space-between"
         >
           <Box>
-            <Typography>{name}</Typography>
+            <Typography>{subCategory.name}</Typography>
           </Box>
           <Box display="flex">
             <Button variant="outlined">Sửa</Button>
@@ -67,7 +68,13 @@ const AccordionItem = ({ name }) => {
   );
 };
 
-const Row = ({ row }) => {
+const Row = ({ row, handleAddSubCategory, subCats }) => {
+  console.log(
+    "CHEck sub array: ",
+    subCats,
+    subCats[subCats.length],
+    subCats.length
+  );
   const classes = useStyles();
   return (
     <>
@@ -76,11 +83,11 @@ const Row = ({ row }) => {
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             {row.name}
           </AccordionSummary>
-          {row.sub_categories.map((item) => (
-            <AccordionItem name={item.name} />
+          {subCats.map((subCategory) => (
+            <AccordionItem subCategory={subCategory} />
           ))}
           <AccordionDetails>
-            <Button>Add</Button>
+            <Button onClick={() => handleAddSubCategory(row)}>Add</Button>
           </AccordionDetails>
         </Accordion>
       </TableCell>
@@ -89,8 +96,10 @@ const Row = ({ row }) => {
 };
 
 function CategoriesTable({ selectCategories, deleteCategoryStart }) {
+  console.log("check categories table: ", selectCategories);
   const classes = useStyles();
   const [openPopup, setOpenPopup] = useState(false);
+  const [addSub, setAddSub] = useState(null);
   const [targetRow, setTargetRow] = useState(null);
 
   const [notify, setNotify] = useState({
@@ -121,10 +130,20 @@ function CategoriesTable({ selectCategories, deleteCategoryStart }) {
     });
   };
 
+  const handleAddSubCategory = (row) => {
+    setAddSub(row._id);
+    setOpenPopup(true);
+  };
+
   function handleEdit(row) {
     setTargetRow(row);
     setOpenPopup(true);
   }
+
+  useEffect(() => {
+    if (openPopup === false) setTargetRow(null);
+    if (openPopup === false) setAddSub(null);
+  }, [openPopup]);
 
   return (
     <>
@@ -145,7 +164,11 @@ function CategoriesTable({ selectCategories, deleteCategoryStart }) {
           <TableBody>
             {selectCategories.map((row) => (
               <TableRow key={row._id}>
-                <Row row={row} />
+                <Row
+                  handleAddSubCategory={handleAddSubCategory}
+                  row={row}
+                  subCats={row.sub_categories}
+                />
                 <TableCell>
                   <Box display="flex">
                     <Button
@@ -180,12 +203,12 @@ function CategoriesTable({ selectCategories, deleteCategoryStart }) {
           </TableBody>
         </Table>
       </TableContainer>
-      <Popup
-        setTargetRow={setTargetRow}
-        openPopup={openPopup}
-        setOpenPopup={setOpenPopup}
-      >
-        <FormCategoryAdd targetRow={targetRow} setOpenPopup={setOpenPopup} />
+      <Popup openPopup={openPopup} setOpenPopup={setOpenPopup}>
+        <FormCategoryAdd
+          addSub={addSub}
+          targetRow={targetRow}
+          setOpenPopup={setOpenPopup}
+        />
       </Popup>
 
       <Notification notify={notify} setNotify={setNotify}></Notification>
