@@ -1,11 +1,11 @@
 import React from "react";
 
-import Form from "../../components/form/form.component";
+import FormAuth from "../../components/Forms/Auth";
 
 const RegisterPage = () => {
   return (
     <div>
-      <Form type="register" />
+      <FormAuth type="register" />
     </div>
   );
 };

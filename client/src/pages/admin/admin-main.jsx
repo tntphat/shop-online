@@ -5,7 +5,7 @@ import AdminHome from "./admin-home";
 import AdminChart from "./admin-chart";
 import AdminMail from "./admin-mail";
 import AdminProduct from "./admin-product";
-import AdminProductAdd from "./admin-pruduct-add";
+import AdminCategories from "./admin-categories";
 
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
@@ -14,7 +14,9 @@ import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import { withStyles } from "@material-ui/core";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -112,6 +114,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const styles = (theme) => ({
+  "@global": {
+    "*::-webkit-scrollbar": {
+      width: "0.5em",
+    },
+    "*::-webkit-scrollbar-track": {
+      "-webkit-box-shadow": "inset 0 0 6px rgba(0,0,0,0.00)",
+    },
+    "*::-webkit-scrollbar-thumb": {
+      backgroundColor: "rgba(0,0,0,.1)",
+      outline: "2px solid slategrey",
+    },
+  },
+});
+
 function AdminPage(props) {
   const { window } = props;
   const classes = useStyles();
@@ -202,7 +219,7 @@ function AdminPage(props) {
           <Route exact path="/admin/chart" component={AdminChart} />
           <Route exact path="/admin/mail" component={AdminMail} />
           <Route exact path="/admin/products" component={AdminProduct} />
-          <Route exact path="/admin/products/add" component={AdminProductAdd} />
+          <Route exact path="/admin/categories" component={AdminCategories} />
         </Switch>
       </main>
     </div>
@@ -213,4 +230,4 @@ AdminPage.propTypes = {
   window: PropTypes.func,
 };
 
-export default withRouter(AdminPage);
+export default withStyles(styles)(withRouter(AdminPage));

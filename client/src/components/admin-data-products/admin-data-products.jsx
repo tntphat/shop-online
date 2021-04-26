@@ -10,8 +10,8 @@ import { connect } from "react-redux";
 import { Box, IconButton, makeStyles, Typography } from "@material-ui/core";
 import PopUp from "../popUp";
 import ConfirmDialog from "../ConfirmDialog";
-import Notification from "../../components/notification";
-import AddProduct from "../../pages/admin/admin-pruduct-add";
+import Notification from "../../components/Notification";
+import ProductForm from "../Forms/Admin-product";
 
 const useStyles = makeStyles((theme) => ({
   dltButton: {
@@ -198,7 +198,7 @@ const DataTable = ({ data, delProductStart }) => {
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
       >
-        <AddProduct
+        <ProductForm
           setOpenPopup={setOpenPopup}
           setTargetRow={setTargetRow}
           targetRow={targetRow}

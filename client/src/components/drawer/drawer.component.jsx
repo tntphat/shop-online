@@ -16,6 +16,7 @@ import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Drawer from "@material-ui/core/Drawer";
 import DashboardIcon from "@material-ui/icons/Dashboard";
+import CategoryIcon from "@material-ui/icons/Category";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -95,6 +96,14 @@ const DrawerChildren = ({ children, ...rest }) => {
               <PeopleOutlineIcon />
             </ListItemIcon>
             <ListItemText primary="Employees Manage" />
+          </ListItem>
+        </Link>
+        <Link className={classes.link} to="/admin/categories">
+          <ListItem button key="Categories">
+            <ListItemIcon>
+              <CategoryIcon />
+            </ListItemIcon>
+            <ListItemText primary="Categories" />
           </ListItem>
         </Link>
       </List>

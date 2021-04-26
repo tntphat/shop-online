@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PopUp(props) {
-  const { title, children, openPopup, setOpenPopup } = props;
+  const { title, children, openPopup, setOpenPopup, setTargetRow } = props;
   const classes = useStyles();
   return (
     <Dialog
@@ -33,7 +33,12 @@ export default function PopUp(props) {
           <Typography variant="h5" component="div">
             {title}
           </Typography>
-          <Button onClick={() => setOpenPopup(false)}>
+          <Button
+            onClick={() => {
+              if (setTargetRow) setTargetRow(null);
+              setOpenPopup(false);
+            }}
+          >
             <CloseIcon />{" "}
           </Button>
         </Box>

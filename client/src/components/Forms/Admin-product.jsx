@@ -1,11 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Typography, makeStyles } from "@material-ui/core";
-import Form from "../../components/form/form.component";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import ErrorMessage from "../../components/errMsg";
+import Control from "../../components/controls/Control";
 import {
   addProductStart,
   editProductStart,
@@ -29,7 +27,7 @@ const AdminProductAdd = ({
   setTargetRow,
   targetRow,
 }) => {
-  const { register, handleSubmit, errors, setError, control } = useForm({
+  const { register, handleSubmit, errors } = useForm({
     mode: "all",
   });
   const classes = useStyles();
@@ -47,26 +45,23 @@ const AdminProductAdd = ({
       <form className={classes.formWidth} onSubmit={handleSubmit(onSubmit)}>
         <Typography variant="h2">Add</Typography>
 
-        <TextField
+        <Control.Input
           defaultValue={targetRow ? targetRow.name : ""}
           inputRef={register({ required: true })}
           name="name"
           label="Name"
-          variant="outlined"
           fullWidth
-          margin="normal"
+          error={errors.name}
         />
-        <ErrorMessage error={errors.name} params="name" minL="4" />
-        <TextField
+
+        <Control.Input
           defaultValue={targetRow ? targetRow.type : ""}
           inputRef={register({ required: true })}
           name="type"
           label="Type"
-          variant="outlined"
           fullWidth
-          margin="normal"
+          error={errors.type}
         />
-        <ErrorMessage error={errors.type} params="type" minL="4" />
 
         <Button className={classes.submitBtn} variant="contained" type="submit">
           Submit

@@ -1,10 +1,10 @@
 import React from "react";
-import Form from "../../components/form/form.component";
+import FormAuth from "../../components/Forms/Auth";
 
 const RegisterPage = () => {
   return (
     <div>
-      <Form type="sign-in" />
+      <FormAuth type="sign-in" />
     </div>
   );
 };
