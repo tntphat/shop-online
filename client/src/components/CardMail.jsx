@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import moment from "moment";
 
 import Popup from "./popUp";
-import MailForm from "./mail-form";
+import MailForm from "./Forms/mail-form";
 
 import {
   Box,

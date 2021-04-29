@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { selectCurrentUser } from "../../redux/user/user.selector";
 import MailIcon from "@material-ui/icons/Mail";
 import Popup from "../../components/popUp";
-import MailForm from "../../components/mail-form";
+import MailForm from "../../components/Forms/mail-form";
 
 const useStyles = makeStyles((theme) => ({
   paper: {

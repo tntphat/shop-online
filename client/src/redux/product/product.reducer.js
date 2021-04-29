@@ -8,6 +8,7 @@ import {
 const INITIAL_STATE = {
   products: [],
   error: null,
+  isFetching: false,
 };
 
 const productReducer = (state = INITIAL_STATE, action) => {
@@ -48,15 +49,22 @@ const productReducer = (state = INITIAL_STATE, action) => {
         ...state,
         error: action.payload,
       };
+    case ProductActionTypes.FETCH_PRODUCTS_START:
+      return {
+        ...state,
+        isFetching: true,
+      };
     case ProductActionTypes.FETCH_PRODUCTS_SUCCESS:
       return {
         ...state,
         products: action.payload,
+        isFetching: false,
         error: null,
       };
     case ProductActionTypes.FETCH_PRODUCTS_FAILURE:
       return {
         ...state,
+        isFetching: false,
         error: action.payload,
       };
     default:

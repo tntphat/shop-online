@@ -4,7 +4,7 @@ import {
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
-import ErrorMessage from "../errMsg";
+import ErrorMessage from "./errMsg";
 import { Controller } from "react-hook-form";
 import { FormControl } from "@material-ui/core";
 

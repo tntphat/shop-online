@@ -18,10 +18,10 @@ const axiosInstance = axios.create({
   baseURL: "http://localhost:5000",
 });
 
-export function* addProduct({ payload: { name, type } }) {
+export function* addProduct({ payload }) {
   try {
     console.log("helo from saga");
-    const { data } = yield axiosInstance.post("/products/add", { name, type });
+    const { data } = yield axiosInstance.post("/products/add", payload);
     console.log(data);
     yield put(addProductSuccess(data));
   } catch (error) {

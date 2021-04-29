@@ -1,12 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Typography, makeStyles } from "@material-ui/core";
 // import Form from "../../components/form/form.component";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import ErrorMessage from "./errMsg";
-import { addMailStart } from "../redux/mails/mail.actions";
+import { addMailStart } from "../../redux/mails/mail.actions";
+import Control from "../controls/Control";
 
 const useStyles = makeStyles((theme) => ({
   formWidth: {
@@ -25,7 +24,7 @@ const MailForm = ({ setOpenPopup, addMailStart, idMail }) => {
   });
   const classes = useStyles();
   const onSubmit = (data) => {
-    // addMailStart({data});
+    addMailStart({ data });
     console.log(data, idMail);
     setOpenPopup(false);
   };
@@ -33,29 +32,25 @@ const MailForm = ({ setOpenPopup, addMailStart, idMail }) => {
   return (
     <>
       <form className={classes.formWidth} onSubmit={handleSubmit(onSubmit)}>
-        <Typography variant="h2">Add</Typography>
+        <Typography variant="h6">Add</Typography>
 
-        <TextField
+        <Control.Input
+          fullWidth
           inputRef={register({ required: true })}
           name="title"
           label="Title"
-          variant="outlined"
-          fullWidth
-          margin="normal"
+          error={errors.title}
         />
-        <ErrorMessage error={errors.title} params="title" minL="4" />
-        <TextField
+        <Control.Input
+          fullWidth
           inputRef={register({ required: true })}
           name="content"
           label="Content"
-          variant="outlined"
-          fullWidth
-          margin="normal"
+          error={errors.content}
           multiline
           rows={2}
           rowsMax={4}
         />
-        <ErrorMessage error={errors.content} params="content" minL="4" />
 
         <Button className={classes.submitBtn} variant="contained" type="submit">
           Submit

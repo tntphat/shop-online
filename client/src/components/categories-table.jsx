@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AccordionItem = ({ subCategory }) => {
+const AccordionItem = ({ subCategory, handleEditSub }) => {
   const classes = useStyles();
   return (
     <>
@@ -57,7 +57,12 @@ const AccordionItem = ({ subCategory }) => {
             <Typography>{subCategory.name}</Typography>
           </Box>
           <Box display="flex">
-            <Button variant="outlined">Sửa</Button>
+            <Button
+              variant="outlined"
+              onClick={() => handleEditSub(subCategory)}
+            >
+              Sửa
+            </Button>
             <Box ml={1}>
               <Button variant="outlined">Xóa</Button>
             </Box>
@@ -68,13 +73,7 @@ const AccordionItem = ({ subCategory }) => {
   );
 };
 
-const Row = ({ row, handleAddSubCategory, subCats }) => {
-  console.log(
-    "CHEck sub array: ",
-    subCats,
-    subCats[subCats.length],
-    subCats.length
-  );
+const Row = ({ row, handleAddSubCategory, handleEditSub }) => {
   const classes = useStyles();
   return (
     <>
@@ -83,8 +82,11 @@ const Row = ({ row, handleAddSubCategory, subCats }) => {
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             {row.name}
           </AccordionSummary>
-          {subCats.map((subCategory) => (
-            <AccordionItem subCategory={subCategory} />
+          {row.sub_categories.map((subCategory) => (
+            <AccordionItem
+              handleEditSub={handleEditSub}
+              subCategory={subCategory}
+            />
           ))}
           <AccordionDetails>
             <Button onClick={() => handleAddSubCategory(row)}>Add</Button>
@@ -140,11 +142,15 @@ function CategoriesTable({ selectCategories, deleteCategoryStart }) {
     setOpenPopup(true);
   }
 
+  function handleEditSub(subCategory) {
+    setAddSub(subCategory);
+    setOpenPopup(true);
+  }
+
   useEffect(() => {
     if (openPopup === false) setTargetRow(null);
     if (openPopup === false) setAddSub(null);
   }, [openPopup]);
-
   return (
     <>
       <TableContainer className={classes.root} component={Paper}>
@@ -165,9 +171,10 @@ function CategoriesTable({ selectCategories, deleteCategoryStart }) {
             {selectCategories.map((row) => (
               <TableRow key={row._id}>
                 <Row
+                  key={row._id}
                   handleAddSubCategory={handleAddSubCategory}
+                  handleEditSub={handleEditSub}
                   row={row}
-                  subCats={row.sub_categories}
                 />
                 <TableCell>
                   <Box display="flex">

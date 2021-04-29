@@ -1,12 +1,12 @@
 import { Controller } from "react-hook-form";
-import React from "react";
+import React, { useState } from "react";
 import {
   InputLabel,
   Select as MuiSelect,
   MenuItem,
   FormControl,
 } from "@material-ui/core";
-import ErrorMessage from "../errMsg";
+import ErrorMessage from "./errMsg";
 
 export default function Select({
   error,
@@ -14,6 +14,7 @@ export default function Select({
   control,
   label,
   name,
+  onChange,
   ...others
 }) {
   return (
@@ -22,10 +23,23 @@ export default function Select({
       <Controller
         defaultValue=""
         as={
-          <MuiSelect {...others}>
-            <MenuItem value="">None</MenuItem>
+          <MuiSelect>
+            <MenuItem
+              onClick={() => {
+                if (onChange) onChange(null);
+              }}
+              value=""
+            >
+              None
+            </MenuItem>
             {options.map((item) => (
-              <MenuItem key={item.id} value={item.id}>
+              <MenuItem
+                onClick={() => {
+                  if (onChange) onChange(item);
+                }}
+                key={item.id}
+                value={item.id}
+              >
                 {item.title}
               </MenuItem>
             ))}
@@ -34,6 +48,33 @@ export default function Select({
         name={name}
         control={control}
       />
+      {/* <Controller
+              as={
+                <MuiSelect>
+                  <MenuItem value="">None</MenuItem>
+                  <MenuItem value="simple">
+                    Simple Words only (3-5 characters)
+                  </MenuItem>
+                  <MenuItem value="medium">
+                    Medium Words only (5-8 characters)
+                  </MenuItem>
+                  <MenuItem value="complex">
+                    Complex Words only (8+ characters)
+                  </MenuItem>
+                  <MenuItem value="allwords">
+                    Randomly Select Words all across
+                  </MenuItem>
+                </MuiSelect>
+              }
+              name="wordlevel"
+              rules={{ required: "this is required" }}
+              control={control}
+              defaultValue=""
+              onChange={d => {
+                console.log('hello')
+                return d[0].target.value;
+              }}
+            /> */}
       <ErrorMessage error={error} params={name} />
     </FormControl>
   );

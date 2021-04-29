@@ -14,18 +14,14 @@ class MailController {
   }
 
   async addMail(req, res) {
-    req.body.mail_author = req.user._id;
-    const mail = new Mail(req.body);
+    const data = { ...req.body.data, mail_author: req.user._id };
+    const mail = new Mail(data);
     const newMail = await mail.save();
 
-    // const user = await User.findById(req.user._id);
-    // user.sent_mails.push({ mail_id: newMail._id });
-    // await user.save();
     const user = await User.updateOne(
       { _id: req.user._id },
       { $push: { sent_mails: { mail_id: newMail._id } } }
     );
-    console.log(newMail);
     if (newMail && user) res.status(200).send(mail);
     else res.status(400).send("failllllllll");
   }

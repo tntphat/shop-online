@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function NestedList() {
+function NestedList({ categories }) {
   const classes = useStyles();
 
   return (
@@ -82,53 +82,20 @@ function NestedList() {
       }
       className={classes.root}
     >
-      <ListItem className={classes.lisItem}>
-        <Accordion className={classes.accordion}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            Đồ ún các loại
-          </AccordionSummary>
-          <AccordionDetails>Nc ngọt</AccordionDetails>
-          <AccordionDetails>Cafe</AccordionDetails>
-          <AccordionDetails>Tà tưa</AccordionDetails>
-          <AccordionDetails>Nc iến</AccordionDetails>
-        </Accordion>
-      </ListItem>
-
-      <ListItem className={classes.lisItem}>
-        <Accordion className={classes.accordion}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            Đồ ún các loại
-          </AccordionSummary>
-          <AccordionDetails>Nc ngọt</AccordionDetails>
-          <AccordionDetails>Cafe</AccordionDetails>
-          <AccordionDetails>Tà tưa</AccordionDetails>
-          <AccordionDetails>Nc iến</AccordionDetails>
-        </Accordion>
-      </ListItem>
-
-      <ListItem className={classes.lisItem}>
-        <Accordion className={classes.accordion}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            Đồ ún các loại
-          </AccordionSummary>
-          <AccordionDetails>Nc ngọt</AccordionDetails>
-          <AccordionDetails>Cafe</AccordionDetails>
-          <AccordionDetails>Tà tưa</AccordionDetails>
-          <AccordionDetails>Nc iến</AccordionDetails>
-        </Accordion>
-      </ListItem>
-
-      <ListItem className={classes.lisItem}>
-        <Accordion className={classes.accordion}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            Đồ ún các loại
-          </AccordionSummary>
-          <AccordionDetails>Nc ngọt</AccordionDetails>
-          <AccordionDetails>Cafe</AccordionDetails>
-          <AccordionDetails>Tà tưa</AccordionDetails>
-          <AccordionDetails>Nc iến</AccordionDetails>
-        </Accordion>
-      </ListItem>
+      {categories.map((category) => (
+        <ListItem className={classes.lisItem} key={category._id}>
+          <Accordion className={classes.accordion}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              {category.name}
+            </AccordionSummary>
+            {category.sub_categories.map((sub_category) => (
+              <AccordionDetails key={sub_category._id}>
+                {sub_category.name}
+              </AccordionDetails>
+            ))}
+          </Accordion>
+        </ListItem>
+      ))}
     </List>
   );
 }

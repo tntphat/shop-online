@@ -8,6 +8,7 @@ import {
   addProductStart,
   editProductStart,
 } from "../../redux/product/product.actions";
+import { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
   formWidth: {
@@ -26,25 +27,26 @@ const AdminProductAdd = ({
   setOpenPopup,
   setTargetRow,
   targetRow,
+  categories,
 }) => {
-  const { register, handleSubmit, errors } = useForm({
+  console.log("categories in product form : ", categories);
+  const { register, handleSubmit, errors, control } = useForm({
     mode: "all",
   });
   const classes = useStyles();
+  const [curCategory, setCurCategory] = useState(null);
   const onSubmit = (data) => {
-    const { name, type } = data;
     if (targetRow) editProductStart({ ...data, _id: targetRow._id });
-    else addProductStart({ name, type });
+    else addProductStart(data);
     setOpenPopup(false);
   };
 
   console.log(targetRow, "aaaaaaa");
+  console.log(curCategory, "rerendered");
 
   return (
     <>
       <form className={classes.formWidth} onSubmit={handleSubmit(onSubmit)}>
-        <Typography variant="h2">Add</Typography>
-
         <Control.Input
           defaultValue={targetRow ? targetRow.name : ""}
           inputRef={register({ required: true })}
@@ -54,16 +56,59 @@ const AdminProductAdd = ({
           error={errors.name}
         />
 
-        <Control.Input
-          defaultValue={targetRow ? targetRow.type : ""}
-          inputRef={register({ required: true })}
-          name="type"
-          label="Type"
-          fullWidth
+        <Control.Select
+          control={control}
+          name="category_id"
+          label="Category"
           error={errors.type}
+          options={categories.map((category) => {
+            return {
+              id: category._id,
+              title: category.name,
+              sub_categories: category.sub_categories,
+            };
+          })}
+          onChange={setCurCategory}
+        />
+        {curCategory ? (
+          <Control.Select
+            control={control}
+            name="sub_category_id"
+            label="Sub Category"
+            error={errors.type}
+            options={curCategory.sub_categories.map((sub_category) => {
+              return {
+                id: sub_category._id,
+                title: sub_category.name,
+              };
+            })}
+          />
+        ) : (
+          <></>
+        )}
+
+        <Control.Input
+          fullWidth
+          inputRef={register({ required: true })}
+          name="price"
+          label="Price"
+          type="number"
+          error={errors.price}
         />
 
-        <Button className={classes.submitBtn} variant="contained" type="submit">
+        <Control.DatePicker
+          control={control}
+          name="expiry_date"
+          label="Expiry Date"
+          error={errors.expiry_date}
+        />
+
+        <Button
+          fullWidth
+          className={classes.submitBtn}
+          variant="contained"
+          type="submit"
+        >
           Submit
         </Button>
       </form>

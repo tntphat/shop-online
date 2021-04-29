@@ -6,6 +6,7 @@ import RegisterPage from "./pages/register/register";
 import SignInPage from "./pages/sign-in/sign-in";
 import HomePage from "./pages/home/home";
 import ProductsPage from "./pages/products/products";
+import ProductContainer from "./pages/product/product";
 import ProfilePage from "./pages/profile/profile";
 import AdminRoute from "./pages/admin/admin-main";
 import Header from "./components/header/header";
@@ -73,7 +74,7 @@ const App = ({ currUser, checkUserSession }) => {
             path="/sign-in"
             render={() => (currUser ? <Redirect to="/" /> : <SignInPage />)}
           />
-          <Route exact path="/products" component={ProductsPage} />
+          <Route path="/products" component={ProductContainer} />
           <AdminRoute path="/admin" />
           <Route
             exact

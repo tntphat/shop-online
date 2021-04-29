@@ -18,14 +18,15 @@ const axiosInstance = axios.create({
 
 export function* addMail({ payload }) {
   try {
-    console.log("helo from saga MAIL ADD");
+    console.log("helo from saga MAIL ADD", payload);
     const curUser = yield select(selectCurrentUser);
+    // console.log(payload);
     const { data } = yield axiosInstance.post("/mails/add", payload, {
       headers: {
         Authorization: "Bearer " + curUser.token,
       },
     });
-    console.log(data);
+    // console.log(data);
     // yield put(addMailSuccess(data));
   } catch (error) {
     yield put(addMailFailure(error.response.data));

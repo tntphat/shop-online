@@ -1,6 +1,6 @@
 import React from "react";
 import { TextField } from "@material-ui/core";
-import ErrorMessage from "../errMsg";
+import ErrorMessage from "./errMsg";
 
 export default function Input(props) {
   const { name, error, minL, ...others } = props;

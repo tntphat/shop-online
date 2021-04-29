@@ -1,16 +1,11 @@
 import React, { useEffect } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import Button from "@material-ui/core/Button";
-import ErrorMessage from "../errMsg";
 import Control from "../controls/Control";
 import "./form.styles.css";
 import { connect } from "react-redux";
 
-import { TextField, Paper, Typography } from "@material-ui/core";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from "@material-ui/core/FormControl";
+import { Paper, Typography } from "@material-ui/core";
 
 import {
   signInSuccess,
@@ -25,9 +20,9 @@ const Form = ({ type, signInStart, signUpStart, errorSignIn }) => {
     mode: "all",
   });
   const onSubmit = async (data) => {
-    // if (type === "register") signUpStart(data);
-    // else signInStart(data);
     console.log(data);
+    if (type === "register") signUpStart(data);
+    else signInStart(data);
   };
 
   useEffect(() => {
@@ -59,33 +54,16 @@ const Form = ({ type, signInStart, signUpStart, errorSignIn }) => {
               label="Last Name:"
               error={errors.lastName}
             />
-            <FormControl fullWidth margin="normal">
-              <InputLabel htmlFor="gender-select">Gender</InputLabel>
-              <Controller
-                control={control}
-                name="gender"
-                defaultValue=""
-                as={
-                  <Select id="gender-select">
-                    <MenuItem key="male" value="male">
-                      Male
-                    </MenuItem>
-                    <MenuItem key="female" value="female">
-                      Female
-                    </MenuItem>
-                  </Select>
-                }
-              />
-            </FormControl>
-
-            <ErrorMessage error={errors.gender} />
-
-            <Control.Input
-              fullWidth
-              inputRef={register({ required: true })}
-              name="username"
-              label="Username"
-              error={errors.username}
+            <Control.RadioGroup
+              control={control}
+              name="gender"
+              label="Ur gender"
+              error={errors.gender}
+              items={[
+                { id: "male", title: "Male" },
+                { id: "female", title: "feMale" },
+                { id: "other", title: "Other" },
+              ]}
             />
           </div>
         ) : undefined}
@@ -99,43 +77,6 @@ const Form = ({ type, signInStart, signUpStart, errorSignIn }) => {
           name="email"
           label="Email"
           error={errors.email}
-        />
-        <Control.DatePicker
-          control={control}
-          name="hireDate"
-          label="Hire Date"
-          error={errors.hireDate}
-        />
-
-        <Control.Select
-          control={control}
-          name="type"
-          label="Type"
-          error={errors.type}
-          options={[
-            { id: 1, title: "ĐL" },
-            { id: 2, title: "ĐL2" },
-            { id: 3, title: "ĐL3" },
-          ]}
-        />
-
-        <Control.Checkbox
-          control={control}
-          name="isGay"
-          label="R U Gay ?"
-          error={errors.isGay}
-        />
-
-        <Control.RadioGroup
-          control={control}
-          name="gender2"
-          label="Ur gender"
-          error={errors.gender2}
-          items={[
-            { id: "male", title: "Male" },
-            { id: "female", title: "feMale" },
-            { id: "other", title: "Other" },
-          ]}
         />
 
         <Control.Input

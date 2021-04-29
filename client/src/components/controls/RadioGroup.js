@@ -7,7 +7,7 @@ import {
   Radio,
   InputLabel,
 } from "@material-ui/core";
-import ErrorMessage from "../errMsg";
+import ErrorMessage from "./errMsg";
 import { Controller } from "react-hook-form";
 
 export default function RadioGroup(props) {

@@ -9,6 +9,7 @@ import {
   editCategoryStart,
   addSubCategoryStart,
 } from "../../redux/categories/category.actions";
+import { useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
   formWidth: {
@@ -36,13 +37,18 @@ const AdminCategoryAdd = ({
   const onSubmit = (data) => {
     console.log(data, targetRow);
     if (addSub) {
-      addSubCategoryStart({ category_id: addSub, ...data });
+      if (addSub.category_id) {
+        // editSubCategoryStart({...addSub,...data})
+        console.log("ok nha", { ...addSub, ...data });
+      } else addSubCategoryStart({ category_id: addSub, ...data });
     } else {
       if (targetRow) editCategoryStart({ ...data, _id: targetRow._id });
       else addCategoryStart(data);
     }
     setOpenPopup(false);
   };
+  const defaultName =
+    (addSub && addSub.name) || (targetRow && targetRow.name) || "";
 
   return (
     <>
@@ -50,7 +56,7 @@ const AdminCategoryAdd = ({
         <Typography variant="h2">Category</Typography>
 
         <Control.Input
-          defaultValue={targetRow ? targetRow.name : ""}
+          defaultValue={defaultName}
           inputRef={register({ required: true })}
           name="name"
           label="Name"

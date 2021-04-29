@@ -5,7 +5,7 @@ import {
   InputLabel,
   Checkbox as MuiCheckbox,
 } from "@material-ui/core";
-import ErrorMessage from "../errMsg";
+import ErrorMessage from "./errMsg";
 
 export default function Checkbox(props) {
   const { name, label, control, error } = props;

@@ -15,7 +15,8 @@ import ProductForm from "../Forms/Admin-product";
 
 const useStyles = makeStyles((theme) => ({
   dltButton: {
-    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+    marginRight: theme.spacing(2),
   },
   addBtn: {
     height: "36px",
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DataTable = ({ data, delProductStart }) => {
+const DataTable = ({ data, categories, delProductStart }) => {
   const classes = useStyles();
   const rows = data;
   console.log("RENDER DATA TABLE AGAIN");
@@ -71,7 +72,19 @@ const DataTable = ({ data, delProductStart }) => {
   const columns = [
     { field: "id", headerName: "ID", flex: 0.4 },
     { field: "name", headerName: "Name", flex: 1 },
-    { field: "type", headerName: "Type", flex: 1 },
+    {
+      field: "category_id",
+      headerName: "Category ",
+      flex: 1,
+      valueGetter: (params) => params.row.category_id.name,
+    },
+
+    {
+      field: "sub_category_id",
+      headerName: "Sub Name",
+      flex: 1,
+      valueGetter: (params) => params.row.sub_category_id.name,
+    },
     {
       field: "createdAt",
       type: "date",
@@ -145,26 +158,46 @@ const DataTable = ({ data, delProductStart }) => {
   };
 
   return (
-    <div style={{ height: 400, width: "100%" }}>
+    <div style={{ height: 500, width: "100%" }}>
       <Box display="flex" justifyContent="space-between" alignItems="flex-end">
         <Typography variant="h2">Product</Typography>
-        <Button
-          onClick={() => {
-            setTargetRow(null);
-            setOpenPopup(true);
-          }}
-          variant="contained"
-          className={classes.addBtn}
-          color="primary"
-          startIcon={<AddIcon />}
-        >
-          add
-        </Button>
+        <Box display="flex">
+          <Button
+            onClick={() =>
+              setConfirmDialog({
+                isOpen: true,
+                title: "Are u sure to delete?",
+                subTitle: "U cant undo this operation",
+                onConfirm: () => {
+                  submitDelete();
+                },
+              })
+            }
+            className={classes.dltButton}
+            startIcon={<DeleteIcon />}
+            variant="contained"
+            color="primary"
+          >
+            Delete
+          </Button>
+          <Button
+            onClick={() => {
+              setTargetRow(null);
+              setOpenPopup(true);
+            }}
+            variant="contained"
+            className={classes.addBtn}
+            color="primary"
+            startIcon={<AddIcon />}
+          >
+            add
+          </Button>
+        </Box>
       </Box>
       <DataGrid
+        pageSize={10}
         rows={newRows}
         columns={columns}
-        pageSize={5}
         checkboxSelection
         disableSelectionOnClick={true}
         loading={!data}
@@ -173,32 +206,16 @@ const DataTable = ({ data, delProductStart }) => {
         }}
       />
 
-      <Button
-        onClick={() =>
-          setConfirmDialog({
-            isOpen: true,
-            title: "Are u sure to delete?",
-            subTitle: "U cant undo this operation",
-            onConfirm: () => {
-              submitDelete();
-            },
-          })
-        }
-        className={classes.dltButton}
-        startIcon={<DeleteIcon />}
-        variant="contained"
-        color="primary"
-      >
-        Delete
-      </Button>
       <Notification notify={notify} setNotify={setNotify}></Notification>
 
       <PopUp
         title="Add Product"
+        fullScreen={true}
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
       >
         <ProductForm
+          categories={categories}
           setOpenPopup={setOpenPopup}
           setTargetRow={setTargetRow}
           targetRow={targetRow}
