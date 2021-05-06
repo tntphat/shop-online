@@ -47,6 +47,25 @@ export const signUpFailure = (error) => ({
   payload: error,
 });
 
+export const fetchEmployeesStart = () => ({
+  type: UserActionTypes.FETCH_EMPLOYEES_START,
+});
+
+export const fetchEmployeesSuccess = (employees) => ({
+  type: UserActionTypes.FETCH_EMPLOYEES_SUCCESS,
+  payload: employees,
+});
+
+export const fetchEmployeesFailure = (error) => ({
+  type: UserActionTypes.FETCH_EMPLOYEES_FAILURE,
+  payload: error,
+});
+
+export const addEmployeeSuccess = (employee) => ({
+  type: UserActionTypes.ADD_EMPLOYEE_SUCCESS,
+  payload: employee,
+});
+
 export const testHeader = () => ({
   type: UserActionTypes.TEST_HEADER,
 });

@@ -10,6 +10,9 @@ import {
   signOutFailure,
   signUpSuccess,
   signUpFailure,
+  fetchEmployeesSuccess,
+  fetchEmployeesFailure,
+  addEmployeeSuccess,
 } from "./user.actions";
 
 import { selectCurrentUser } from "./user.selector";
@@ -36,9 +39,16 @@ export function* signIn({ payload: { email, password } }) {
 export function* signUp({ payload }) {
   try {
     console.log("helo from saga SIGN Up ");
-    const { data } = yield axiosInstance.post("/user/register", payload);
-    yield Cookies.set("user", JSON.stringify(data));
-    yield put(signUpSuccess(data));
+    const { notClient, ...others } = payload;
+    others.isNotClient = notClient && 1;
+    const { data } = yield axiosInstance.post("/user/register", others);
+    if (!notClient) {
+      yield Cookies.set("user", JSON.stringify(data));
+
+      yield put(signUpSuccess(data));
+    } else {
+      yield put(addEmployeeSuccess(data));
+    }
   } catch (error) {
     yield put(signUpFailure(error.response.data));
   }
@@ -65,27 +75,21 @@ export function* signOut() {
   }
 }
 
-// export function* testHeader() {
-//   try {
-//     const data = yield Cookies.get("user");
-//     const { token } = JSON.parse(data);
-//     console.log("HELLO FROM TEST SAGAS", token);
-//     yield axiosInstance.post(
-//       "/test",
-//       { data: 1 },
-//       { headers: { Authorization: "Bearer " + token } }
-//     );
-//   } catch (error) {
-//     yield put(signOutFailure(error));
-//   }
-// }
+export function* fetchEmployees() {
+  try {
+    console.log("helo from saga FETCH EMPLOYEES");
+    const { data } = yield axiosInstance.get("/user/employees");
+    console.log("emplyees:", data);
+    yield put(fetchEmployeesSuccess(data));
+  } catch (error) {
+    yield put(fetchEmployeesFailure(error));
+  }
+}
 
 export function* testHeader() {
   try {
     const data = yield select(selectCurrentUser);
     console.log(data);
-    // const { token } = JSON.parse(data);
-    // console.log("HELLO FROM TEST SAGAS", token);
     yield axiosInstance.post(
       "/test",
       { data: 1 },
@@ -117,6 +121,10 @@ export function* onCheckUserSession() {
   yield takeLatest(UserActionTypes.CHECK_USER_SESSION, isUserAuthenticated);
 }
 
+export function* onFetchEmployeesStart() {
+  yield takeLatest(UserActionTypes.FETCH_EMPLOYEES_START, fetchEmployees);
+}
+
 export function* onTestHeader() {
   yield takeLatest(UserActionTypes.TEST_HEADER, testHeader);
 }
@@ -128,5 +136,6 @@ export function* userSagas() {
     call(onCheckUserSession),
     call(onSignOutStart),
     call(onTestHeader),
+    call(onFetchEmployeesStart),
   ]);
 }

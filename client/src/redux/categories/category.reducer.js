@@ -42,7 +42,7 @@ const mailReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         categories: state.categories.filter(
-          (item) => item._id != action.payload
+          (item) => item._id !== action.payload
         ),
         error: null,
       };

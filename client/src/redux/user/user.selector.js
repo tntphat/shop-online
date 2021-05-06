@@ -7,4 +7,9 @@ export const selectCurrentUser = createSelector(
   (user) => user.currentUser
 );
 
+export const selectEmployees = createSelector(
+  [selectUser],
+  (user) => user.employees
+);
+
 export const selectErrors = createSelector([selectUser], (user) => user.error);

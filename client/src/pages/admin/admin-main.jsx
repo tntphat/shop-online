@@ -6,6 +6,8 @@ import AdminChart from "./admin-chart";
 import AdminMail from "./admin-mail";
 import AdminProduct from "./admin-product";
 import AdminCategories from "./admin-categories";
+import AdminAuthorities from "./admin-authorities";
+import AdminEmployees from "./admin-employees";
 
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
@@ -220,6 +222,8 @@ function AdminPage(props) {
           <Route exact path="/admin/mail" component={AdminMail} />
           <Route exact path="/admin/products" component={AdminProduct} />
           <Route exact path="/admin/categories" component={AdminCategories} />
+          <Route exact path="/admin/authorities" component={AdminAuthorities} />
+          <Route exact path="/admin/employees" component={AdminEmployees} />
         </Switch>
       </main>
     </div>

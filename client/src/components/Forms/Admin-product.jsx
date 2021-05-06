@@ -60,7 +60,7 @@ const AdminProductAdd = ({
           control={control}
           name="category_id"
           label="Category"
-          error={errors.type}
+          error={errors.category_id}
           options={categories.map((category) => {
             return {
               id: category._id,
@@ -75,7 +75,7 @@ const AdminProductAdd = ({
             control={control}
             name="sub_category_id"
             label="Sub Category"
-            error={errors.type}
+            error={errors.sub_category_id}
             options={curCategory.sub_categories.map((sub_category) => {
               return {
                 id: sub_category._id,

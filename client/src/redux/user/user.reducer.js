@@ -2,6 +2,7 @@ import UserActionTypes from "./user.types";
 
 const INITIAL_STATE = {
   currentUser: null,
+  employees: [],
   error: null,
 };
 
@@ -31,6 +32,28 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+    case UserActionTypes.FETCH_EMPLOYEES_START:
+      return {
+        ...state,
+      };
+    case UserActionTypes.FETCH_EMPLOYEES_SUCCESS:
+      return {
+        ...state,
+        employees: action.payload,
+        error: null,
+      };
+    case UserActionTypes.FETCH_EMPLOYEES_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        error: action.payload,
+      };
+    case UserActionTypes.ADD_EMPLOYEE_SUCCESS:
+      return {
+        ...state,
+        employees: [...state.employees, action.payload],
+        error: null,
       };
     default:
       return state;

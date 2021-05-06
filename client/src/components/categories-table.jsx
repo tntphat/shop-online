@@ -54,7 +54,7 @@ const AccordionItem = ({ subCategory, handleEditSub }) => {
           justifyContent="space-between"
         >
           <Box>
-            <Typography>{subCategory.name}</Typography>
+            <Typography variant="body2">{subCategory.name}</Typography>
           </Box>
           <Box display="flex">
             <Button
@@ -80,7 +80,7 @@ const Row = ({ row, handleAddSubCategory, handleEditSub }) => {
       <TableCell style={{ width: "100%" }} component="th" scope="row">
         <Accordion>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            {row.name}
+            <Typography>{row.name}</Typography>
           </AccordionSummary>
           {row.sub_categories.map((subCategory) => (
             <AccordionItem
@@ -89,7 +89,12 @@ const Row = ({ row, handleAddSubCategory, handleEditSub }) => {
             />
           ))}
           <AccordionDetails>
-            <Button onClick={() => handleAddSubCategory(row)}>Add</Button>
+            <Button
+              variant="outlined"
+              onClick={() => handleAddSubCategory(row)}
+            >
+              Add
+            </Button>
           </AccordionDetails>
         </Accordion>
       </TableCell>

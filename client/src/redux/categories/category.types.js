@@ -1,4 +1,4 @@
-const MailActionTypes = {
+const CategoryActionTypes = {
   ADD_CATEGORY_SUCCESS: "ADD_CATEGORY_SUCCESS",
   ADD_CATEGORY_FAILURE: "ADD_CATEGORY_FAILURE",
   ADD_CATEGORY_START: "ADD_CATEGORY_START",
@@ -16,4 +16,4 @@ const MailActionTypes = {
   FETCH_CATEGORIES_START: "FETCH_CATEGORIES_START",
 };
 
-export default MailActionTypes;
+export default CategoryActionTypes;
