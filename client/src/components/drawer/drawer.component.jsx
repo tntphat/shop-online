@@ -3,21 +3,16 @@ import { Link } from "react-router-dom";
 
 import Box from "@material-ui/core/Box";
 import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import HomeIcon from "@material-ui/icons/Home";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import BarChartIcon from "@material-ui/icons/BarChart";
-import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Drawer from "@material-ui/core/Drawer";
-import DashboardIcon from "@material-ui/icons/Dashboard";
-import CategoryIcon from "@material-ui/icons/Category";
 import { makeStyles } from "@material-ui/core/styles";
+
+import DrawerData from "./drawer.data";
 
 const useStyles = makeStyles((theme) => ({
   home: {
@@ -58,54 +53,14 @@ const DrawerChildren = ({ children, ...rest }) => {
 
       <Divider />
       <List>
-        <Link className={classes.link} to="/admin">
-          <ListItem button key="Dashboard">
-            <ListItemIcon>
-              <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText primary="Dashboard" />
-          </ListItem>
-        </Link>
-        <Link className={classes.link} to="/admin/mail">
-          <ListItem button key="Mail">
-            <ListItemIcon>
-              <InboxIcon />
-            </ListItemIcon>
-            <ListItemText primary="Mail" />
-          </ListItem>
-        </Link>
-        <Link className={classes.link} to="/admin/products">
-          <ListItem button key="Products">
-            <ListItemIcon>
-              <ShoppingCartIcon />
-            </ListItemIcon>
-            <ListItemText primary="Products" />
-          </ListItem>
-        </Link>
-        <Link className={classes.link} to="/admin/chart">
-          <ListItem button key="Chart">
-            <ListItemIcon>
-              <BarChartIcon />
-            </ListItemIcon>
-            <ListItemText primary="Chart" />
-          </ListItem>
-        </Link>
-        <Link className={classes.link} to="/admin/employees">
-          <ListItem button key="Employees Manage">
-            <ListItemIcon>
-              <PeopleOutlineIcon />
-            </ListItemIcon>
-            <ListItemText primary="Employees Manage" />
-          </ListItem>
-        </Link>
-        <Link className={classes.link} to="/admin/categories">
-          <ListItem button key="Categories">
-            <ListItemIcon>
-              <CategoryIcon />
-            </ListItemIcon>
-            <ListItemText primary="Categories" />
-          </ListItem>
-        </Link>
+        {DrawerData.map((item) => (
+          <Link key={item.name} className={classes.link} to={item.link}>
+            <ListItem button>
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.name} />
+            </ListItem>
+          </Link>
+        ))}
       </List>
       <Divider />
       <List>

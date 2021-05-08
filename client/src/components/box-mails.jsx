@@ -44,7 +44,7 @@ export default function AlignItemsList({ curMail, mails, setCurMail }) {
             button
             alignItems="flex-start"
             onClick={() => setCurMail(mail)}
-            className={curMail && mail._id == curMail._id && classes.active}
+            className={curMail && mail._id === curMail._id && classes.active}
           >
             <ListItemAvatar>
               <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />

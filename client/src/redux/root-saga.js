@@ -4,6 +4,7 @@ import { userSagas } from "./user/user.sagas";
 import { productSagas } from "./product/product.sagas";
 import { mailSagas } from "./mails/mail.sagas";
 import { categorySagas } from "./categories/category.sagas";
+import { authoritySagas } from "./authority/authority.sagas";
 
 export default function* rootSaga() {
   yield all([
@@ -11,5 +12,6 @@ export default function* rootSaga() {
     call(userSagas),
     call(mailSagas),
     call(categorySagas),
+    call(authoritySagas),
   ]);
 }
