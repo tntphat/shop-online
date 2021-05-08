@@ -6,18 +6,17 @@ var MongoDBStore = require("connect-mongodb-session")(session);
   collection: 'session',
   databaseName: 'doanweb'
 }); */
-var store = new MongoDBStore({
-  uri: "mongodb://localhost:27017/form_dev",
-  collection: "session",
-  databaseName: "form_dev",
-});
+// var store = new MongoDBStore({
+//   uri: "mongodb://localhost:27017/form_dev",
+//   collection: "session",
+//   databaseName: "form_dev",
+// });
 
-//dai loan :))
-/* var store = new MongoDBStore({
-  uri: 'mongodb+srv://dbUser3:dbUser3@cluster0.fqbw0.mongodb.net/doanweb?retryWrites=true&w=majority',
+var store = new MongoDBStore({
+  uri: 'mongodb+srv://dbUser5:dbUser5@cluster0.w7ggh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
   collection: 'session',
   databaseName: 'doanweb'
-}); */
+});
 
 store.on("error", function (error) {
   console.log(error);

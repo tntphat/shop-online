@@ -2,18 +2,8 @@ const Category = require("../models/Category");
 const SubCategory = require("../models/SubCategory");
 
 class CategoryController {
-  // async getCategory(req, res) {
-  //   const categories = await Category.find().populate({
-  //     path: "sub_categories",
-  //     select: "_id name",
-  //   });
-  //   console.log(categories);
-  //   if (categories) res.status(200).send(categories);
-  //   else res.status(400).send("fail");
-  // }
-
-  async addCategory(req, res) {
-    // req.body.Category_author = req.user._id;
+  //@route POST /sub-categories/add
+  async addSubCategory(req, res) {
     try {
       const subCategory = new SubCategory(req.body);
 
@@ -25,8 +15,9 @@ class CategoryController {
       );
 
       res.status(200).send(subCategory);
-    } catch (e) {
-      res.status(500).send(e);
+    } catch (error) {
+      console.error(error.message)
+      res.status(500).send({ msg: 'Server error' });
     }
   }
 }

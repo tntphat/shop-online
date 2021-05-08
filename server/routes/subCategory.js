@@ -3,7 +3,6 @@ const router = express.Router();
 
 const SubCategoryController = require("../app/controllers/SubCategoryController");
 
-// router.get("/", SubCategoryController.getCategory);
-router.post("/add", SubCategoryController.addCategory);
+router.post("/add", SubCategoryController.addSubCategory);
 
 module.exports = router;

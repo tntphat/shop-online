@@ -1,54 +1,64 @@
 const Product = require("../models/Product");
 
 class ProductController {
+  //@route GET /products/
   async getProduct(req, res) {
-    const products = await Product.find().populate(
-      "sub_category_id category_id"
-    );
-    if (products) res.status(200).send(products);
-    else res.status(400).send("fail");
+    try {
+      const products = await Product.find().populate(
+        "sub_category_id category_id"
+      );
+      res.status(200).send(products);
+    } catch (error) {
+      console.error(error.message)
+      res.status(500).send({ msg: 'Server error' });
+    }
   }
 
+  //@route POST /products/add
   async addProduct(req, res) {
-    const data = req.body;
-    console.log(data);
-    const product = new Product(data);
-    console.log(product);
-    const { name } = product;
-    const checkProduct = await Product.findOne({ name });
-    if (checkProduct) {
-      console.log(checkProduct);
-      res.status(401).send({ param: "name", msg: "used_name" });
-    } else {
+    try {
+      const data = req.body;
+      const product = new Product(data);
+      const { name } = product;
+      const checkProduct = await Product.findOne({ name });
+      if (checkProduct) {
+        return res.status(401).send({ param: "name", msg: "used_name" });
+      }
       const newProduct = await product.save();
       const dataSent = await Product.populate(newProduct, {
         path: "category_id sub_category_id",
       });
-      console.log(dataSent);
-      if (newProduct) res.status(200).send(dataSent);
-      else res.status(400).send("failllllllll");
+      res.status(200).send(dataSent);
+    } catch (error) {
+      console.error(error.message)
+      res.status(500).send({ msg: 'Server error' });
     }
   }
+
+  //@route DELETE /products/del
   async dltProduct(req, res) {
-    const { ids } = req.body;
-    const flag = true;
-    ids.forEach(async (id) => {
-      const del = await Product.deleteOne({ _id: id });
-      if (!del) flag = false;
-    });
-    flag ? res.status(200).send("ok") : res.status(400).send(" not ok");
+    try {
+      const { ids } = req.body;
+      ids.forEach(async (id) => {
+        const del = await Product.deleteOne({ _id: id });
+      });
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).send({ msg: 'Server error' });
+    }
   }
 
+  //@route PATCH /products/edit
   async editProduct(req, res) {
     try {
       const {
         data: { _id, ...others },
       } = req.body;
       await Product.updateOne({ _id: _id }, others);
-      // if(updateProduct)
       res.status(200).send();
-    } catch (err) {
-      res.status(400).send(err);
+    } catch (error) {
+      console.error(error.message)
+      res.status(500).send({ msg: 'Server error' });
     }
   }
 }

@@ -76,14 +76,14 @@ const DataTable = ({ data, categories, delProductStart }) => {
       field: "category_id",
       headerName: "Category ",
       flex: 1,
-      valueGetter: (params) => params.row.category_id.name,
+      valueGetter: (params) => "" ?? params.row.category_id.name,
     },
 
     {
       field: "sub_category_id",
       headerName: "Sub Name",
       flex: 1,
-      valueGetter: (params) => params.row.sub_category_id.name,
+      valueGetter: (params) => "" ?? params.row.sub_category_id.name,
     },
     {
       field: "createdAt",
@@ -133,14 +133,6 @@ const DataTable = ({ data, categories, delProductStart }) => {
     },
   ];
 
-  const handleClick = () => {
-    setNotify({
-      isOpen: true,
-      message: "Hello",
-      type: "success",
-    });
-  };
-  // const [rows, setRows] = useState(data);
   const newRows = rows.map((row, index) => {
     const { _id, createdAt, ...others } = row;
     const fomatted_date = moment(createdAt).format("YYYY-MM-DD");
