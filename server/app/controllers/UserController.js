@@ -76,7 +76,10 @@ class UserController {
           "@gmail.com";
         const user = new User(req.body);
         const newUser = await user.save();
-        res.status(200).send(newUser);
+        const dataSent = await User.populate(newUser, {
+          path: "authority",
+        });
+        res.status(200).send(dataSent);
       }
     } catch (e) {
       console.log("hereeeeeeeeeeeeeee", e);

@@ -5,16 +5,14 @@ class MailController {
   //@route GET /mails/
   async getMail(req, res) {
     try {
-
-      req.session.sayHi = "ILDL";
       const mails = await Mail.find().populate({
         path: "mail_author",
         select: "_id firstName lastName email createdAt",
       });
-      res.status(200).send(mails)
+      res.status(200).send(mails);
     } catch (error) {
-      console.error(error.message)
-      res.status(500).send({ msg: 'Server error' });
+      console.error(error.message);
+      res.status(500).send({ msg: "Server error" });
     }
   }
 
@@ -22,7 +20,7 @@ class MailController {
   async addMail(req, res) {
     try {
       const data = { ...req.body, mail_author: req.user._id };
-      console.log(data)
+      console.log(data);
       const mail = new Mail(data);
       const newMail = await mail.save();
 
@@ -32,8 +30,8 @@ class MailController {
       );
       res.status(200).send(mail);
     } catch (error) {
-      console.error(error.message)
-      res.status(500).send({ msg: 'Server error' });
+      console.error(error.message);
+      res.status(500).send({ msg: "Server error" });
     }
   }
 }
