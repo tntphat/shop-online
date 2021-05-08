@@ -132,16 +132,14 @@ const HideAppBar = ({ currentUser, signOutStart, testHeader, location }) => {
 
                 <IconButton onClick={signOutStart}>SIGN OUT</IconButton>
 
-                <IconButton onClick={testHeader}>test header</IconButton>
+                <Link className={classes.link} to="/profiles">
+                  <Typography variant="h5">Profiles</Typography>
+                </Link>
               </>
             )}
 
             <Link className={classes.link} to="/products">
               <Typography variant="h5">Products</Typography>
-            </Link>
-
-            <Link className={classes.link} to="/profiles">
-              <Typography variant="h5">Profiles</Typography>
             </Link>
 
             <Link className={classes.link} to="/admin">

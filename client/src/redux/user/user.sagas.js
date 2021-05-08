@@ -56,10 +56,13 @@ export function* signUp({ payload }) {
 
 export function* isUserAuthenticated() {
   try {
-    console.log("CHECK USER SAGA");
     const data = yield Cookies.get("user");
     console.log(!data);
-    if (!data) return;
+    const curUser = yield select(selectCurrentUser);
+    if (!data) {
+      if (curUser) yield signOut();
+      return;
+    }
     yield put(signInSuccess(JSON.parse(data)));
   } catch (error) {
     yield put(signInFailure(error));

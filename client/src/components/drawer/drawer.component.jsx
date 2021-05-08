@@ -54,8 +54,8 @@ const DrawerChildren = ({ children, ...rest }) => {
       <Divider />
       <List>
         {DrawerData.map((item) => (
-          <Link className={classes.link} to={item.link}>
-            <ListItem button key={item.name}>
+          <Link key={item.name} className={classes.link} to={item.link}>
+            <ListItem button>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.name} />
             </ListItem>
