@@ -43,7 +43,7 @@ class UserController {
         } else {
           const newUser = await user.save();
           console.log(newUser);
-          const token = jwt.sign({ newUser }, "secret", { expiresIn: "1h" });
+          const token = jwt.sign({ newUser }, "secret", { expiresIn: "12h" });
           const {
             _id,
             firstName,
@@ -110,7 +110,7 @@ class UserController {
           gender,
           role,
         };
-        const token = jwt.sign(data, "secret", { expiresIn: "1h" });
+        const token = jwt.sign(data, "secret", { expiresIn: "12h" });
         if (user.password === password) {
           res.status(200).send({ ...data, token });
         } else res.status(400).send({ param: "password", msg: "wrong pass" });
