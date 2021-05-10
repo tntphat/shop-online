@@ -61,6 +61,19 @@ class ProductController {
       res.status(500).send({ msg: 'Server error' });
     }
   }
+
+  async addNewGoods(goods) {
+    try {
+      const goodIds = goods.map(good=>good.product);
+      //await Product.updateMany({_id:{$in: goodIds}},{$inc :{'quantity':goods[_id]}});
+      goodIds.forEach(async(id,idx)=>{
+        await Product.updateOne({_id:id},{$inc :{quantity:goods[idx].quantity}});
+      })
+    } catch (error) {
+      console.error(error.message)
+      res.status(500).send({ msg: 'Server error' });
+    }
+  }
 }
 
 module.exports = new ProductController();
