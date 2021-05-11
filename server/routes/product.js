@@ -4,6 +4,7 @@ const router = express.Router();
 const productController = require("../app/controllers/ProductController");
 
 router.get("/", productController.getProduct);
+router.get("/expired", productController.getExpiredProduct);
 router.post("/add", productController.addProduct);
 router.delete("/del", productController.dltProduct);
 router.put("/edit", productController.editProduct);

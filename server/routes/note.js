@@ -5,6 +5,7 @@ const isAuth = require('../auth/authHelper')
 const NoteController = require('../app/controllers/NoteController')
 
 router.get('/',NoteController.getAll);
+router.get('/total-price',NoteController.getTotalImportPrice);
 router.get('/:id',NoteController.get);
 router.post('/',NoteController.addNote);
 

@@ -9,7 +9,20 @@ class ProductController {
       );
       res.status(200).send(products);
     } catch (error) {
-      console.error(error.message)
+      console.error(error.message);
+      res.status(500).send({ msg: 'Server error' });
+    }
+  }
+
+  //@route GET /products/expired
+  async getExpiredProduct(req, res) {
+    try {
+      const products = await Product.find({ expiry_date: { $lte: Date.now() } }).populate(
+        "sub_category_id category_id"
+      );;
+      res.status(200).send(products);
+    } catch (error) {
+      console.error(error.message);
       res.status(500).send({ msg: 'Server error' });
     }
   }
@@ -30,7 +43,7 @@ class ProductController {
       });
       res.status(200).send(dataSent);
     } catch (error) {
-      console.error(error.message)
+      console.error(error.message);
       res.status(500).send({ msg: 'Server error' });
     }
   }
@@ -43,8 +56,8 @@ class ProductController {
         const del = await Product.deleteOne({ _id: id });
       });
     } catch (error) {
-        console.error(error.message)
-        res.status(500).send({ msg: 'Server error' });
+      console.error(error.message);
+      res.status(500).send({ msg: 'Server error' });
     }
   }
 
@@ -57,20 +70,20 @@ class ProductController {
       await Product.updateOne({ _id: _id }, others);
       res.status(200).send();
     } catch (error) {
-      console.error(error.message)
+      console.error(error.message);
       res.status(500).send({ msg: 'Server error' });
     }
   }
 
   async addNewGoods(goods) {
     try {
-      const goodIds = goods.map(good=>good.product);
+      const goodIds = goods.map(good => good.product);
       //await Product.updateMany({_id:{$in: goodIds}},{$inc :{'quantity':goods[_id]}});
-      goodIds.forEach(async(id,idx)=>{
-        await Product.updateOne({_id:id},{$inc :{quantity:goods[idx].quantity}});
+      goodIds.forEach(async (id, idx) => {
+        await Product.updateOne({ _id: id }, { $inc: { quantity: goods[idx].quantity } });
       })
     } catch (error) {
-      console.error(error.message)
+      console.error(error.message);
       res.status(500).send({ msg: 'Server error' });
     }
   }

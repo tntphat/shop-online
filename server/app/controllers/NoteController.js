@@ -2,8 +2,16 @@ const Note = require('../models/Note');
 const {addNewGoods} = require('./ProductController')
 
 class NoteController {
-    async getTotalImportPrice() {
-
+    //@router GET /note/total-price
+    async getTotalImportPrice(req,res) {
+        try {
+            const total_price = await Note.find().select('total_price');
+            const totalImportPrice = await total_price.reduce((a,b) => (a['total_price'] || 0)+(b['total_price'] || 0),0);
+            res.status(200).send({total:totalImportPrice});
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).send({ msg: 'Server Error' });
+        }
     }
 
     //@router GET /note
