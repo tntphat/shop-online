@@ -36,6 +36,8 @@ const AdminProductAdd = ({
   const classes = useStyles();
   const [curCategory, setCurCategory] = useState(null);
   const onSubmit = (data) => {
+    data.description = JSON.stringify(data.description);
+    console.log(data);
     if (targetRow) editProductStart({ ...data, _id: targetRow._id });
     else addProductStart(data);
     setOpenPopup(false);
@@ -55,6 +57,8 @@ const AdminProductAdd = ({
           fullWidth
           error={errors.name}
         />
+
+        <Control.Slate name="description" control={control} />
 
         <Control.Select
           control={control}

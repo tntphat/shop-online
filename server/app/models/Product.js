@@ -6,6 +6,8 @@ const ProductSchema = new Schema(
     name: { type: String },
     price: { type: Number, default: 0 },
     expiry_date: { type: Date, default: Date.now },
+    quantity: { type: Number, default: 0 },
+    description: { type: String, default: "" },
     category_id: {
       type: Schema.Types.ObjectId,
       ref: "Category",

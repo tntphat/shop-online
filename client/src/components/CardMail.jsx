@@ -3,18 +3,15 @@ import moment from "moment";
 
 import Popup from "./popUp";
 import MailForm from "./Forms/mail-form";
+import SlateRender from "./controls/SlateRender";
 
 import {
-  Box,
-  Hidden,
   Card,
   makeStyles,
   Typography,
   CardContent,
   CardHeader,
   Avatar,
-  IconButton,
-  withStyles,
 } from "@material-ui/core";
 
 // import MoreVertIcon from "@material-ui/icons/MoreVert";
@@ -50,7 +47,7 @@ function CardMail({ curMail }) {
           subheader={moment(curMail.createdAt).format("MMMM Do YYYY")}
         />
         <CardContent>
-          <Typography>{curMail.content}</Typography>
+          <SlateRender content={curMail.content} />
         </CardContent>
       </Card>
 

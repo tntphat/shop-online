@@ -2,6 +2,7 @@ import UserActionTypes from "./user.types";
 
 const INITIAL_STATE = {
   currentUser: null,
+  checking: true,
   employees: [],
   error: null,
 };
@@ -54,6 +55,16 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         employees: [...state.employees, action.payload],
         error: null,
+      };
+    case UserActionTypes.CHECK_USER_SESSION:
+      return {
+        ...state,
+        checking: true,
+      };
+    case UserActionTypes.CHECK_USER_SESSION_DONE:
+      return {
+        ...state,
+        checking: false,
       };
     default:
       return state;

@@ -7,6 +7,9 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
+import moment from "moment";
+import SlateRender from "./controls/SlateRender";
+import { Box } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,6 +29,12 @@ const useStyles = makeStyles((theme) => ({
     display: "-webkit-box",
     boxOrient: "vertical",
     lineClamp: "2",
+    overflow: "hidden",
+  },
+  title: {
+    display: "-webkit-box",
+    boxOrient: "vertical",
+    lineClamp: "1",
     overflow: "hidden",
   },
   active: {
@@ -50,21 +59,22 @@ export default function AlignItemsList({ curMail, mails, setCurMail }) {
               <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
             </ListItemAvatar>
             <ListItemText
-              primary={mail.title}
               secondary={
-                <React.Fragment>
-                  <div className={classes.description}>
-                    <Typography
-                      component="span"
-                      variant="body2"
-                      className={classes.inline}
-                      color="textPrimary"
-                    >
-                      {mail.mail_author.firstName}
-                    </Typography>
-                    {` — ${mail.content}`}
-                  </div>
-                </React.Fragment>
+                <div className={classes.description}>
+                  <Typography
+                    component="span"
+                    variant="body2"
+                    className={classes.inline}
+                    color="textPrimary"
+                  >
+                    {mail.mail_author.firstName}
+                  </Typography>
+                  <Box display="flex" justifyContent="space-between">
+                    <Box className={classes.title}>{mail.title}</Box>
+                    <Box>{moment(mail.createdAt).format("MM/DD/YY")}</Box>
+                  </Box>
+                  <SlateRender notFormat={1} content={mail.content} />
+                </div>
               }
             />
           </ListItem>

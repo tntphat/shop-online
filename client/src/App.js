@@ -13,8 +13,10 @@ import Header from "./components/header/header";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import ThemeContext from "./contexts/theme.context";
 
-import { selectCurrentUser } from "./redux/user/user.selector";
+import { selectCurrentUser, selectChecking } from "./redux/user/user.selector";
 import { checkUserSession } from "./redux/user/user.actions";
+
+import Spinner from "../src/components/Spinner/Spinner";
 
 // const RegisterPage = lazy(() => import("./pages/register/register"));
 const darkTheme = createMuiTheme({
@@ -40,7 +42,7 @@ const lightTheme = createMuiTheme({
     },
   },
 });
-const App = ({ currUser, checkUserSession }) => {
+const App = ({ currUser, checkUserSession, checking }) => {
   useEffect(() => {
     console.log("run Effect Check User S");
     checkUserSession();
@@ -54,43 +56,46 @@ const App = ({ currUser, checkUserSession }) => {
     return { night, setNight };
   }, [night, setNight]);
   const theme = night ? darkTheme : lightTheme;
-  console.log("CURRENT USER IN APP : ", currUser);
-  return (
-    <div>
-      <ThemeProvider theme={theme}>
-        <ThemeContext.Provider value={themeValue}>
-          <Header />
-        </ThemeContext.Provider>
+  console.log("CURRENT USER IN APP : ", currUser, checking);
+  if (checking) return <Spinner />;
+  else
+    return (
+      <div>
+        <ThemeProvider theme={theme}>
+          <ThemeContext.Provider value={themeValue}>
+            <Header />
+          </ThemeContext.Provider>
 
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route
-            exact
-            path="/register"
-            render={() => (currUser ? <Redirect to="/" /> : <RegisterPage />)}
-          />
-          <Route
-            exact
-            path="/sign-in"
-            render={() => (currUser ? <Redirect to="/" /> : <SignInPage />)}
-          />
-          <Route path="/products" component={ProductContainer} />
-          <AdminRoute path="/admin" />
-          <Route
-            exact
-            path="/profiles"
-            render={() =>
-              currUser ? <ProfilePage /> : <Redirect to="/sign-in" />
-            }
-          />
-        </Switch>
-      </ThemeProvider>
-    </div>
-  );
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route
+              exact
+              path="/register"
+              render={() => (currUser ? <Redirect to="/" /> : <RegisterPage />)}
+            />
+            <Route
+              exact
+              path="/sign-in"
+              render={() => (currUser ? <Redirect to="/" /> : <SignInPage />)}
+            />
+            <Route path="/products" component={ProductContainer} />
+            <AdminRoute path="/admin" />
+            <Route
+              exact
+              path="/profiles"
+              render={() =>
+                currUser ? <ProfilePage /> : <Redirect to="/sign-in" />
+              }
+            />
+          </Switch>
+        </ThemeProvider>
+      </div>
+    );
 };
 
 const mapStateToProp = (state) => ({
   currUser: selectCurrentUser(state),
+  checking: selectChecking(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

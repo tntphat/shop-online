@@ -3,6 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { selectProductSpecified } from "../../redux/product/product.selector";
+import SlateRender from "../../components/controls/SlateRender";
 
 const ProductDetail = (props) => {
   const { selectProductSpecified } = props;
@@ -10,6 +11,7 @@ const ProductDetail = (props) => {
   return (
     <>
       <Typography variant="h1">{selectProductSpecified.name}</Typography>
+      <SlateRender content={selectProductSpecified.description} />
     </>
   );
 };
