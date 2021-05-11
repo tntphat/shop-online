@@ -13,6 +13,7 @@ import {
   fetchEmployeesSuccess,
   fetchEmployeesFailure,
   addEmployeeSuccess,
+  checkUserSessionDone,
 } from "./user.actions";
 
 import { selectCurrentUser } from "./user.selector";
@@ -61,10 +62,14 @@ export function* isUserAuthenticated() {
     const curUser = yield select(selectCurrentUser);
     if (!data) {
       if (curUser) yield signOut();
+      yield put(checkUserSessionDone());
       return;
     }
     yield put(signInSuccess(JSON.parse(data)));
+    yield put(checkUserSessionDone());
   } catch (error) {
+    yield put(checkUserSessionDone());
+
     yield put(signInFailure(error));
   }
 }

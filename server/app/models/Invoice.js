@@ -9,14 +9,16 @@ const Schema = mongoose.Schema;
 // - Cancelled
 const InvoiceSchema = new Schema(
   {
-    customer: {type: Schema.Types.ObjectId, ref: 'User'},
-    products: [{
-      product_id: {type: Schema.Types.ObjectId,ref:'Product'},
-      quantity: {type: Number, default: 1}
-    }],
-    status: {type: String, default: 'Pending'},
-    address: {type: String},
-    total_price: {type: Number,default: 0},
+    customer: { type: Schema.Types.ObjectId, ref: "User" },
+    products: [
+      {
+        product_id: { type: Schema.Types.ObjectId, ref: "Product" },
+        quantity: { type: Number, default: 1 },
+      },
+    ],
+    status: { type: String, default: "Pending" },
+    address: { type: String },
+    total_price: { type: Number, default: 0 },
   },
   {
     timestamps: true,

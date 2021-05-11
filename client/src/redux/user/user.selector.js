@@ -7,6 +7,11 @@ export const selectCurrentUser = createSelector(
   (user) => user.currentUser
 );
 
+export const selectChecking = createSelector(
+  [selectUser],
+  (user) => user.checking
+);
+
 export const selectEmployees = createSelector(
   [selectUser],
   (user) => user.employees

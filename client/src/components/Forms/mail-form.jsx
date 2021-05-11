@@ -24,8 +24,9 @@ const MailForm = ({ setOpenPopup, addMailStart, idMail }) => {
   });
   const classes = useStyles();
   const onSubmit = (data) => {
+    data.content = JSON.stringify(data.content);
     addMailStart({ data });
-    console.log(data, idMail);
+    console.log("Mail: ", data);
     setOpenPopup(false);
   };
 
@@ -35,22 +36,15 @@ const MailForm = ({ setOpenPopup, addMailStart, idMail }) => {
         <Typography variant="h6">Add</Typography>
 
         <Control.Input
+          control={control}
           fullWidth
           inputRef={register({ required: true })}
           name="title"
           label="Title"
           error={errors.title}
         />
-        <Control.Input
-          fullWidth
-          inputRef={register({ required: true })}
-          name="content"
-          label="Content"
-          error={errors.content}
-          multiline
-          rows={2}
-          rowsMax={4}
-        />
+
+        <Control.Slate name="content" control={control} />
 
         <Button className={classes.submitBtn} variant="contained" type="submit">
           Submit
