@@ -41,13 +41,13 @@ export function* signUp({ payload }) {
   try {
     console.log("helo from saga SIGN Up ");
     const { notClient, ...others } = payload;
-    others.isNotClient = notClient && 1;
-    const { data } = yield axiosInstance.post("/user/register", others);
+    const path = notClient ? "employee" : "user";
+    const { data } = yield axiosInstance.post(`/${path}/register`, others);
     if (!notClient) {
       yield Cookies.set("user", JSON.stringify(data));
-
       yield put(signUpSuccess(data));
     } else {
+      console.log("emloyee: ", data);
       yield put(addEmployeeSuccess(data));
     }
   } catch (error) {
@@ -86,8 +86,7 @@ export function* signOut() {
 export function* fetchEmployees() {
   try {
     console.log("helo from saga FETCH EMPLOYEES");
-    const { data } = yield axiosInstance.get("/user/employees");
-    console.log("emplyees:", data);
+    const { data } = yield axiosInstance.get("/employee");
     yield put(fetchEmployeesSuccess(data));
   } catch (error) {
     yield put(fetchEmployeesFailure(error));

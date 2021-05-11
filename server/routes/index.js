@@ -5,8 +5,9 @@ const authorityRouter = require("./authority");
 const testRouter = require("./test");
 const categoryRouter = require("./category");
 const subCategoryRouter = require("./subCategory");
-const invoiceRouter = require('./invoice')
-const noteRouter = require('./note');
+const invoiceRouter = require("./invoice");
+const noteRouter = require("./note");
+const employeeRouter = require("./employee");
 
 function route(app) {
   app.use("/user", userRouter);
@@ -18,6 +19,7 @@ function route(app) {
   app.use("/sub-categories", subCategoryRouter);
   app.use("/invoice", invoiceRouter);
   app.use("/note", noteRouter);
+  app.use("/employee", employeeRouter);
 }
 
 module.exports = route;
