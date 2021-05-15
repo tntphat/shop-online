@@ -9,6 +9,7 @@ const MailSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+    reply: { type: String, default: "" },
   },
   {
     timestamps: true,

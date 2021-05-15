@@ -1,40 +1,11 @@
 const User = require("../models/User");
-const jwt = require("jsonwebtoken");
-const Authority = require("../models/Authority");
-
-function toSlug(str) {
-  // Chuyển hết sang chữ thường
-  str = str.toLowerCase();
-
-  // xóa dấu
-  str = str
-    .normalize("NFD") // chuyển chuỗi sang unicode tổ hợp
-    .replace(/[\u0300-\u036f]/g, ""); // xóa các ký tự dấu sau khi tách tổ hợp
-
-  // Thay ký tự đĐ
-  str = str.replace(/[đĐ]/g, "d");
-
-  // Xóa ký tự đặc biệt
-  str = str.replace(/([^0-9a-z-\s])/g, "");
-
-  // Xóa khoảng trắng thay bằng ký tự -
-  str = str.replace(/(\s+)/g, "");
-
-  // Xóa ký tự - liên tiếp
-  str = str.replace(/-+/g, "-");
-
-  // xóa phần dư - ở đầu & cuối
-  str = str.replace(/^-+|-+$/g, "");
-
-  // return
-  return str;
-}
+const jwtConvert = require("../../auth/jwtConvert");
 
 class UserController {
   //@route POST /user/register
   register = async (req, res) => {
     try {
-      // console.log(req.body);
+      console.log(req.body);
       const user = new User(req.body);
       const { email } = user;
       const checkUser = await User.findOne({ email });
@@ -42,24 +13,10 @@ class UserController {
         res.status(401).send({ param: "email", msg: "used_email" });
       } else {
         const newUser = await user.save();
-        console.log(newUser);
-        const token = jwt.sign({ newUser }, "secret", { expiresIn: "12h" });
-        const { _id, firstName, lastName, email, username, gender, role } =
-          user;
-        console.log(token);
-        res.status(200).send({
-          _id,
-          firstName,
-          lastName,
-          email,
-          username,
-          gender,
-          role,
-          token,
-        });
+        const data = jwtConvert(newUser);
+        res.status(200).send(data);
       }
     } catch (e) {
-      console.log("hereeeeeeeeeeeeeee", e);
       res.status(400).send(e);
     }
   };
@@ -69,20 +26,9 @@ class UserController {
       const { email, password } = req.body;
       const user = await User.findOne({ email });
       if (user) {
-        const { _id, firstName, lastName, email, username, gender, role } =
-          user;
-        const data = {
-          _id,
-          firstName,
-          lastName,
-          email,
-          username,
-          gender,
-          role,
-        };
-        const token = jwt.sign(data, "secret", { expiresIn: "12h" });
         if (user.password === password) {
-          res.status(200).send({ ...data, token });
+          const data = jwtConvert(user);
+          res.status(200).send(data);
         } else res.status(400).send({ param: "password", msg: "wrong pass" });
       } else res.status(400).send({ param: "email", msg: "not existed email" });
     } catch (error) {
@@ -90,6 +36,18 @@ class UserController {
       res.status(500).send({ msg: "Server error" });
     }
   };
+
+  async editUser(req, res) {
+    try {
+      const user = await User.findByIdAndUpdate(req.user._id, req.body, {
+        new: true,
+      });
+      const data = jwtConvert(user);
+      res.status(200).send(data);
+    } catch (e) {
+      res.status(400).send(e);
+    }
+  }
 
   async getEmployees(req, res) {
     try {

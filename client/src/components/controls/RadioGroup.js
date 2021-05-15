@@ -11,14 +11,15 @@ import ErrorMessage from "./errMsg";
 import { Controller } from "react-hook-form";
 
 export default function RadioGroup(props) {
-  const { name, label, control, error, onChange, items, ...others } = props;
+  const { defVal, name, label, control, error, onChange, items, ...others } =
+    props;
 
   return (
     <>
       <InputLabel>{label}</InputLabel>
       <Controller
         name={name}
-        defaultValue=""
+        defaultValue={defVal || ""}
         control={control}
         as={
           <MuiRadioGroup {...others} row onChange={onChange}>
