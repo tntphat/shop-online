@@ -16,15 +16,40 @@ class MailController {
     }
   }
 
+  async getUserMail(req, res) {
+    try {
+      const mails = await Mail.find({ mail_author: req.user._id }).populate(
+        "mail_author"
+      );
+      res.status(200).send(mails);
+    } catch (e) {
+      res.status(400).send(e);
+    }
+  }
+
+  async repMail(req, res) {
+    try {
+      const mail = await Mail.findOneAndUpdate(
+        { _id: req.body.idMail },
+        { reply: req.body.content },
+        { new: true }
+      );
+      console.log(mail);
+      res.status(200).send(mail);
+    } catch (e) {
+      res.status(400).send(e);
+    }
+  }
+
   //@route GET /mails/add
   async addMail(req, res) {
     try {
+      // const data = { ...req.body, mail_author: req.user._id };
       const data = { ...req.body, mail_author: req.user._id };
-      console.log(data);
       const mail = new Mail(data);
       const newMail = await mail.save();
 
-      const user = await User.updateOne(
+      await User.updateOne(
         { _id: req.user._id },
         { $push: { sent_mails: { mail_id: newMail._id } } }
       );

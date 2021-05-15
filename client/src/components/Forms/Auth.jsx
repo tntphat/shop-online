@@ -53,6 +53,21 @@ const Form = ({ type, signInStart, signUpStart, errorSignIn }) => {
             label="Last Name:"
             error={errors.lastName}
           />
+          <Control.Input
+            fullWidth
+            inputRef={register({ required: true })}
+            name="phone"
+            type="number"
+            label="Phone Number"
+            error={errors.phone}
+          />
+          <Control.Input
+            fullWidth
+            inputRef={register({ required: true })}
+            name="address"
+            label="Address"
+            error={errors.address}
+          />
           <Control.RadioGroup
             control={control}
             name="gender"

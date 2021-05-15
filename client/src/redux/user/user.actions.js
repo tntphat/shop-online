@@ -15,6 +15,21 @@ export const signInFailure = (error) => ({
   payload: error,
 });
 
+export const editUserStart = (user) => ({
+  type: UserActionTypes.EDIT_USER_START,
+  payload: user,
+});
+
+export const editUserSuccess = (user) => ({
+  type: UserActionTypes.EDIT_USER_SUCCESS,
+  payload: user,
+});
+
+export const editUserFailure = (error) => ({
+  type: UserActionTypes.EDIT_USER_FAILURE,
+  payload: error,
+});
+
 export const checkUserSession = () => ({
   type: UserActionTypes.CHECK_USER_SESSION,
 });

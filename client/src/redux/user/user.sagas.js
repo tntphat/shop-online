@@ -6,6 +6,8 @@ import UserActionTypes from "./user.types";
 import {
   signInSuccess,
   signInFailure,
+  editUserSuccess,
+  editUserFailure,
   signOutSuccess,
   signOutFailure,
   signUpSuccess,
@@ -42,6 +44,7 @@ export function* signUp({ payload }) {
     console.log("helo from saga SIGN Up ");
     const { notClient, ...others } = payload;
     const path = notClient ? "employee" : "user";
+    console.log(path);
     const { data } = yield axiosInstance.post(`/${path}/register`, others);
     if (!notClient) {
       yield Cookies.set("user", JSON.stringify(data));
@@ -52,6 +55,33 @@ export function* signUp({ payload }) {
     }
   } catch (error) {
     yield put(signUpFailure(error.response.data));
+  }
+}
+
+export function* editUser({ payload }) {
+  try {
+    console.log("helo from saga EDIT USER ");
+    const { notClient, ...others } = payload;
+    const path = notClient ? "employee" : "user";
+    console.log(path, payload);
+    const curUser = yield select(selectCurrentUser);
+
+    const { data } = yield axiosInstance.put(`/${path}/edit`, others, {
+      headers: {
+        Authorization: "Bearer " + curUser.token,
+      },
+    });
+    console.log(data);
+    if (!notClient) {
+      yield Cookies.set("user", JSON.stringify(data));
+      yield put(editUserSuccess(data));
+      // history.push("/");
+    } else {
+      // console.log("emloyee: ", data);
+      // yield put(addEmployeeSuccess(data));
+    }
+  } catch (error) {
+    yield put(editUserFailure(error.response.data));
   }
 }
 
@@ -116,6 +146,10 @@ export function* onSignInStart() {
   yield takeLatest(UserActionTypes.SIGN_IN_START, signIn);
 }
 
+export function* onEditUserStart() {
+  yield takeLatest(UserActionTypes.EDIT_USER_START, editUser);
+}
+
 export function* onSignUpStart() {
   yield takeLatest(UserActionTypes.SIGN_UP_START, signUp);
 }
@@ -139,6 +173,7 @@ export function* onTestHeader() {
 export function* userSagas() {
   yield all([
     call(onSignInStart),
+    call(onEditUserStart),
     call(onSignUpStart),
     call(onCheckUserSession),
     call(onSignOutStart),

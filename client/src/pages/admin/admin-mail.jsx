@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Box, Hidden, makeStyles, Typography } from "@material-ui/core";
+import { Box, Hidden, makeStyles } from "@material-ui/core";
 
 import { fetchMailsStart } from "../../redux/mails/mail.actions";
 
@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 
 import BoxMails from "../../components/box-mails";
 import CardMail from "../../components/CardMail";
+import MailGroup from "../../components/MailGroup/MailGroup";
 import { useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
@@ -36,25 +37,11 @@ const useStyles = makeStyles((theme) => ({
 function AdminMail({ fetchMailsStart, selectMail }) {
   const classes = useStyles();
 
-  const [curMail, setCurMail] = useState(selectMail[0]);
   console.log("sssssss", selectMail);
   useEffect(() => {
     fetchMailsStart();
   }, [fetchMailsStart]);
-  return (
-    <Box className={classes.root} display="flex">
-      <Hidden xsDown>
-        <BoxMails
-          curMail={curMail}
-          mails={selectMail}
-          setCurMail={setCurMail}
-        />
-      </Hidden>
-      <Box className={classes.cardMail} display="flex" flexDirection="column">
-        <CardMail curMail={curMail} />
-      </Box>
-    </Box>
-  );
+  return <MailGroup selectMail={selectMail} />;
 }
 
 const mapStateToProp = (state) => ({

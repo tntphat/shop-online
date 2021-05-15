@@ -92,10 +92,7 @@ const HideAppBar = ({ currentUser, signOutStart, testHeader, location }) => {
         <> </>
       )}
 
-      <Box
-        className={`${classes.navBar}  ${reach ? classes.navBar2 : ""}`}
-        // style={!reach ? { marginTop: 0, background: "black" } : {}}
-      >
+      <Box className={`${classes.navBar}  ${reach ? classes.navBar2 : ""}`}>
         <Box
           mx={4}
           display="flex"

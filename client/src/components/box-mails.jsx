@@ -40,11 +40,13 @@ const useStyles = makeStyles((theme) => ({
   active: {
     backgroundColor: "#84817a",
   },
+  repped: {
+    backgroundColor: "#3867d6",
+  },
 }));
 
 export default function AlignItemsList({ curMail, mails, setCurMail }) {
   const classes = useStyles();
-  console.log("This IS MAILSSSS", mails);
   return (
     <List className={classes.root}>
       {mails.map((mail) => (
@@ -53,7 +55,10 @@ export default function AlignItemsList({ curMail, mails, setCurMail }) {
             button
             alignItems="flex-start"
             onClick={() => setCurMail(mail)}
-            className={curMail && mail._id === curMail._id && classes.active}
+            className={
+              (curMail && mail._id === curMail._id && classes.active) ||
+              (mail.reply && classes.repped)
+            }
           >
             <ListItemAvatar>
               <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
