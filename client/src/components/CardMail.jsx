@@ -12,6 +12,7 @@ import {
   CardContent,
   CardHeader,
   Avatar,
+  Divider,
 } from "@material-ui/core";
 
 // import MoreVertIcon from "@material-ui/icons/MoreVert";
@@ -26,26 +27,40 @@ const useStyles = makeStyles((theme) => ({
     overflow: "auto",
   },
 }));
-function CardMail({ curMail }) {
+function CardMail({ curMail, canNotReply }) {
   const classes = useStyles();
   const [openPopup, setOpenPopup] = useState(false);
+  const Action =
+    !curMail.reply && !canNotReply ? (
+      <MenuMoovert setOpenPopup={setOpenPopup} />
+    ) : (
+      <> </>
+    );
   return curMail ? (
     <>
       <Typography variant="overline">{curMail.title}</Typography>
       <Card className={classes.root}>
+        {curMail.reply ? (
+          <>
+            <CardHeader
+              avatar={<Avatar aria-label="recipe">A</Avatar>}
+              title={"Admin"}
+            />
+            <CardContent>
+              <SlateRender content={curMail.reply} />
+            </CardContent>
+            <Divider light />
+          </>
+        ) : (
+          <></>
+        )}
         <CardHeader
-          avatar={<Avatar aria-label="recipe">R</Avatar>}
-          action={
-            <>
-              <MenuMoovert setOpenPopup={setOpenPopup} />
-              {/* <IconButton aria-label="settings">
-                <MoreVertIcon />
-              </IconButton> */}
-            </>
-          }
+          avatar={<Avatar aria-label="recipe">C</Avatar>}
           title={`${curMail.mail_author.firstName} ${curMail.mail_author.lastName}`}
           subheader={moment(curMail.createdAt).format("MMMM Do YYYY")}
+          action={Action}
         />
+
         <CardContent>
           <SlateRender content={curMail.content} />
         </CardContent>

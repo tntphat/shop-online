@@ -1,21 +1,12 @@
 import React from "react";
+import { useLocation, withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import Collapse from "@material-ui/core/Collapse";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import DraftsIcon from "@material-ui/icons/Drafts";
-import SendIcon from "@material-ui/icons/Send";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
-import StarBorder from "@material-ui/icons/StarBorder";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
-import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import { withStyles } from "@material-ui/core";
@@ -62,11 +53,38 @@ const useStyles = makeStyles((theme) => ({
   text: {
     paddingLeft: theme.spacing(4),
   },
+  link: {
+    color: theme.palette.text.main,
+    textDecoration: "none",
+    cursor: "pointer",
+    "&:hover": {
+      color: "#353b48",
+    },
+  },
 }));
 
-function NestedList({ categories }) {
-  const classes = useStyles();
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 
+function NestedList(props) {
+  const classes = useStyles();
+  let query = useQuery();
+  const { categories, history, match } = props;
+  const handleCLick = (e) => {
+    e.stopPropagation();
+  };
+  const clearQuery = (e) => {
+    e.stopPropagation();
+    query.delete("sub");
+  };
+  const handleNavigate = (field, value, e) => {
+    e.stopPropagation();
+    query.set(field, value);
+    history.replace({
+      search: query.toString(),
+    });
+  };
   return (
     <List
       component="nav"
@@ -86,11 +104,30 @@ function NestedList({ categories }) {
         <ListItem className={classes.lisItem} key={category._id}>
           <Accordion className={classes.accordion}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              {category.name}
+              {/* <Link
+                className={classes.link}
+                to={`/products/filter/${category.slug}?kw=helo`}
+                onClick={(e) => handleCLick(e)}
+              > */}
+              <span
+                className={classes.link}
+                onClick={(e) => {
+                  clearQuery(e);
+                  handleNavigate("category", category.slug, e);
+                }}
+              >
+                {category.name}
+              </span>
+              {/* // </Link> */}
             </AccordionSummary>
             {category.sub_categories.map((sub_category) => (
               <AccordionDetails key={sub_category._id}>
-                {sub_category.name}
+                <span
+                  className={classes.link}
+                  onClick={(e) => handleNavigate("sub", sub_category.slug, e)}
+                >
+                  {sub_category.name}
+                </span>
               </AccordionDetails>
             ))}
           </Accordion>
@@ -100,4 +137,4 @@ function NestedList({ categories }) {
   );
 }
 
-export default withStyles(styles)(NestedList);
+export default withStyles(styles)(withRouter(NestedList));

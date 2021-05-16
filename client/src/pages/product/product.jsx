@@ -13,7 +13,9 @@ import { useEffect } from "react";
 // import ProductsPage from "../products/products";
 // import ProductDetail from "../product-detail/product-detail";
 import Spinner from "../../components/Spinner/Spinner";
-const ProductsPage = lazy(() => import("../products/products"));
+const ProductsPageContainer = lazy(() =>
+  import("../products/products.container")
+);
 const ProductDetailContainer = lazy(() =>
   import("../product-detail/product-detail.container")
 );
@@ -43,30 +45,24 @@ const ProductContainer = ({
   return (
     <Paper className={classes.paper}>
       <Suspense fallback={<Spinner />}>
-        <Route exact path={`${match.path}`} component={ProductsPage} />
+        <Route exact path={`${match.path}`} component={ProductsPageContainer} />
+        {/* <Route
+          exact
+          path={`${match.path}/filter/:categoryId`}
+          component={ProductsPageContainer}
+        />
         <Route
+          exact
+          path={`${match.path}/filter/:categoryId/:subCategoryId`}
+          component={ProductsPageContainer}
+        /> */}
+        <Route
+          exact
           path={`${match.path}/:productId`}
           component={ProductDetailContainer}
         />
+        {/* <Route exact path={`topic`} component={ProductsPageContainer} /> */}
       </Suspense>
-      {/* <Grid container>
-        <Grid container item xs={false} sm={3}>
-          <Grid item sm={3} />
-          <Grid item sm={9}>
-            <ListCategory categories={selectCategories} />
-          </Grid>
-        </Grid>
-        <Grid item xs={12} sm={8} style={{ marginTop: "16px" }}>
-          <Grid container spacing={1}>
-            {selectProducts.map((product, index) => (
-              <Grid item xs={12} sm={6} md={3}>
-                <Card key={index} product={product} />
-              </Grid>
-            ))}
-          </Grid>
-        </Grid>
-        <Grid item xs={false} sm={1} />
-      </Grid> */}
     </Paper>
   );
 };

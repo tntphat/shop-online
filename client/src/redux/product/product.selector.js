@@ -19,13 +19,34 @@ export const selectIsProductsLoaded = createSelector(
 
 export const selectProductSpecified = (productUrlParam) =>
   createSelector([selectProducts], (productsData) => {
-    console.log("check selector: ", productsData, productUrlParam);
     let b = null;
     productsData.forEach((product) => {
-      console.log(product._id === productUrlParam);
       if (product._id === productUrlParam) b = product;
     });
     return b;
+  });
+
+export const selectProductsByFiler = (categoryId, subCategoryId) =>
+  createSelector([selectProducts], (productsData) => {
+    console.log("PARAM: ", categoryId, productsData);
+    return (
+      (subCategoryId &&
+        productsData.filter(
+          (product) => product.sub_category_id.slug === subCategoryId
+        )) ||
+      (categoryId &&
+        productsData.filter(
+          (product) => product.category_id.slug === categoryId
+        )) ||
+      productsData
+    );
+    // const data = !productUrlParam
+    //   ? productsData
+    //   : productsData.filter(
+    //       (product) => product.category_id._id === productUrlParam
+    //     );
+    // console.log("data: ", data);
+    // return data;
   });
 
 export const selectErrors = createSelector(

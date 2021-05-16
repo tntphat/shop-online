@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { Typography, makeStyles } from "@material-ui/core";
 // import Form from "../../components/form/form.component";
 import Button from "@material-ui/core/Button";
-import { addMailStart } from "../../redux/mails/mail.actions";
+import { addMailStart, repMailStart } from "../../redux/mails/mail.actions";
 import Control from "../controls/Control";
 
 const useStyles = makeStyles((theme) => ({
@@ -18,14 +18,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MailForm = ({ setOpenPopup, addMailStart, idMail }) => {
+const MailForm = ({ setOpenPopup, addMailStart, repMailStart, idMail }) => {
   const { register, handleSubmit, errors, setError, control } = useForm({
     mode: "all",
   });
   const classes = useStyles();
   const onSubmit = (data) => {
     data.content = JSON.stringify(data.content);
-    addMailStart({ data });
+
+    idMail ? repMailStart({ ...data, idMail }) : addMailStart(data);
+
     console.log("Mail: ", data);
     setOpenPopup(false);
   };
@@ -33,16 +35,18 @@ const MailForm = ({ setOpenPopup, addMailStart, idMail }) => {
   return (
     <>
       <form className={classes.formWidth} onSubmit={handleSubmit(onSubmit)}>
-        <Typography variant="h6">Add</Typography>
-
-        <Control.Input
-          control={control}
-          fullWidth
-          inputRef={register({ required: true })}
-          name="title"
-          label="Title"
-          error={errors.title}
-        />
+        {idMail ? (
+          <></>
+        ) : (
+          <Control.Input
+            control={control}
+            fullWidth
+            inputRef={register({ required: true })}
+            name="title"
+            label="Title"
+            error={errors.title}
+          />
+        )}
 
         <Control.Slate name="content" control={control} />
 
@@ -56,6 +60,7 @@ const MailForm = ({ setOpenPopup, addMailStart, idMail }) => {
 
 const mapDispatchToProp = (dispatch) => ({
   addMailStart: (data) => dispatch(addMailStart(data)),
+  repMailStart: (data) => dispatch(repMailStart(data)),
 });
 
 export default connect(null, mapDispatchToProp)(MailForm);
