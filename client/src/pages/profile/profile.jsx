@@ -3,21 +3,17 @@ import { makeStyles } from "@material-ui/core/styles";
 import { IconButton, Paper, Typography, withStyles } from "@material-ui/core";
 import { connect } from "react-redux";
 import { selectCurrentUser } from "../../redux/user/user.selector";
-<<<<<<< HEAD
 
 import MailIcon from "@material-ui/icons/Mail";
 import Button from '@material-ui/core/Button'
 
-=======
 import TabsBar from "../../components/Tabs/Tabs";
 import { fetchUserMailsStart } from "../../redux/mails/mail.actions";
 import { selectMail } from "../../redux/mails/mail.selector";
 import { useEffect } from "react";
 import MailGroup from "../../components/MailGroup/MailGroup";
 import EditProfile from "../../components/Forms/EditProfile";
->>>>>>> f6a02615cc9d895cb223b4f8231a9e48574c7e65
 import Popup from "../../components/popUp";
-import MailIcon from "@material-ui/icons/Mail";
 import MailForm from "../../components/Forms/mail-form";
 
 const useStyles = makeStyles((theme) => ({
