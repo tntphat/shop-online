@@ -3,7 +3,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import { IconButton, Paper, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
 import { selectCurrentUser } from "../../redux/user/user.selector";
+
 import MailIcon from "@material-ui/icons/Mail";
+import Button from '@material-ui/core/Button'
+
 import Popup from "../../components/popUp";
 import MailForm from "../../components/Forms/mail-form";
 
@@ -31,6 +34,7 @@ const ProfilePage = ({ currentUser }) => {
       <Popup openPopup={openPopup} setOpenPopup={setOpenPopup} title="Mail">
         <MailForm setOpenPopup={setOpenPopup} />
       </Popup>
+        
     </Paper>
   );
 };

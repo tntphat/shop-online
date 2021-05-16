@@ -40,7 +40,7 @@ export default function SimpleCard({ product }) {
     <Card variant="outlined">
       <CardMedia
         className={classes.img}
-        image="https://cdn.pixabay.com/photo/2021/02/21/07/42/easter-6035549__480.jpg"
+        image={product.imgs}
         title="Paella dish"
       />
       <CardContent className={classes.cardContent}>

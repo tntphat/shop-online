@@ -59,7 +59,7 @@ const AdminCategoryAdd = ({
           defaultValue={defaultName}
           inputRef={register({ required: true })}
           name="name"
-          label="Name"
+          label="Name" 
           fullWidth
           error={errors.name}
         />

@@ -14,6 +14,8 @@ app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use('/public', express.static('public'));
+
 const corsOption = {
   origin: true,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",

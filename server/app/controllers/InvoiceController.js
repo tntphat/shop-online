@@ -1,4 +1,5 @@
 const Invoice = require('../models/Invoice');
+const {appendInvoice} = require('./UserController');
 
 const statuses = ['Pending', 'Activated', 'Sending', 'Success', 'Cancelled']
 
@@ -67,7 +68,7 @@ class InvoiceController {
         try {
             const newInvoice = new Invoice(req.body);
             //@note check if customer has paid yet
-
+            appendInvoice(req.user,newInvoice.id);
             const invoice = await newInvoice.save();
             res.status(200).send(invoice);
         } catch (error) {

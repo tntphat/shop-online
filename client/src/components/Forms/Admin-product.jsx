@@ -35,8 +35,16 @@ const AdminProductAdd = ({
   });
   const classes = useStyles();
   const [curCategory, setCurCategory] = useState(null);
+  const [selectedFile,setSelectedFile] = useState(null);
+
+  const onFileChanged = (event) => {
+    setSelectedFile(event.target.files[0]);
+    console.log(event.target.files[0]);
+  }
+
   const onSubmit = (data) => {
     data.description = JSON.stringify(data.description);
+    data= {...data,file: selectedFile};
     console.log(data);
     if (targetRow) editProductStart({ ...data, _id: targetRow._id });
     else addProductStart(data);
@@ -90,6 +98,15 @@ const AdminProductAdd = ({
         ) : (
           <></>
         )}
+
+        <Control.Input
+          fullWidth
+          name="file"
+          label="Image"
+          type="file"
+          onChange={onFileChanged}
+          error={errors.file}
+        />
 
         <Control.Input
           fullWidth

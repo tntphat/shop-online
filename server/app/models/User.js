@@ -9,6 +9,9 @@ const UserSchema = new Schema(
     email: { type: String, default: "dtkl@gmail.com" },
     password: { type: String, default: "admin" },
     isNotClient: { type: Number, default: 0 },
+    invoices: [{
+      invoice_id: { type: Schema.Types.ObjectId, ref: "Invoice" }
+    }],
     sent_mails: [
       {
         mail_id: { type: Schema.Types.ObjectId, ref: "Mail" },

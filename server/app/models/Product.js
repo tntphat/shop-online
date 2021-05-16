@@ -9,6 +9,7 @@ const ProductSchema = new Schema(
     expiry_date: { type: Date, default: Date.now },
     quantity: { type: Number, default: 0 },
     description: { type: String, default: "" },
+    imgs: {type: String,default: 'http://atc-home.com/images/joomlart/demo/default.jpg'},
     category_id: {
       type: Schema.Types.ObjectId,
       ref: "Category",

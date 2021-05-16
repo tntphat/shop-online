@@ -1,4 +1,5 @@
 const Product = require("../models/Product");
+const multer = require('multer')
 
 class ProductController {
   //@route GET /products/
@@ -29,19 +30,30 @@ class ProductController {
 
   //@route POST /products/add
   async addProduct(req, res) {
-    try {
-      const data = req.body;
-      const product = new Product(data);
-      const { name } = product;
-      const checkProduct = await Product.findOne({ name });
-      if (checkProduct) {
-        return res.status(401).send({ param: "name", msg: "used_name" });
+    const storage = multer.diskStorage({
+      destination: function (req, file, cb) {
+          cb(null, './public/images/');
+      },
+      filename: function (req, file, cb) {
+          cb(null, file.originalname);
       }
-      const newProduct = await product.save();
-      const dataSent = await Product.populate(newProduct, {
-        path: "category_id sub_category_id",
-      });
-      res.status(200).send(dataSent);
+  });
+  const upload = multer({ storage });
+    try {
+      upload.single('file', 1)(req, res, async function (err) {
+        const data = req.body;
+        const product = new Product({...data,imgs: 'http://localhost:5000/public/images/'+req.file.originalname});
+        const { name } = product;
+        const checkProduct = await Product.findOne({ name });
+        if (checkProduct) {
+          return res.status(401).send({ param: "name", msg: "used_name" });
+        }
+        const newProduct = await product.save();
+        const dataSent = await Product.populate(newProduct, {
+          path: "category_id sub_category_id",
+        });
+        res.status(200).send(dataSent);
+      })      
     } catch (error) {
       console.error(error.message);
       res.status(500).send({ msg: 'Server error' });

@@ -106,6 +106,17 @@ class UserController {
       res.status(400).send(e);
     }
   }
+
+  async appendInvoice(user_id,invoice_id) {
+    try {
+      const user = await User.findById(user_id);
+      user.invoices.push(invoice_id);
+      await user.save();
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).send({ msg: "Server error" });
+    }
+  }
 }
 
 module.exports = new UserController();
