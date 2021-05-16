@@ -65,6 +65,7 @@ const AdminProductAdd = ({
           name="category_id"
           label="Category"
           error={errors.category_id}
+          rules={{ required: true }}
           options={categories.map((category) => {
             return {
               id: category._id,
@@ -78,8 +79,10 @@ const AdminProductAdd = ({
           <Control.Select
             control={control}
             name="sub_category_id"
+            inputRef={register({ required: true })}
             label="Sub Category"
             error={errors.sub_category_id}
+            rules={{ required: true }}
             options={curCategory.sub_categories.map((sub_category) => {
               return {
                 id: sub_category._id,

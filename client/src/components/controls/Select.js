@@ -15,6 +15,7 @@ export default function Select({
   label,
   name,
   onChange,
+  rules,
   ...others
 }) {
   return (
@@ -22,6 +23,8 @@ export default function Select({
       <InputLabel>{label}</InputLabel>
       <Controller
         defaultValue=""
+        // {...others}
+        rules={rules}
         as={
           <MuiSelect>
             <MenuItem
@@ -48,33 +51,6 @@ export default function Select({
         name={name}
         control={control}
       />
-      {/* <Controller
-              as={
-                <MuiSelect>
-                  <MenuItem value="">None</MenuItem>
-                  <MenuItem value="simple">
-                    Simple Words only (3-5 characters)
-                  </MenuItem>
-                  <MenuItem value="medium">
-                    Medium Words only (5-8 characters)
-                  </MenuItem>
-                  <MenuItem value="complex">
-                    Complex Words only (8+ characters)
-                  </MenuItem>
-                  <MenuItem value="allwords">
-                    Randomly Select Words all across
-                  </MenuItem>
-                </MuiSelect>
-              }
-              name="wordlevel"
-              rules={{ required: "this is required" }}
-              control={control}
-              defaultValue=""
-              onChange={d => {
-                console.log('hello')
-                return d[0].target.value;
-              }}
-            /> */}
       <ErrorMessage error={error} params={name} />
     </FormControl>
   );
