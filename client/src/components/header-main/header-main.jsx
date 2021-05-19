@@ -2,8 +2,10 @@ import React, { useContext, useState, useRef, useEffect } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import { makeStyles, useTheme } from "@material-ui/styles";
+import { makeStyles, fade } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
+import InputBase from "@material-ui/core/InputBase";
+import SearchIcon from "@material-ui/icons/Search";
 import Hidden from "@material-ui/core/Hidden";
 import Cookies from "js-cookie";
 import { withRouter } from "react-router-dom";
@@ -58,12 +60,59 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "red",
     position: "absolute",
   },
+  search: {
+    position: "relative",
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    "&:hover": {
+      backgroundColor: fade(theme.palette.common.white, 0.25),
+    },
+    marginLeft: 0,
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing(1),
+      width: "auto",
+    },
+  },
+  searchIcon: {
+    cursor: "default",
+    padding: theme.spacing(0, 2),
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  inputRoot: {
+    color: "inherit",
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "0",
+      "&:focus": {
+        width: "20ch",
+      },
+    },
+  },
 }));
 console.log("RE RENDERRRR");
 
-const HideAppBar = ({ currentUser, signOutStart, testHeader, location }) => {
+const HideAppBar = ({
+  currentUser,
+  signOutStart,
+  testHeader,
+  location,
+  history,
+}) => {
   const [reach, setReach] = useState(true);
   const classes = useStyles();
+  const [searchValue, setSearchValue] = useState("");
   const { night, setNight } = useContext(ThemeContext);
   const switchTheme = () => {
     setNight(!night);
@@ -83,11 +132,7 @@ const HideAppBar = ({ currentUser, signOutStart, testHeader, location }) => {
   return (
     <>
       {location.pathname === "/" ? (
-        <Box
-          ref={test}
-          // ref={`${location.pathname !== "/" ? test : ""}`}
-          className={classes.vl}
-        />
+        <Box ref={test} className={classes.vl} />
       ) : (
         <> </>
       )}
@@ -111,6 +156,32 @@ const HideAppBar = ({ currentUser, signOutStart, testHeader, location }) => {
               <i className="fas fa-home"></i>
             </Link>
           </IconButton>
+          <Box>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                console.log(searchValue);
+                history.push(`/products?kw=${searchValue}`);
+                setSearchValue("");
+              }}
+            >
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
+                </div>
+                <InputBase
+                  placeholder="Search…"
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                  inputProps={{ "aria-label": "search" }}
+                />
+              </div>
+            </form>
+          </Box>
 
           <Hidden xsDown>
             {!currentUser ? (

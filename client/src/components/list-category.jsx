@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "none",
     cursor: "pointer",
     "&:hover": {
-      color: "#353b48",
+      color: theme.palette.navBar.main,
     },
   },
 }));

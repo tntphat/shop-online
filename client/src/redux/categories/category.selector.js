@@ -7,6 +7,15 @@ export const selectCategories = createSelector(
   (category) => category.categories
 );
 
+export const selectNameCategoryBySlug = (slug) =>
+  createSelector([selectCategories], (categories) => {
+    let name = "";
+    categories.forEach((category) => {
+      if (category.slug === slug) name = category.name;
+    });
+    return name;
+  });
+
 export const selectErrors = createSelector(
   [selectCategory],
   (category) => category.error

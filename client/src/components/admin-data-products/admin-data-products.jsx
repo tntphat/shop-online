@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { DataGrid } from "@material-ui/data-grid";
 import Button from "@material-ui/core/Button";
-import moment from "moment";
+import { formatDateByString } from "../../helpers/date-time";
 import { delProductStart } from "../../redux/product/product.actions";
 import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -135,10 +135,9 @@ const DataTable = ({ data, categories, delProductStart }) => {
 
   const newRows = rows.map((row, index) => {
     const { _id, createdAt, ...others } = row;
-    const fomatted_date = moment(createdAt).format("YYYY-MM-DD");
     const newRow = {
       id: index,
-      createdAt: fomatted_date,
+      createdAt: formatDateByString(createdAt, "YYYY-MM-DD"),
       _id,
       ...others,
     };

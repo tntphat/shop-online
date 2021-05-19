@@ -18,18 +18,16 @@ const axiosInstance = axios.create({
   baseURL: "http://localhost:5000",
 });
 
-export function* addProduct({payload}) {
+export function* addProduct({ payload }) {
   try {
     console.log("helo from saga");
-    console.log(payload.file)
+    console.log(payload.file);
     const fd = new FormData();
-    fd.append('name',payload.name);
-    fd.append('description',payload.description);
-    fd.append('price',payload.price);
-    fd.append('expiry_date',payload.expiry_date);
-    fd.append('file',payload.file);
+    for (const field in payload) {
+      fd.append(field, payload[field]);
+    }
     const { data } = yield axiosInstance.post("/products/add", fd);
-    console.log('data:',data);
+    console.log("data:", data);
     yield put(addProductSuccess(data));
   } catch (error) {
     yield put(addProductFailure(error.response.data));
