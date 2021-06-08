@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid } from "@material-ui/core";
+import { Grid, Hidden } from "@material-ui/core";
 import Card from "../../components/card/card.component";
 
 import { useLocation, useHistory } from "react-router-dom";
@@ -12,6 +12,8 @@ import { selectCategories } from "../../redux/categories/category.selector";
 import ListCategory from "../../components/list-category";
 import FilterBar from "../../components/filter-bar/FilterBar";
 
+import Notification from "../../components/Notification";
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     maxWidth: "100%",
@@ -22,19 +24,17 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-// const findMax = (products) => {
-//   let max = 0;
-//   products.forEach((product) => {
-//     max = (product.price > max && product.price) || max;
-//   });
-//   return max;
-// };
-
 const ProductsPage = ({ selectProductsByFiler, selectCategories }) => {
   let query = useQuery();
   let history = useHistory();
   const classes = useStyles();
   const first = useRef(0);
+
+  const [notify, setNotify] = useState({
+    isOpen: false,
+    message: "",
+    type: "",
+  });
 
   const { products, max } = selectProductsByFiler(
     query.get("category"),
@@ -58,24 +58,27 @@ const ProductsPage = ({ selectProductsByFiler, selectCategories }) => {
 
   return (
     <Grid container className={classes.paper} spacing={1}>
-      <Grid container item xs={false} sm={3}>
-        <Grid item sm={3} />
-        <Grid item sm={9}>
+      <Grid container item xs={12} sm={3}>
+        <Grid item md={3} sm={0} />
+        <Grid item md={9} xs={12}>
           <ListCategory categories={selectCategories} />
         </Grid>
       </Grid>
       <Grid item xs={12} sm={8} style={{ marginTop: "16px" }}>
+        {/* <Hidden xsDown> */}
         <FilterBar max={max} count={products.length} />
+        {/* </Hidden> */}
 
         <Grid container spacing={1}>
           {products.map((product, index) => (
             <Grid key={index} item xs={12} sm={6} md={3}>
-              <Card product={product} />
+              <Card product={product} setNotify={setNotify} />
             </Grid>
           ))}
         </Grid>
       </Grid>
       <Grid item xs={false} sm={1} />
+      <Notification notify={notify} setNotify={setNotify} />
     </Grid>
   );
 };

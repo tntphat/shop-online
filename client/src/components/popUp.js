@@ -31,9 +31,7 @@ export default function PopUp(props) {
     >
       <DialogTitle>
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Typography variant="h5" component="div">
-            {title}
-          </Typography>
+          <Typography variant="h5">{title}</Typography>
           <Button
             onClick={() => {
               setOpenPopup(false);

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
 
+import { connect } from "react-redux";
+
 import AdminHome from "./admin-home";
 import AdminChart from "./admin-chart";
 import AdminMail from "./admin-mail";
@@ -25,6 +27,11 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 import DrawerChildren from "../../components/drawer/drawer.component";
 import NavBar from "../../components/appbar-admin/appbar-admin";
+
+import Popup from "../../components/popUp";
+import SignInForm from "../../components/Forms/Auth";
+
+import { selectCurrentUser } from "../../redux/user/user.selector";
 
 const drawerWidth = 240;
 
@@ -131,12 +138,13 @@ const styles = (theme) => ({
   },
 });
 
-function AdminPage(props) {
-  const { window } = props;
+function AdminPage({ window, selectCurrentUser, ...rest }) {
+  console.log("RENDER ADMIN MAIN", selectCurrentUser);
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [open, setOpen] = React.useState(true);
+  const [openPopup, setOpenPopup] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -157,6 +165,8 @@ function AdminPage(props) {
     <div className={classes.root}>
       <CssBaseline />
       <NavBar
+        setOpenPopup={setOpenPopup}
+        user={selectCurrentUser}
         position="absolute"
         className={`${classes.appBar}  ${open && classes.appBarShift} `}
       >
@@ -179,41 +189,51 @@ function AdminPage(props) {
           </IconButton>
         </Hidden>
       </NavBar>
+
       <nav
         className={`${classes.drawer}  ${!open && classes.drawerShift} `}
         aria-label="mailbox folders"
       >
-        <Hidden mdUp implementation="css">
-          <DrawerChildren
-            container={container}
-            variant="temporary"
-            anchor={theme.direction === "rtl" ? "right" : "left"}
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
-            }}
-          ></DrawerChildren>
-        </Hidden>
-        <Hidden smDown implementation="css">
-          <DrawerChildren
-            classes={{
-              paper: `${classes.drawerPaper}  ${
-                !open ? classes.drawerPaperClose : ""
-              } `,
-            }}
-            variant="permanent"
-            open={open}
-          >
-            <IconButton onClick={handleDrawerClose}>
-              <ArrowBackIosIcon />
-            </IconButton>
-          </DrawerChildren>
-        </Hidden>
+        {selectCurrentUser && selectCurrentUser.authority ? (
+          <>
+            <Hidden mdUp implementation="css">
+              <DrawerChildren
+                role={selectCurrentUser.authority.role}
+                container={container}
+                variant="temporary"
+                handleDrawerClose={handleDrawerToggle}
+                isMobile={1}
+                anchor={theme.direction === "rtl" ? "right" : "left"}
+                open={mobileOpen}
+                onClose={handleDrawerToggle}
+                classes={{
+                  paper: classes.drawerPaper,
+                }}
+                ModalProps={{
+                  keepMounted: true, // Better open performance on mobile.
+                }}
+              ></DrawerChildren>
+            </Hidden>
+            <Hidden smDown implementation="css">
+              <DrawerChildren
+                role={selectCurrentUser.authority.role}
+                classes={{
+                  paper: `${classes.drawerPaper}  ${
+                    !open ? classes.drawerPaperClose : ""
+                  } `,
+                }}
+                variant="permanent"
+                open={open}
+              >
+                <IconButton onClick={handleDrawerClose}>
+                  <ArrowBackIosIcon />
+                </IconButton>
+              </DrawerChildren>
+            </Hidden>
+          </>
+        ) : undefined}
       </nav>
+
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Switch>
@@ -226,6 +246,10 @@ function AdminPage(props) {
           <Route exact path="/admin/employees" component={AdminEmployees} />
         </Switch>
       </main>
+
+      <Popup title="Sign In" openPopup={openPopup} setOpenPopup={setOpenPopup}>
+        <SignInForm isEmployee setOpenPopup={setOpenPopup} />
+      </Popup>
     </div>
   );
 }
@@ -234,4 +258,12 @@ AdminPage.propTypes = {
   window: PropTypes.func,
 };
 
-export default withStyles(styles)(withRouter(AdminPage));
+const mapStateToProps = (state) => ({
+  selectCurrentUser: selectCurrentUser(state),
+});
+
+export default withStyles(styles)(
+  withRouter(connect(mapStateToProps)(AdminPage))
+);
+
+// export default connect(mapStateToProps)(AdminPage);

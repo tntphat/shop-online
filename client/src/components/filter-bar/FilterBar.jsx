@@ -2,7 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { Button, Grid, Chip, makeStyles, Typography } from "@material-ui/core";
-import { selectNameCategoryBySlug } from "../../redux/categories/category.selector";
+import {
+  selectNameCategoryBySlug,
+  selectNameSubBySlug,
+} from "../../redux/categories/category.selector";
 import Menu from "../menu/menu";
 import RangeSlider from "../range-slider/rangeSlider";
 import arraySort from "./data-sort";
@@ -21,7 +24,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function FilterBar({ max, selectNameCategoryBySlug, count }) {
+function FilterBar({
+  max,
+  selectNameCategoryBySlug,
+  count,
+  selectNameSubBySlug,
+}) {
   let query = useQuery();
   let history = useHistory();
   const classes = useStyles();
@@ -34,6 +42,7 @@ function FilterBar({ max, selectNameCategoryBySlug, count }) {
   };
 
   const categoryQuery = query.get("category");
+  const subQuery = query.get("sub");
   const sortQuery = query.get("sort");
   const fromQuery = query.get("from");
   const toQuery = query.get("to");
@@ -56,6 +65,11 @@ function FilterBar({ max, selectNameCategoryBySlug, count }) {
       queryValue: categoryQuery,
       label: selectNameCategoryBySlug(categoryQuery),
       query: "category",
+    },
+    {
+      queryValue: subQuery,
+      label: selectNameSubBySlug(subQuery),
+      query: "sub",
     },
     {
       queryValue: sortQuery,
@@ -89,40 +103,44 @@ function FilterBar({ max, selectNameCategoryBySlug, count }) {
       ) : (
         <> </>
       )}
-      <Grid item sm={9}>
-        <RangeSlider max={max} />
-      </Grid>
+      {count ? (
+        <>
+          <Grid item sm={9} xs={8}>
+            <RangeSlider max={max} />
+          </Grid>
 
-      <Grid item sm={3}>
-        <Menu title="Sắp xếp" array={arraySort} onChange={onChangeSort} />
-      </Grid>
+          <Grid item sm={3} xs={4}>
+            <Menu title="Sắp xếp" array={arraySort} onChange={onChangeSort} />
+          </Grid>
 
-      <Grid item sm={12} className={classes.chips}>
-        {categoryQuery || sortQuery || fromQuery || toQuery ? (
-          <Button
-            onClick={handleClearQuery}
-            variant="outlined"
-            style={{ float: "right", marginRight: "0" }}
-            startIcon={<CloseIcon />}
-          >
-            Xóa bộ lọc
-          </Button>
-        ) : (
-          <> </>
-        )}
-        {chips.map((chip) => {
-          if (chip.queryValue)
-            return (
-              <Chip
-                key={chip.query}
-                label={chip.label}
-                onDelete={() => handleDelete(chip.query)}
+          <Grid item xs={12} className={classes.chips}>
+            {categoryQuery || sortQuery || fromQuery || toQuery ? (
+              <Button
+                onClick={handleClearQuery}
                 variant="outlined"
-                color="secondary"
-              />
-            );
-        })}
-      </Grid>
+                style={{ float: "right", marginRight: "0" }}
+                startIcon={<CloseIcon />}
+              >
+                Xóa bộ lọc
+              </Button>
+            ) : (
+              <> </>
+            )}
+            {chips.map((chip) => {
+              if (chip.queryValue)
+                return (
+                  <Chip
+                    key={chip.query}
+                    label={chip.label}
+                    onDelete={() => handleDelete(chip.query)}
+                    variant="outlined"
+                    color="secondary"
+                  />
+                );
+            })}
+          </Grid>
+        </>
+      ) : undefined}
 
       <Grid item sm={3}></Grid>
     </Grid>
@@ -131,6 +149,7 @@ function FilterBar({ max, selectNameCategoryBySlug, count }) {
 
 const mapStateToProps = (state) => ({
   selectNameCategoryBySlug: (slug) => selectNameCategoryBySlug(slug)(state),
+  selectNameSubBySlug: (slug) => selectNameSubBySlug(slug)(state),
 });
 
 export default connect(mapStateToProps)(FilterBar);

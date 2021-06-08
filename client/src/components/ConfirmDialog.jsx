@@ -44,11 +44,11 @@ export default function (props) {
   const { confirmDialog, setConfirmDialog } = props;
   return (
     <Dialog open={confirmDialog.isOpen} className={{ paper: classes.dialog }}>
-      <DialogTitle className={classes.dialogTitle}>
+      {/* <DialogTitle className={classes.dialogTitle}>
         <IconButton className={classes.titleIcon} disableRipple>
           <NotListedLocationIcon />
         </IconButton>
-      </DialogTitle>
+      </DialogTitle> */}
 
       <DialogContent className={classes.dialogContent}>
         <Typography variant="h5"> {confirmDialog.title}</Typography>

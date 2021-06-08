@@ -55,39 +55,47 @@ class EmployeeController {
   };
 
   //@route POST /user/sign-in
-  // signIn = async (req, res) => {
-  //   try {
-  //     const { email, password } = req.body;
-  //     const user = await User.findOne({ email });
-  //     if (user) {
-  //       const {
-  //         _id,
-  //         firstName,
-  //         lastName,
-  //         email,
-  //         username,
-  //         gender,
-  //         role,
-  //       } = user;
-  //       const data = {
-  //         _id,
-  //         firstName,
-  //         lastName,
-  //         email,
-  //         username,
-  //         gender,
-  //         role,
-  //       };
-  //       const token = jwt.sign(data, "secret", { expiresIn: "12h" });
-  //       if (user.password === password) {
-  //         res.status(200).send({ ...data, token });
-  //       } else res.status(400).send({ param: "password", msg: "wrong pass" });
-  //     } else res.status(400).send({ param: "email", msg: "not existed email" });
-  //   } catch (error) {
-  //     console.error(error.message)
-  //     res.status(500).send({ msg: 'Server error' });
-  //   }
-  // };
+  signIn = async (req, res) => {
+    try {
+      const { email, password } = req.body;
+      const user = await Employee.findOne({ email }).populate("authority");
+      if (user) {
+        const {
+          _id,
+          firstName,
+          lastName,
+          email,
+          salary,
+          phone,
+          address,
+          gender,
+          role,
+          authority,
+          time,
+        } = user;
+        const data = {
+          _id,
+          firstName,
+          lastName,
+          email,
+          phone,
+          address,
+          gender,
+          role,
+          authority,
+          time,
+          salary,
+        };
+        const token = jwt.sign(data, "secret", { expiresIn: "12h" });
+        if (user.password === password) {
+          res.status(200).send({ ...data, token });
+        } else res.status(400).send({ param: "password", msg: "wrong pass" });
+      } else res.status(400).send({ param: "email", msg: "not existed email" });
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).send({ msg: "Server error" });
+    }
+  };
 
   async getEmployees(req, res) {
     try {

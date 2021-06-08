@@ -5,11 +5,18 @@ const ProductSchema = new Schema(
   {
     name: { type: String },
     price: { type: Number, default: 0 },
-    quantity: {type: Number,default: 0},
-    expiry_date: { type: Date, default: Date.now },
-    quantity: { type: Number, default: 0 },
+    discount_price: { type: Number, default: 0 },
+    discount_date: { type: Date },
+    quantity_left: { type: Number, default: 50 },
     description: { type: String, default: "" },
-    imgs: {type: String,default: 'http://atc-home.com/images/joomlart/demo/default.jpg'},
+    producer: { type: String, default: "" },
+    purchased: { type: Number, default: 0 },
+    star: { type: Number, default: 0 },
+    rates: [{ type: Schema.Types.ObjectId, ref: "Rate" }],
+    imgs: {
+      type: String,
+      default: "http://atc-home.com/images/joomlart/demo/default.jpg",
+    },
     category_id: {
       type: Schema.Types.ObjectId,
       ref: "Category",

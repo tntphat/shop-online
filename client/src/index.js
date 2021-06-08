@@ -5,15 +5,18 @@ import { Provider } from "react-redux";
 
 import { store } from "./redux/store";
 import App from "./App";
+import CartProvider from "./providers/cart/cart.provider";
 import "./index.css";
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>,
+  <CartProvider>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
+  </CartProvider>,
   rootElement
 );
 

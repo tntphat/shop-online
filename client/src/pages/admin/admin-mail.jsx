@@ -8,8 +8,6 @@ import { selectMail } from "../../redux/mails/mail.selector";
 
 import { connect } from "react-redux";
 
-import BoxMails from "../../components/box-mails";
-import CardMail from "../../components/CardMail";
 import MailGroup from "../../components/MailGroup/MailGroup";
 import { useEffect } from "react";
 

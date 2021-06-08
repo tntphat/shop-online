@@ -10,15 +10,8 @@ const UserSchema = new Schema(
     password: { type: String, default: "admin" },
     address: { type: String, default: "0/0" },
     phone: { type: String, default: "090" },
-    isNotClient: { type: Number, default: 0 },
-    invoices: [{
-      invoice_id: { type: Schema.Types.ObjectId, ref: "Invoice" }
-    }],
-    sent_mails: [
-      {
-        mail_id: { type: Schema.Types.ObjectId, ref: "Mail" },
-      },
-    ],
+    invoices: [{ type: Schema.Types.ObjectId, ref: "Invoice" }],
+    sent_mails: [{ type: Schema.Types.ObjectId, ref: "Mail" }],
     cart: [
       {
         product_id: { type: Schema.Types.ObjectId, ref: "Product" },
@@ -26,11 +19,6 @@ const UserSchema = new Schema(
       },
     ],
     invoices: [{ type: Schema.Types.ObjectId, ref: "Invoice" }],
-    authority: {
-      type: Schema.Types.ObjectId,
-      ref: "Authority",
-      default: "6092bc3f0c299a5e3838fe31",
-    },
   },
   {
     timestamps: true,

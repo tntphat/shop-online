@@ -16,6 +16,17 @@ export const selectNameCategoryBySlug = (slug) =>
     return name;
   });
 
+export const selectNameSubBySlug = (slug) =>
+  createSelector([selectCategories], (categories) => {
+    let name = "";
+    categories.forEach((category) => {
+      category.sub_categories.forEach((sub) => {
+        if (sub.slug === slug) name = sub.name;
+      });
+    });
+    return name;
+  });
+
 export const selectErrors = createSelector(
   [selectCategory],
   (category) => category.error

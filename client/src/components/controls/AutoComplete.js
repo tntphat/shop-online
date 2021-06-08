@@ -1,15 +1,16 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
+import Chip from "@material-ui/core/Chip";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { FormControl } from "@material-ui/core";
 import { Controller } from "react-hook-form";
 import dataDrawer from "../drawer/drawer.data";
 
-export default function CountrySelect({ onChange, control }) {
+export default function AutoComplete({ control }) {
   return (
     <FormControl fullWidth margin="normal">
       <Controller
-        defaultValue={[dataDrawer[0]]}
+        defaultValue={[]}
         render={(props) => (
           <Autocomplete
             {...props}

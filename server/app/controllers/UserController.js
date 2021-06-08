@@ -2,6 +2,14 @@ const User = require("../models/User");
 const jwtConvert = require("../../auth/jwtConvert");
 
 class UserController {
+  getInfo = async (req, res) => {
+    try {
+      const user = await User.findById(req.params.id);
+      res.send(user);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   //@route POST /user/register
   register = async (req, res) => {
     try {
@@ -65,7 +73,7 @@ class UserController {
     }
   }
 
-  async appendInvoice(user_id,invoice_id) {
+  async appendInvoice(user_id, invoice_id) {
     try {
       const user = await User.findById(user_id);
       user.invoices.push(invoice_id);

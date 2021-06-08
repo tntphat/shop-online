@@ -24,16 +24,22 @@ const axiosInstance = axios.create({
   baseURL: "http://localhost:5000",
 });
 
-export function* signIn({ payload: { email, password } }) {
+export function* signIn({
+  payload: { email, password, isEmployee, setOpenPopup },
+}) {
   try {
     console.log("helo from saga SIGN IN ");
-    const { data } = yield axiosInstance.post("/user/sign-in", {
-      email,
-      password,
-    });
+    const { data } = yield axiosInstance.post(
+      `/${(isEmployee && "employee") || "user"}/sign-in`,
+      {
+        email,
+        password,
+      }
+    );
     console.log(data);
     yield Cookies.set("user", JSON.stringify(data));
     yield put(signInSuccess(data));
+    if (isEmployee) yield setOpenPopup(false);
   } catch (error) {
     yield put(signInFailure(error.response.data));
   }

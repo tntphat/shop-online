@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "@material-ui/core/Button";
 import Control from "../controls/Control";
 import "./form.styles.css";
+import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 
-import { Paper, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 
 import {
   signInSuccess,
@@ -15,28 +16,53 @@ import {
 
 import { selectErrors } from "../../redux/user/user.selector";
 
-const Form = ({ type, signInStart, signUpStart, errorSignIn }) => {
+const useStyles = makeStyles((theme) => ({
+  containSwitch: {
+    margin: "8px 0",
+  },
+  switch: {
+    fontWeight: "500",
+    color: "#636e72",
+    cursor: "pointer",
+  },
+}));
+
+const Form = ({
+  type,
+  signInStart,
+  signUpStart,
+  errorSignIn,
+  isEmployee,
+  setOpenPopup,
+  isIn,
+  setIsIn,
+  ...rest
+}) => {
   const { register, handleSubmit, errors, setError, control } = useForm({
     mode: "all",
   });
-  const onSubmit = async (data) => {
+
+  // const [isIn, setIsIn] = useState(true);
+  const onSubmit = (data) => {
     console.log(data);
-    if (type === "register") signUpStart(data);
-    else signInStart(data);
+    if (!isIn && !isEmployee) signUpStart(data);
+    else signInStart({ ...data, isEmployee: isEmployee || 0, setOpenPopup });
   };
+
+  const classes = useStyles();
 
   useEffect(() => {
     if (errorSignIn)
       setError(errorSignIn.param, { type: "myErr", message: errorSignIn.msg });
   }, [errorSignIn, setError]);
 
-  console.log(type);
+  const setMode = () => {
+    setIsIn((state) => !state);
+  };
+
   return (
     <form className="App" onSubmit={handleSubmit(onSubmit)}>
-      <Typography variant="h2" align="center">
-        {type === "register" ? "Sign Up" : "Sign In"}
-      </Typography>
-      {type === "register" ? (
+      {!isIn && !isEmployee ? (
         <>
           <Control.Input
             fullWidth
@@ -101,7 +127,23 @@ const Form = ({ type, signInStart, signUpStart, errorSignIn }) => {
         type="password"
         error={errors.password}
       />
-
+      {!isEmployee ? (
+        <Typography
+          variant="body2"
+          align="center"
+          className={classes.containSwitch}
+        >
+          <span>Bạn {(isIn && "chưa") || "đã"} có tài khoản? </span>
+          <span
+            className={classes.switch}
+            onClick={() => {
+              setMode();
+            }}
+          >
+            {(isIn && "Đăng ký ngay") || "Đăng nhập"}
+          </span>
+        </Typography>
+      ) : undefined}
       <Button variant="contained" color="primary" type="submit" fullWidth>
         Submit
       </Button>

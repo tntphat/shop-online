@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import Box from "@material-ui/core/Box";
@@ -11,14 +12,11 @@ import HomeIcon from "@material-ui/icons/Home";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Drawer from "@material-ui/core/Drawer";
 import { makeStyles } from "@material-ui/core/styles";
+// import { } from '../'
 
 import DrawerData from "./drawer.data";
 
 const useStyles = makeStyles((theme) => ({
-  home: {
-    height: "100px",
-  },
-
   toolbarIcon: {
     display: "flex",
     alignItems: "center",
@@ -34,33 +32,55 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
     color: theme.palette.text.main,
   },
+  active: {
+    backgroundColor: "#636e72",
+    color: theme.palette.navBar.main,
+  },
 }));
 
-const DrawerChildren = ({ children, ...rest }) => {
+const DrawerChildren = ({
+  children,
+  match,
+  isMobile,
+  handleDrawerClose,
+  role,
+  ...rest
+}) => {
   const classes = useStyles();
+  let location = useLocation();
+  const locate = location.pathname;
   return (
     <Drawer {...rest}>
       <Box display="flex" flexDirection="row-reverse" alignItems="center">
-        {/* <Box flexGrow="1" textAlign="center">
-          <Link className={classes.link} to="/">
-            <IconButton className={classes.home}>
-              <HomeIcon className={classes.homeIcon} />
-            </IconButton>
-          </Link>
-        </Box> */}
         <div className={classes.toolbarIcon}>{children}</div>
       </Box>
 
       <Divider />
       <List>
-        {DrawerData.map((item) => (
-          <Link key={item.name} className={classes.link} to={item.link}>
-            <ListItem button>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.name} />
-            </ListItem>
-          </Link>
-        ))}
+        {DrawerData.map(
+          (item) =>
+            role % item.id === 0 && (
+              <Link
+                key={item.name}
+                className={`${classes.link}  ${
+                  locate === item.link && classes.active
+                } `}
+                to={item.link}
+              >
+                <ListItem
+                  // onClick={() => isMobile && handleDrawerClose()}
+                  button
+                >
+                  <ListItemIcon
+                    className={` ${locate === item.link && classes.active} `}
+                  >
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText primary={item.name} />
+                </ListItem>
+              </Link>
+            )
+        )}
       </List>
       <Divider />
       <List>
@@ -83,4 +103,4 @@ const DrawerChildren = ({ children, ...rest }) => {
   );
 };
 
-export default DrawerChildren;
+export default withRouter(DrawerChildren);

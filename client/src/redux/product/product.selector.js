@@ -104,7 +104,8 @@ export const selectProductsByFiler = (
   from,
   to
 ) =>
-  createSelector([selectProducts], (productsData) => {
+  createSelector([selectProducts], (productsState) => {
+    var productsData = JSON.parse(JSON.stringify(productsState));
     productsData = (kw && filterSearchByKw(productsData, kw)) || productsData;
     productsData = filterByCategory(productsData, categoryId, subCategoryId);
     const max = findMax(productsData);

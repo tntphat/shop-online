@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { useForm } from "react-hook-form";
-import { Typography, makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Control from "../../components/controls/Control";
 import {
@@ -35,16 +35,16 @@ const AdminProductAdd = ({
   });
   const classes = useStyles();
   const [curCategory, setCurCategory] = useState(null);
-  const [selectedFile,setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const onFileChanged = (event) => {
     setSelectedFile(event.target.files[0]);
     console.log(event.target.files[0]);
-  }
+  };
 
   const onSubmit = (data) => {
     data.description = JSON.stringify(data.description);
-    data= {...data,file: selectedFile};
+    data = { ...data, file: selectedFile };
     console.log(data);
     if (targetRow) editProductStart({ ...data, _id: targetRow._id });
     else addProductStart(data);
@@ -118,6 +118,14 @@ const AdminProductAdd = ({
           label="Price"
           type="number"
           error={errors.price}
+        />
+
+        <Control.Input
+          fullWidth
+          inputRef={register({ required: true })}
+          name="producer"
+          label="Producer"
+          error={errors.producer}
         />
 
         <Control.DatePicker

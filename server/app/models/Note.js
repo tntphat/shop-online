@@ -11,6 +11,7 @@ const NoteSchema = new Schema(
     ],
     total_price: { type: Number, default: 0 },
     supplier: { type: String },
+    status: { type: Boolean, default: 0 },
   },
   {
     timestamps: true,

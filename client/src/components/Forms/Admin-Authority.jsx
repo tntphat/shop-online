@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import React from "react";
 import { Button } from "@material-ui/core";
 import { useForm } from "react-hook-form";
-import CountrySelect from "../controls/AutoComplete";
+import AuthoritiesSelect from "../controls/AutoComplete";
 import { addAuthorityStart } from "../../redux/authority/authority.actions";
 
 function AuthorityForm({ addAuthorityStart, setOpenPopup }) {
@@ -23,7 +23,7 @@ function AuthorityForm({ addAuthorityStart, setOpenPopup }) {
         label="Authority Name"
         error={errors.name}
       />
-      <CountrySelect control={control} />
+      <AuthoritiesSelect control={control} />
       <Button variant="contained" fullWidth type="submit">
         Add
       </Button>

@@ -51,7 +51,7 @@ class MailController {
 
       await User.updateOne(
         { _id: req.user._id },
-        { $push: { sent_mails: { mail_id: newMail._id } } }
+        { $push: { sent_mails: newMail._id } }
       );
       res.status(200).send(mail);
     } catch (error) {

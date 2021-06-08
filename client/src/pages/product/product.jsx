@@ -46,22 +46,11 @@ const ProductContainer = ({
     <Paper className={classes.paper}>
       <Suspense fallback={<Spinner />}>
         <Route exact path={`${match.path}`} component={ProductsPageContainer} />
-        {/* <Route
-          exact
-          path={`${match.path}/filter/:categoryId`}
-          component={ProductsPageContainer}
-        />
-        <Route
-          exact
-          path={`${match.path}/filter/:categoryId/:subCategoryId`}
-          component={ProductsPageContainer}
-        /> */}
         <Route
           exact
           path={`${match.path}/:productId`}
           component={ProductDetailContainer}
         />
-        {/* <Route exact path={`topic`} component={ProductsPageContainer} /> */}
       </Suspense>
     </Paper>
   );
