@@ -27,27 +27,36 @@ export function* addInvoice({ payload }) {
       productsQuantityLeft,
       clearCart,
       setNotify,
+      productsPurchased,
       history,
     } = payload;
     const curUser = yield select(selectCurrentUser);
-    const { data } = yield axiosInstance.post(
-      "/invoice",
-      { products, total_price, productsQuantityLeft },
-      {
-        headers: {
-          Authorization: "Bearer " + curUser.token,
-        },
-      }
-    );
+    if (!curUser) {
+      yield setNotify({
+        isOpen: true,
+        message: "Pls sign in before paying",
+        type: "error",
+      });
+    } else {
+      const { data } = yield axiosInstance.post(
+        "/invoice",
+        { products, total_price, productsQuantityLeft, productsPurchased },
+        {
+          headers: {
+            Authorization: "Bearer " + curUser.token,
+          },
+        }
+      );
 
-    yield setNotify({
-      isOpen: true,
-      message: "Bn đã pay thành công",
-      type: "success",
-    });
-    yield clearCart();
-    yield history.push("/products");
-    yield put(addInvoiceSuccess(data));
+      yield setNotify({
+        isOpen: true,
+        message: "Bn đã pay thành công",
+        type: "success",
+      });
+      yield clearCart();
+      yield history.push("/products");
+      yield put(addInvoiceSuccess(data));
+    }
   } catch (error) {
     yield put(addInvoiceFailure(error.response.data));
   }

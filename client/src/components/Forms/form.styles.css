@@ -9,6 +9,7 @@ form {
 }
 
 .error-msg {
+  width: 100%;
   color: #bf1650;
 }
 

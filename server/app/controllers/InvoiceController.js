@@ -70,7 +70,7 @@ class InvoiceController {
   //@router POST /invoice
   async addInvoice(req, res) {
     try {
-      // console.log(req.body, req.user);
+      console.log(req.body.productsPurchased);
 
       const newInvoice = new Invoice({
         ...req.body,
@@ -82,15 +82,14 @@ class InvoiceController {
 
       const idArr = req.body.products.map((prod) => prod.product_id);
 
-      idArr.forEach(async (id) => {
-        Product.findByIdAndUpdate(id, {});
-      });
       for (let i = 0; i < idArr.length; ++i) {
         await Product.updateOne(
           { _id: idArr[i] },
           {
             quantity_left:
               req.body.productsQuantityLeft[i] - req.body.products[i].quantity,
+            purchased:
+              req.body.productsPurchased[i] + req.body.products[i].quantity,
           }
         );
       }

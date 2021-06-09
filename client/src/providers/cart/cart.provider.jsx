@@ -27,10 +27,14 @@ const CartProvider = ({ children }) => {
     setCartItems(addItemToCart(cartItems, item, quant));
   const removeItem = (item) =>
     setCartItems(removeItemFromCart(cartItems, item));
-  const clearItemFromCart = (item) =>
+  const clearItemFromCart = (item) => {
     setCartItems(filterItemFromCart(cartItems, item));
+  };
 
-  const clearCart = () => setCartItems([]);
+  const clearCart = () => {
+    localStorage.setItem("cart", JSON.stringify([]));
+    setCartItems([]);
+  };
   const toggleHidden = () => setHidden(!hidden);
 
   useEffect(() => {
@@ -38,10 +42,6 @@ const CartProvider = ({ children }) => {
   }, [cartItems]);
 
   useEffect(() => {
-    // const cartCookies = Cookies.get("cart");
-
-    // if (cartCookies) setCartItems(JSON.parse(cartCookies));
-
     const cartStorage = localStorage.getItem("cart");
     if (cartStorage) setCartItems(JSON.parse(cartStorage));
   }, []);

@@ -81,19 +81,24 @@ const ProductContainer = ({ name }) => {
   const history = useHistory();
   const handlePay = () => {
     const products = [];
+    const productsPurchased = [];
     const productsQuantityLeft = [];
-    const data = cartItems.forEach(({ quantity, _id, quantity_left }) => {
-      products.push({
-        quantity,
-        product_id: _id,
-      });
-      productsQuantityLeft.push(quantity_left);
-    });
+    const data = cartItems.forEach(
+      ({ quantity, _id, quantity_left, purchased }) => {
+        products.push({
+          quantity,
+          product_id: _id,
+        });
+        productsQuantityLeft.push(quantity_left);
+        productsPurchased.push(purchased);
+      }
+    );
     dispatch(
       addInvoiceStart({
         products,
         total_price: totalPrice,
         productsQuantityLeft,
+        productsPurchased,
         clearCart,
         setNotify,
         history,

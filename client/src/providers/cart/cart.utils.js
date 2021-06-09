@@ -1,8 +1,5 @@
-import Cookies from "js-cookie";
-
 const setCookies = (cart) => {
   localStorage.setItem("cart", JSON.stringify(cart));
-  // Cookies.set("cart", );
 };
 
 export const addItemToCart = (cartItems, cartItemToAdd, quant = 1) => {
@@ -20,7 +17,7 @@ export const addItemToCart = (cartItems, cartItemToAdd, quant = 1) => {
     return res;
   }
 
-  const res = [...cartItems, { ...cartItemToAdd, quantity: 1 }];
+  const res = [...cartItems, { ...cartItemToAdd, quantity: quant }];
 
   setCookies(res);
 

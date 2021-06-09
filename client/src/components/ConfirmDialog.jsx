@@ -7,9 +7,7 @@ import {
   Typography,
   Button,
   makeStyles,
-  IconButton,
 } from "@material-ui/core";
-import NotListedLocationIcon from "@material-ui/icons/NotListedLocation";
 
 const useStyles = makeStyles((theme) => ({
   dialog: {
@@ -44,14 +42,11 @@ export default function (props) {
   const { confirmDialog, setConfirmDialog } = props;
   return (
     <Dialog open={confirmDialog.isOpen} className={{ paper: classes.dialog }}>
-      {/* <DialogTitle className={classes.dialogTitle}>
-        <IconButton className={classes.titleIcon} disableRipple>
-          <NotListedLocationIcon />
-        </IconButton>
-      </DialogTitle> */}
+      <DialogTitle className={classes.dialogTitle}>
+        {confirmDialog.title}
+      </DialogTitle>
 
       <DialogContent className={classes.dialogContent}>
-        <Typography variant="h5"> {confirmDialog.title}</Typography>
         <Typography variant="subtitle2">{confirmDialog.subTitle}</Typography>
       </DialogContent>
       <DialogActions className={classes.dialogActions}>

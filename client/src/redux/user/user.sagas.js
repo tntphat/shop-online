@@ -39,7 +39,7 @@ export function* signIn({
     console.log(data);
     yield Cookies.set("user", JSON.stringify(data));
     yield put(signInSuccess(data));
-    if (isEmployee) yield setOpenPopup(false);
+    yield setOpenPopup(false);
   } catch (error) {
     yield put(signInFailure(error.response.data));
   }
