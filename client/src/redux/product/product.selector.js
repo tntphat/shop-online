@@ -61,7 +61,7 @@ const filterSearchByKw = (arr, kw) => {
 const filterBySort = (arr, valueSort) => {
   switch (+valueSort) {
     case 1:
-      return arr;
+      return arr.sort((a, b) => -a.purchased + b.purchased);
     case 2:
       // return arr.sort((a, b) => -new Date(a.createdAt) + new Date(b.createdAt));
       return arr.sort((a, b) => subtractTimeByString(a.createdAt, b.createdAt));
@@ -114,6 +114,29 @@ export const selectProductsByFiler = (
     productsData =
       (sortValue && filterBySort(productsData, sortValue)) || productsData;
     return { products: productsData, max };
+  });
+
+const selectTopExcept = (productsData, id, n) => {
+  let count = 0;
+  const res = [];
+  for (let i = 0; i < productsData.length && count < n; ++i) {
+    if (productsData[i]._id !== id) {
+      res.push(productsData[i]);
+      count++;
+    }
+  }
+  return res;
+};
+
+export const selectProductsByProduct = (product) =>
+  createSelector([selectProducts], (productsState) => {
+    var productsData = JSON.parse(JSON.stringify(productsState));
+    productsData = filterByCategory(productsData, product.category_id.slug);
+    productsData = filterBySort(productsData, 1);
+    productsData = selectTopExcept(productsData, product._id, 3);
+    console.log("product: ", productsData);
+
+    return productsData;
   });
 
 export const selectErrors = createSelector(

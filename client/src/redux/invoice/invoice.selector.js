@@ -1,8 +1,11 @@
 import { createSelector } from "reselect";
 
-const selectProduct = (state) => state.mail;
+const selectInvoice = (state) => state.invoice;
 
-export const selectMail = createSelector([selectProduct], (mail) => mail.mails);
+export const selectInvoices = createSelector(
+  [selectInvoice],
+  (invoice) => invoice.invoices
+);
 
 export const selectErrors = createSelector(
   [selectProduct],

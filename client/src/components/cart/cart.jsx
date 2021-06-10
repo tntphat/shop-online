@@ -1,15 +1,10 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import Divider from "@material-ui/core/Divider";
 
-import { Button, Typography } from "@material-ui/core";
+import CartItems from "../cart-items/cart-items";
 
-import { formatNumber } from "../../helpers/number";
+import { Typography } from "@material-ui/core";
 
 import { CartContext } from "../../providers/cart/cart.provider";
 
@@ -53,49 +48,17 @@ export default function Cart() {
   };
   console.log(cartItems);
   return (
-    <List className={classes.root}>
-      <ListItem key={1}>
-        <Typography variant="h5">Ur Cart</Typography>
-      </ListItem>
+    <div className={classes.root}>
       {cartItemsCount ? (
-        <>
-          {cartItems.map((item) => (
-            <div key={item.id}>
-              <ListItem key={item.id}>
-                <ListItemAvatar>
-                  <div
-                    className={classes.image}
-                    style={{
-                      backgroundImage: `url(${item.imgs})`,
-                    }}
-                  />
-                </ListItemAvatar>
-                <ListItemText
-                  className={classes.text}
-                  classes={{ primary: classes.name }}
-                  primary={item.name}
-                  secondary={`x ${item.quantity}`}
-                />
-                {formatNumber(item.price)}
-              </ListItem>
-              <Divider variant="middle" component="li" />
-            </div>
-          ))}
-
-          <ListItem key={3}>
-            <Button
-              className={classes.btnCheckOut}
-              fullWidth
-              variant="contained"
-              onClick={handleCheckout}
-            >
-              checkout
-            </Button>
-          </ListItem>
-        </>
+        <CartItems
+          cartItems={cartItems}
+          title="Ur Cart"
+          isCart
+          handleCheckout={handleCheckout}
+        />
       ) : (
         <Typography>Ur cart is empry</Typography>
       )}
-    </List>
+    </div>
   );
 }

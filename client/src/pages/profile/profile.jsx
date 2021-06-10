@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { selectCurrentUser } from "../../redux/user/user.selector";
 
 import MailIcon from "@material-ui/icons/Mail";
-import Button from '@material-ui/core/Button'
 
 import TabsBar from "../../components/Tabs/Tabs";
 import { fetchUserMailsStart } from "../../redux/mails/mail.actions";
@@ -13,13 +12,14 @@ import { selectMail } from "../../redux/mails/mail.selector";
 import { useEffect } from "react";
 import MailGroup from "../../components/MailGroup/MailGroup";
 import EditProfile from "../../components/Forms/EditProfile";
+import Invoices from "../../components/invoices/invoices";
 import Popup from "../../components/popUp";
 import MailForm from "../../components/Forms/mail-form";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     paddingTop: "50px",
-    height: "200vh",
+    minHeight: "92vh",
   },
 }));
 
@@ -71,7 +71,7 @@ const ProfilePage = ({ currentUser, fetchUserMailsStart, mails }) => {
           },
           {
             label: "Invoices",
-            comp: <Typography variant="h3">Invoices</Typography>,
+            comp: <Invoices />,
           },
         ]}
       />
@@ -79,7 +79,6 @@ const ProfilePage = ({ currentUser, fetchUserMailsStart, mails }) => {
       <Popup openPopup={openPopup} setOpenPopup={setOpenPopup} title="Mail">
         <MailForm setOpenPopup={setOpenPopup} />
       </Popup>
-        
     </Paper>
   );
 };

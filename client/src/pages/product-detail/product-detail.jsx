@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -7,11 +7,13 @@ import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Rating from "@material-ui/lab/Rating";
-
 import RemoveIcon from "@material-ui/icons/Remove";
 import AddIcon from "@material-ui/icons/Add";
 
-import { selectProductSpecified } from "../../redux/product/product.selector";
+import {
+  selectProductSpecified,
+  selectProductsByProduct,
+} from "../../redux/product/product.selector";
 import SlateRender from "../../components/controls/SlateRender";
 
 import { formatNumber } from "../../helpers/number";
@@ -19,6 +21,8 @@ import { Divider, IconButton } from "@material-ui/core";
 
 import { CartContext } from "../../providers/cart/cart.provider";
 import Notification from "../../components/Notification";
+
+import Card from "../../components/card/card.component";
 
 import BreadCrumbs from "../../components/breadcrumbs/Breadcrumbs";
 
@@ -57,10 +61,16 @@ const useStyles = makeStyles((theme) => ({
   btnAdd: {
     marginTop: "auto",
   },
+  divider: {
+    marginTop: "8px",
+    marginBottom: "8px",
+  },
 }));
 
 const ProductDetail = (props) => {
-  const { product } = props;
+  const { product, selectTopProducts } = props;
+  const topProducts = selectTopProducts(product);
+  console.log("top prod: ", topProducts);
   const classes = useStyles();
   const { addItem } = useContext(CartContext);
 
@@ -185,6 +195,12 @@ const ProductDetail = (props) => {
         </Grid>
         <Grid item sm={2}>
           <Typography variant="h6">Top selling</Typography>
+          {topProducts.map((prod) => (
+            <>
+              <Card product={prod} hideBtn />
+              <Divider className={classes.divider} variant="middle" light />
+            </>
+          ))}
         </Grid>
       </Grid>
       <Grid item sm={1} xs={0} />
@@ -196,6 +212,7 @@ const ProductDetail = (props) => {
 
 const mapStateToProp = (state, ownProps) => ({
   product: selectProductSpecified(ownProps.match.params.productId)(state),
+  selectTopProducts: (product) => selectProductsByProduct(product)(state),
 });
 
 export default connect(mapStateToProp)(ProductDetail);

@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SimpleCard({ product, setNotify }) {
+export default function SimpleCard({ product, setNotify, hideBtn }) {
   const classes = useStyles();
   const history = useHistory();
   const { addItem } = useContext(CartContext);
@@ -105,17 +105,19 @@ export default function SimpleCard({ product, setNotify }) {
           {formatNumber(product.price)} VND
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button
-          className={classes.btnAdd}
-          onClick={handleAddItem}
-          size="small"
-          variant="contained"
-          fullWidth
-        >
-          aDD to cart
-        </Button>
-      </CardActions>
+      {!hideBtn ? (
+        <CardActions>
+          <Button
+            className={classes.btnAdd}
+            onClick={handleAddItem}
+            size="small"
+            variant="contained"
+            fullWidth
+          >
+            aDD to cart
+          </Button>
+        </CardActions>
+      ) : undefined}
     </Card>
     // </Link>
   );

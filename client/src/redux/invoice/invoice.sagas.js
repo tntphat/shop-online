@@ -64,8 +64,9 @@ export function* addInvoice({ payload }) {
 
 export function* editInvoice({ payload }) {
   try {
-    const { data } = yield axiosInstance.patch("/invoice/edit", payload);
-    console.log("data:", data);
+    console.log("edit invoice: ", payload);
+    const { data } = yield axiosInstance.patch("/invoice", payload);
+    console.log(data);
     yield put(editInvoiceSuccess(data));
   } catch (e) {
     yield put(editInvoiceFailure());
@@ -81,10 +82,10 @@ export function* fetchUserInvoices() {
         Authorization: "Bearer " + curUser.token,
       },
     });
-    console.log(data);
+    console.log("invoices: ", data);
     yield put(fetchInvoicesSuccess(data));
   } catch (error) {
-    yield put(addInvoiceFailure(error.response.data));
+    yield put(fetchInvoicesFailure(error.response.data));
   }
 }
 

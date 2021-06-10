@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import UserActionTypes from "./user.types";
 import {
   signInSuccess,
+  signInSuccessEmployee,
   signInFailure,
   editUserSuccess,
   editUserFailure,
@@ -38,7 +39,8 @@ export function* signIn({
     );
     console.log(data);
     yield Cookies.set("user", JSON.stringify(data));
-    yield put(signInSuccess(data));
+    if (isEmployee) yield put(signInSuccessEmployee(data));
+    else yield put(signInSuccess(data));
     yield setOpenPopup(false);
   } catch (error) {
     yield put(signInFailure(error.response.data));
@@ -101,7 +103,9 @@ export function* isUserAuthenticated() {
       yield put(checkUserSessionDone());
       return;
     }
-    yield put(signInSuccess(JSON.parse(data)));
+    const user = JSON.parse(data);
+    if (user.authority) yield put(signInSuccessEmployee(user));
+    else yield put(signInSuccess(user));
     yield put(checkUserSessionDone());
   } catch (error) {
     yield put(checkUserSessionDone());
@@ -110,8 +114,10 @@ export function* isUserAuthenticated() {
   }
 }
 
-export function* signOut() {
+export function* signOut({ payload }) {
   try {
+    const { history } = payload;
+    history.push("/");
     yield Cookies.remove("user");
     yield put(signOutSuccess());
   } catch (error) {

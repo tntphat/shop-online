@@ -2,6 +2,7 @@ import UserActionTypes from "./user.types";
 
 const INITIAL_STATE = {
   currentUser: null,
+  currentEmployee: null,
   checking: true,
   employees: [],
   error: null,
@@ -15,6 +16,12 @@ const userReducer = (state = INITIAL_STATE, action) => {
         currentUser: action.payload,
         error: null,
       };
+    case UserActionTypes.SIGN_IN_SUCCESS_EMPLOYEE:
+      return {
+        ...state,
+        currentEmployee: action.payload,
+        error: null,
+      };
     case UserActionTypes.EDIT_USER_SUCCESS:
       return {
         ...state,
@@ -25,6 +32,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         currentUser: null,
+        currentEmployee: null,
         error: null,
       };
     case UserActionTypes.SIGN_UP_SUCCESS:

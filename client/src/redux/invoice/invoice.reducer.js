@@ -24,7 +24,7 @@ const invoiceReducer = (state = INITIAL_STATE, action) => {
         ...state,
         invoices: state.invoices.map((invoice) =>
           invoice._id === action.payload._id
-            ? { ...invoice, reply: action.payload.reply }
+            ? { ...invoice, status: action.payload.status }
             : invoice
         ),
         error: null,

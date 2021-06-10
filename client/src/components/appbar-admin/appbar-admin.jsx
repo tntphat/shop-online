@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -34,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 function AppbarAdmin({ children, signOutStart, user, setOpenPopup, ...rest }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const history = useHistory();
   const isMenuOpen = Boolean(anchorEl);
 
   const handleProfileMenuOpen = (event) => {
@@ -45,7 +47,9 @@ function AppbarAdmin({ children, signOutStart, user, setOpenPopup, ...rest }) {
   };
 
   const handleSignOut = () => {
-    signOutStart();
+    signOutStart({ history });
+
+    // history.push("/");
     setAnchorEl(null);
   };
 
@@ -104,7 +108,7 @@ function AppbarAdmin({ children, signOutStart, user, setOpenPopup, ...rest }) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  signOutStart: () => dispatch(signOutStart()),
+  signOutStart: (history) => dispatch(signOutStart(history)),
 });
 
 export default connect(null, mapDispatchToProps)(AppbarAdmin);

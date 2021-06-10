@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import { makeStyles, fade } from "@material-ui/core/styles";
@@ -277,7 +277,7 @@ const HideAppBar = ({ currentUser, signOutStart, location, history }) => {
                     <MenuItem
                       onClick={() => {
                         handleClose();
-                        signOutStart();
+                        signOutStart({ history });
                       }}
                     >
                       Logout
@@ -311,7 +311,7 @@ const mapStateToProp = (state) => ({
 });
 
 const mapDispatchToProp = (dispatch) => ({
-  signOutStart: () => dispatch(signOutStart()),
+  signOutStart: (history) => dispatch(signOutStart(history)),
   testHeader: () => dispatch(testHeader()),
 });
 

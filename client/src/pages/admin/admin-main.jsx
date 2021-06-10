@@ -10,19 +10,15 @@ import AdminProduct from "./admin-product";
 import AdminCategories from "./admin-categories";
 import AdminAuthorities from "./admin-authorities";
 import AdminEmployees from "./admin-employees";
+import AdminInvoices from "./admin-invoices";
 
 import PropTypes from "prop-types";
-import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import { withStyles } from "@material-ui/core";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
-
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 import DrawerChildren from "../../components/drawer/drawer.component";
@@ -31,7 +27,7 @@ import NavBar from "../../components/appbar-admin/appbar-admin";
 import Popup from "../../components/popUp";
 import SignInForm from "../../components/Forms/Auth";
 
-import { selectCurrentUser } from "../../redux/user/user.selector";
+import { selectCurrentEmployee } from "../../redux/user/user.selector";
 
 const drawerWidth = 240;
 
@@ -138,8 +134,8 @@ const styles = (theme) => ({
   },
 });
 
-function AdminPage({ window, selectCurrentUser, ...rest }) {
-  console.log("RENDER ADMIN MAIN", selectCurrentUser);
+function AdminPage({ window, selectCurrentEmployee, ...rest }) {
+  console.log("RENDER ADMIN MAIN", selectCurrentEmployee);
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -166,7 +162,7 @@ function AdminPage({ window, selectCurrentUser, ...rest }) {
       <CssBaseline />
       <NavBar
         setOpenPopup={setOpenPopup}
-        user={selectCurrentUser}
+        user={selectCurrentEmployee}
         position="absolute"
         className={`${classes.appBar}  ${open && classes.appBarShift} `}
       >
@@ -194,11 +190,11 @@ function AdminPage({ window, selectCurrentUser, ...rest }) {
         className={`${classes.drawer}  ${!open && classes.drawerShift} `}
         aria-label="mailbox folders"
       >
-        {selectCurrentUser && selectCurrentUser.authority ? (
+        {selectCurrentEmployee && selectCurrentEmployee.authority ? (
           <>
             <Hidden mdUp implementation="css">
               <DrawerChildren
-                role={selectCurrentUser.authority.role}
+                role={selectCurrentEmployee.authority.role}
                 container={container}
                 variant="temporary"
                 handleDrawerClose={handleDrawerToggle}
@@ -216,7 +212,7 @@ function AdminPage({ window, selectCurrentUser, ...rest }) {
             </Hidden>
             <Hidden smDown implementation="css">
               <DrawerChildren
-                role={selectCurrentUser.authority.role}
+                role={selectCurrentEmployee.authority.role}
                 classes={{
                   paper: `${classes.drawerPaper}  ${
                     !open ? classes.drawerPaperClose : ""
@@ -244,6 +240,7 @@ function AdminPage({ window, selectCurrentUser, ...rest }) {
           <Route exact path="/admin/categories" component={AdminCategories} />
           <Route exact path="/admin/authorities" component={AdminAuthorities} />
           <Route exact path="/admin/employees" component={AdminEmployees} />
+          <Route exact path="/admin/invoices" component={AdminInvoices} />
         </Switch>
       </main>
 
@@ -259,7 +256,7 @@ AdminPage.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  selectCurrentUser: selectCurrentUser(state),
+  selectCurrentEmployee: selectCurrentEmployee(state),
 });
 
 export default withStyles(styles)(
