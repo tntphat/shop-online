@@ -37,6 +37,28 @@ const productReducer = (state = INITIAL_STATE, action) => {
         ...state,
         error: action.payload,
       };
+
+    case ProductActionTypes.RATE_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        products: state.products.map(
+          (prod) =>
+            (prod._id = action.payload._id
+              ? {
+                  ...prod,
+                  rates: action.payload.rates,
+                  star: action.payload.star,
+                }
+              : prod)
+        ),
+        error: null,
+      };
+
+    case ProductActionTypes.RATE_PRODUCT_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+      };
     case ProductActionTypes.DEL_PRODUCT_SUCCESS:
       return {
         ...state,

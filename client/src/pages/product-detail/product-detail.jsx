@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
-import { connect, useSelector } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -9,6 +10,10 @@ import Typography from "@material-ui/core/Typography";
 import Rating from "@material-ui/lab/Rating";
 import RemoveIcon from "@material-ui/icons/Remove";
 import AddIcon from "@material-ui/icons/Add";
+
+import TextField from "@material-ui/core/TextField";
+
+import Control from "../../components/controls/Control";
 
 import {
   selectProductSpecified,
@@ -25,6 +30,9 @@ import Notification from "../../components/Notification";
 import Card from "../../components/card/card.component";
 
 import BreadCrumbs from "../../components/breadcrumbs/Breadcrumbs";
+import Rate from "../../components/rating/rating";
+
+import { rateProductStart } from "../../redux/product/product.actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,14 +75,37 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const labels = {
+  0.5: "Useless",
+  1: "Useless+",
+  1.5: "Poor",
+  2: "Poor+",
+  2.5: "Ok",
+  3: "Ok+",
+  3.5: "Good",
+  4: "Good+",
+  4.5: "Excellent",
+  5: "Excellent+",
+};
+
 const ProductDetail = (props) => {
+  const { register, handleSubmit, errors, setError, control } = useForm({
+    mode: "all",
+  });
+  const dispatch = useDispatch();
+  const currUser = useSelector((state) => state.user.currentUser);
+
   const { product, selectTopProducts } = props;
   const topProducts = selectTopProducts(product);
-  console.log("top prod: ", topProducts);
   const classes = useStyles();
   const { addItem } = useContext(CartContext);
 
   const [quantity, setQuantity] = useState(1);
+
+  const [value, setValue] = React.useState(2);
+  const [comment, setComment] = React.useState("");
+
+  const [hover, setHover] = React.useState(-1);
 
   const [notify, setNotify] = useState({
     isOpen: false,
@@ -92,7 +123,17 @@ const ProductDetail = (props) => {
     setQuantity(1);
   };
 
-  console.log("product: ", product);
+  const handleRate = (star, detail) => {
+    dispatch(
+      rateProductStart({
+        star,
+        detail,
+        id: product._id,
+        starProduct: product.star,
+        ratesLength: product.rates.length,
+      })
+    );
+  };
 
   return (
     <Grid container className={classes.root}>
@@ -131,9 +172,9 @@ const ProductDetail = (props) => {
             flexDirection="column"
           >
             <Box display="flex" mb={3} flexDirection="row">
-              <Typography component="span">4.0</Typography>
+              <Typography component="span">{product.star}</Typography>
 
-              <Rating name="read-only" value={4} readOnly />
+              <Rating value={product.star} precision={0.5} readOnly />
               <Box mx={1}>
                 <Divider
                   // variant="middle"
@@ -141,7 +182,7 @@ const ProductDetail = (props) => {
                   orientation="vertical"
                 />
               </Box>
-              <Typography>0 đã bán</Typography>
+              <Typography>{product.purchased} đã bán</Typography>
               <Box mx={1}>
                 <Divider
                   // variant="middle"
@@ -149,7 +190,7 @@ const ProductDetail = (props) => {
                   orientation="vertical"
                 />
               </Box>
-              <Typography>0 đánh giá</Typography>
+              <Typography>{product.rates.length} đánh giá</Typography>
             </Box>
             <Typography variant="h5">{product.name}</Typography>
             <Typography className={classes.price} variant="h6">
@@ -192,6 +233,54 @@ const ProductDetail = (props) => {
         <Grid item sm={10}>
           <Typography variant="h5">Description</Typography>
           <SlateRender content={product.description} />
+          <Divider style={{ margin: "30px 0" }} />
+          {currUser ? (
+            <>
+              <Typography variant="h5">Rate Product</Typography>
+              <Box display="flex" flexDirection="row" mt={2}>
+                <Rating
+                  name="hover-feedback"
+                  value={value}
+                  precision={0.5}
+                  onChange={(event, newValue) => {
+                    setValue(newValue);
+                  }}
+                  onChangeActive={(event, newHover) => {
+                    setHover(newHover);
+                  }}
+                />
+                {value !== null && (
+                  <Box ml={2}>{labels[hover !== -1 ? hover : value]}</Box>
+                )}
+              </Box>
+              <TextField
+                label="Comment"
+                multiline
+                rows={4}
+                value={comment}
+                variant="outlined"
+                fullWidth
+                style={{ margin: "10px 0" }}
+                onChange={(event) => setComment(event.target.value)}
+              />
+              <Button
+                variant="contained"
+                onClick={() => handleRate(value, comment)}
+              >
+                Rate
+              </Button>
+            </>
+          ) : undefined}
+
+          <Typography style={{ margin: "20px 0" }} variant="h5">
+            Rating from Clients
+          </Typography>
+
+          {product.rates.length ? (
+            product.rates.map((rate) => <Rate user={rate.user} rating={rate} />)
+          ) : (
+            <Typography>No rate from this product</Typography>
+          )}
         </Grid>
         <Grid item sm={2}>
           <Typography variant="h6">Top selling</Typography>
@@ -218,3 +307,19 @@ const mapStateToProp = (state, ownProps) => ({
 export default connect(mapStateToProp)(ProductDetail);
 
 // export default ProductDetail;
+
+{
+  /* <form onSubmit={handleSubmit(onSubmit)}>
+              <Control.Rating
+                inputRef={register({ required: true })}
+                name="star"
+                label="First Name"
+                error={errors.star}
+                control={control}
+              />
+
+              <Button variant="contained" type="submit">
+                Submit
+              </Button>
+            </form> */
+}

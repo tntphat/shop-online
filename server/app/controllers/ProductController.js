@@ -1,30 +1,35 @@
 const Product = require("../models/Product");
-const multer = require('multer')
+const Rate = require("../models/Rate");
+const multer = require("multer");
 
 class ProductController {
   //@route GET /products/
   async getProduct(req, res) {
     try {
-      const products = await Product.find().populate(
-        "sub_category_id category_id"
-      );
+      const products = await Product.find()
+        .populate("sub_category_id category_id ")
+        .populate({
+          path: "rates",
+          select: "user detail star createdAt",
+          populate: { path: "user", select: "firstName lastName" },
+        });
       res.status(200).send(products);
     } catch (error) {
       console.error(error.message);
-      res.status(500).send({ msg: 'Server error' });
+      res.status(500).send({ msg: "Server error" });
     }
   }
 
   //@route GET /products/expired
   async getExpiredProduct(req, res) {
     try {
-      const products = await Product.find({ expiry_date: { $lte: Date.now() } }).populate(
-        "sub_category_id category_id"
-      );;
+      const products = await Product.find({
+        expiry_date: { $lte: Date.now() },
+      }).populate("sub_category_id category_id");
       res.status(200).send(products);
     } catch (error) {
       console.error(error.message);
-      res.status(500).send({ msg: 'Server error' });
+      res.status(500).send({ msg: "Server error" });
     }
   }
 
@@ -32,17 +37,20 @@ class ProductController {
   async addProduct(req, res) {
     const storage = multer.diskStorage({
       destination: function (req, file, cb) {
-          cb(null, './public/images/');
+        cb(null, "./public/images/");
       },
       filename: function (req, file, cb) {
-          cb(null, file.originalname);
-      }
-  });
-  const upload = multer({ storage });
+        cb(null, file.originalname);
+      },
+    });
+    const upload = multer({ storage });
     try {
-      upload.single('file', 1)(req, res, async function (err) {
+      upload.single("file", 1)(req, res, async function (err) {
         const data = req.body;
-        const product = new Product({...data,imgs: 'http://localhost:5000/public/images/'+req.file.originalname});
+        const product = new Product({
+          ...data,
+          imgs: "http://localhost:5000/public/images/" + req.file.originalname,
+        });
         const { name } = product;
         const checkProduct = await Product.findOne({ name });
         if (checkProduct) {
@@ -53,10 +61,10 @@ class ProductController {
           path: "category_id sub_category_id",
         });
         res.status(200).send(dataSent);
-      })      
+      });
     } catch (error) {
       console.error(error.message);
-      res.status(500).send({ msg: 'Server error' });
+      res.status(500).send({ msg: "Server error" });
     }
   }
 
@@ -69,7 +77,7 @@ class ProductController {
       });
     } catch (error) {
       console.error(error.message);
-      res.status(500).send({ msg: 'Server error' });
+      res.status(500).send({ msg: "Server error" });
     }
   }
 
@@ -83,20 +91,56 @@ class ProductController {
       res.status(200).send();
     } catch (error) {
       console.error(error.message);
-      res.status(500).send({ msg: 'Server error' });
+      res.status(500).send({ msg: "Server error" });
+    }
+  }
+
+  async rateProduct(req, res) {
+    try {
+      console.log(req.body, req.params.id, req.user._id);
+      const { starProduct, ratesLength, ...rest } = req.body;
+      const rate = new Rate({
+        ...rest,
+        user: req.user._id,
+        product: req.params.id,
+      });
+      const newRate = await rate.save();
+
+      const newProduct = await Product.findOneAndUpdate(
+        { _id: req.params.id },
+        {
+          $push: { rates: newRate._id },
+          star: (starProduct * ratesLength + newRate.star) / (ratesLength + 1),
+        },
+        { new: true }
+      );
+
+      const dataSent = await Product.populate(newProduct, {
+        path: "rates",
+        select: "user detail star createdAt",
+        populate: { path: "user", select: "firstName lastName" },
+      });
+
+      res.status(200).send(dataSent);
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).send({ msg: "Server error" });
     }
   }
 
   async addNewGoods(goods) {
     try {
-      const goodIds = goods.map(good => good.product);
+      const goodIds = goods.map((good) => good.product);
       //await Product.updateMany({_id:{$in: goodIds}},{$inc :{'quantity':goods[_id]}});
       goodIds.forEach(async (id, idx) => {
-        await Product.updateOne({ _id: id }, { $inc: { quantity: goods[idx].quantity } });
-      })
+        await Product.updateOne(
+          { _id: id },
+          { $inc: { quantity: goods[idx].quantity } }
+        );
+      });
     } catch (error) {
       console.error(error.message);
-      res.status(500).send({ msg: 'Server error' });
+      res.status(500).send({ msg: "Server error" });
     }
   }
 }

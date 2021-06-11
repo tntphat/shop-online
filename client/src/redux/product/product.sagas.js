@@ -1,5 +1,6 @@
-import { takeLatest, put, all, call } from "redux-saga/effects";
+import { takeLatest, put, all, call, select } from "redux-saga/effects";
 import axios from "axios";
+import { selectCurrentUser } from "../user/user.selector";
 
 import ProductActionTypes from "./product.types";
 
@@ -8,6 +9,8 @@ import {
   addProductSuccess,
   editProductFailure,
   editProductSuccess,
+  rateProductFailure,
+  rateProductSuccess,
   delProductFailure,
   delProductSuccess,
   fetchProductsSuccess,
@@ -48,6 +51,26 @@ export function* editProduct({ payload }) {
   }
 }
 
+export function* rateProduct({ payload }) {
+  try {
+    console.log("helo from saga rate", payload);
+    const { id, ...rest } = payload;
+    const curUser = yield select(selectCurrentUser);
+    const { data } = yield axiosInstance.patch(
+      `/products/rate/${id}`,
+      { ...rest },
+      {
+        headers: {
+          Authorization: "Bearer " + curUser.token,
+        },
+      }
+    );
+    yield put(rateProductSuccess(data));
+  } catch (error) {
+    yield put(rateProductFailure(error.response.data));
+  }
+}
+
 export function* delProduct({ payload }) {
   try {
     console.log("helo from saga", payload._ids);
@@ -76,6 +99,10 @@ export function* onEditProductStart() {
   yield takeLatest(ProductActionTypes.EDIT_PRODUCT_START, editProduct);
 }
 
+export function* onRateProductStart() {
+  yield takeLatest(ProductActionTypes.RATE_PRODUCT_START, rateProduct);
+}
+
 export function* onAddProductStart() {
   yield takeLatest(ProductActionTypes.ADD_PRODUCT_START, addProduct);
 }
@@ -94,5 +121,6 @@ export function* productSagas() {
     call(onFetchProductsStart),
     call(onDelProductStart),
     call(onEditProductStart),
+    call(onRateProductStart),
   ]);
 }

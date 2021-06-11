@@ -30,6 +30,21 @@ export const editProductFailure = (error) => ({
   payload: error,
 });
 
+export const rateProductStart = (product) => ({
+  type: ProductActionTypes.RATE_PRODUCT_START,
+  payload: product,
+});
+
+export const rateProductSuccess = (product) => ({
+  type: ProductActionTypes.RATE_PRODUCT_SUCCESS,
+  payload: product,
+});
+
+export const rateProductFailure = (error) => ({
+  type: ProductActionTypes.RATE_PRODUCT_FAILURE,
+  payload: error,
+});
+
 export const delProductStart = (product) => ({
   type: ProductActionTypes.DEL_PRODUCT_START,
   payload: product,
