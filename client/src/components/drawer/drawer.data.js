@@ -1,5 +1,4 @@
 import InboxIcon from "@material-ui/icons/MoveToInbox";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline";
 import DashboardIcon from "@material-ui/icons/Dashboard";

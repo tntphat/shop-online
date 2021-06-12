@@ -57,7 +57,7 @@ export default function Cart() {
           handleCheckout={handleCheckout}
         />
       ) : (
-        <Typography variant="h2">Ur cart is empry</Typography>
+        <Typography variant="h5">Ur cart is empry</Typography>
       )}
     </div>
   );

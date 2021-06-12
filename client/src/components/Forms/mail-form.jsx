@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { useForm } from "react-hook-form";
-import { Typography, makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 // import Form from "../../components/form/form.component";
 import Button from "@material-ui/core/Button";
 import { addMailStart, repMailStart } from "../../redux/mails/mail.actions";
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MailForm = ({ setOpenPopup, addMailStart, repMailStart, idMail }) => {
-  const { register, handleSubmit, errors, setError, control } = useForm({
+  const { register, handleSubmit, errors, control } = useForm({
     mode: "all",
   });
   const classes = useStyles();

@@ -137,6 +137,7 @@ function FilterBar({
                     color="secondary"
                   />
                 );
+              else return undefined;
             })}
           </Grid>
         </>

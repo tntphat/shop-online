@@ -27,7 +27,6 @@ const useStyles = makeStyles({
 export default function BasicTable({ authorities }) {
   const classes = useStyles();
   const [openPopup, setOpenPopup] = useState(false);
-  const [targetRow, setTargetRow] = useState(null);
   const [confirmDialog, setConfirmDialog] = useState({
     isOpen: false,
     title: "",

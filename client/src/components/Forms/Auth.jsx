@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Button from "@material-ui/core/Button";
 import Control from "../controls/Control";
@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Form = ({
-  type,
   signInStart,
   signUpStart,
   errorSignIn,
@@ -36,7 +35,6 @@ const Form = ({
   setOpenPopup,
   isIn,
   setIsIn,
-  ...rest
 }) => {
   const { register, handleSubmit, errors, setError, control } = useForm({
     mode: "all",
@@ -45,7 +43,8 @@ const Form = ({
   // const [isIn, setIsIn] = useState(true);
   const onSubmit = (data) => {
     console.log(data);
-    if (!isIn && !isEmployee) signUpStart(data);
+    if (!isIn && !isEmployee)
+      signUpStart({ ...data, setOpenPopup, isEmployee: isEmployee });
     else signInStart({ ...data, isEmployee: isEmployee || 0, setOpenPopup });
   };
 

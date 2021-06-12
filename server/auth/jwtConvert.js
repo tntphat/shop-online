@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const config = require("../config/config");
 
 function hi(user) {
   const {
@@ -23,7 +24,7 @@ function hi(user) {
     gender,
     role,
   };
-  const token = jwt.sign(data, "secret", { expiresIn: "12h" });
+  const token = jwt.sign(data, config.JWT_SECRET, { expiresIn: "12h" });
   return { ...data, token };
 }
 

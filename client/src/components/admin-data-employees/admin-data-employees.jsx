@@ -22,12 +22,9 @@ const useStyles = makeStyles({
   },
 });
 
-const authoritiess = [{ name: "Fat" }];
-
 function EmployeesTable({ authorities, employees }) {
   const classes = useStyles();
   const [openPopup, setOpenPopup] = useState(false);
-  const [targetRow, setTargetRow] = useState(null);
   const [confirmDialog, setConfirmDialog] = useState({
     isOpen: false,
     title: "",
@@ -97,7 +94,7 @@ function EmployeesTable({ authorities, employees }) {
           </TableBody>
         </Table>
       </TableContainer>
-      <Popup fullScreen openPopup={openPopup} setOpenPopup={setOpenPopup}>
+      <Popup openPopup={openPopup} setOpenPopup={setOpenPopup}>
         <EmployeeForm authorities={authorities} setOpenPopup={setOpenPopup} />
       </Popup>
       <Notification notify={notify} setNotify={setNotify}></Notification>

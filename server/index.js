@@ -1,20 +1,18 @@
+const config = require("./config/config");
 const express = require("express");
-const bodyParser = require("body-parser");
 const cors = require("cors");
 const compression = require("compression");
 const db = require("./config/db");
-const { log } = require("console");
 
 db.connect();
 
 const app = express();
-const port = process.env.PORT || 5000;
 app.use(compression());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/public', express.static('public'));
+app.use("/public", express.static("public"));
 
 const corsOption = {
   origin: true,
@@ -26,11 +24,10 @@ app.use(cors(corsOption));
 
 require("./app/middlewares/session.mdw")(app);
 require("./routes")(app);
-
-app.listen(port, (error) => {
+app.listen(config.PORT, (error) => {
   if (error) {
     console.log("Sthing wrong happen");
     throw error;
   }
-  console.log("Server running on port " + port);
+  console.log("Server running on " + config.PORT);
 });

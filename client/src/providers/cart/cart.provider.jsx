@@ -1,4 +1,3 @@
-import Cookies from "js-cookie";
 import React, { createContext, useState, useEffect } from "react";
 import {
   addItemToCart,

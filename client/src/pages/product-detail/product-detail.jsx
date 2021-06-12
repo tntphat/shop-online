@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
-import { useForm } from "react-hook-form";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -12,8 +11,6 @@ import RemoveIcon from "@material-ui/icons/Remove";
 import AddIcon from "@material-ui/icons/Add";
 
 import TextField from "@material-ui/core/TextField";
-
-import Control from "../../components/controls/Control";
 
 import {
   selectProductSpecified,
@@ -89,9 +86,6 @@ const labels = {
 };
 
 const ProductDetail = (props) => {
-  const { register, handleSubmit, errors, setError, control } = useForm({
-    mode: "all",
-  });
   const dispatch = useDispatch();
   const currUser = useSelector((state) => state.user.currentUser);
 
@@ -171,8 +165,10 @@ const ProductDetail = (props) => {
             display="flex"
             flexDirection="column"
           >
-            <Box display="flex" mb={3} flexDirection="row">
-              <Typography component="span">{product.star}</Typography>
+            <Box display="flex" mb={2} flexDirection="row">
+              <Typography component="span">
+                {Math.round(product.star * 2) / 2}
+              </Typography>
 
               <Rating value={product.star} precision={0.5} readOnly />
               <Box mx={1}>
@@ -307,19 +303,3 @@ const mapStateToProp = (state, ownProps) => ({
 export default connect(mapStateToProp)(ProductDetail);
 
 // export default ProductDetail;
-
-{
-  /* <form onSubmit={handleSubmit(onSubmit)}>
-              <Control.Rating
-                inputRef={register({ required: true })}
-                name="star"
-                label="First Name"
-                error={errors.star}
-                control={control}
-              />
-
-              <Button variant="contained" type="submit">
-                Submit
-              </Button>
-            </form> */
-}

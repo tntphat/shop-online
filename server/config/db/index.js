@@ -1,16 +1,17 @@
 const mongoose = require("mongoose");
+const config = require("../config");
 
 async function connect() {
   try {
-    await mongoose.connect("mongodb+srv://dbUser5:dbUser5@cluster0.w7ggh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", {
+    await mongoose.connect(config.MONGODB_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,
       useCreateIndex: true,
     });
-    console.log("Sucessfully Connected !!! HEHEHEHEEHE");
+    console.log("Sucessfully Connected !");
   } catch (error) {
-    console.log("fail");
+    console.log("fail connected to DB");
   }
 }
 

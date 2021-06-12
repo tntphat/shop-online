@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Button, Typography } from "@material-ui/core";
 
@@ -8,9 +9,6 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Divider from "@material-ui/core/Divider";
-
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import { addProductSuccess } from "../../redux/product/product.actions";
 
 const useStyles = makeStyles((theme) => ({
   name: {
@@ -53,11 +51,14 @@ const CartItems = ({
   status,
 }) => {
   const classes = useStyles();
+  const history = useHistory();
   return (
     <List className={!isCart && classes.sect}>
       <ListItem key={1}>
         {isCart ? (
-          <Typography variant="h5">{title}</Typography>
+          <Typography component="span" variant="h5">
+            {title}
+          </Typography>
         ) : (
           <Box
             display="flex"
@@ -65,16 +66,25 @@ const CartItems = ({
             flexDirection="row"
             justifyContent="space-between"
           >
-            <Typography variant="h6">#{title}</Typography>
+            <Typography component="span" variant="h6">
+              #{title}
+            </Typography>
 
-            <Typography variant="h6">{status}</Typography>
+            <Typography component="span" variant="h6">
+              {status}
+            </Typography>
           </Box>
         )}
       </ListItem>
       {cartItems.map((item) => (
-        <div key={item.id}>
-          <ListItem key={item.id}>
-            <ListItemAvatar>
+        <div key={item._id}>
+          <ListItem key={item._id}>
+            <ListItemAvatar
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                history.push(`/products/${item._id}`);
+              }}
+            >
               <div
                 className={classes.image}
                 style={{
@@ -90,7 +100,7 @@ const CartItems = ({
             />
             {formatNumber(item.price)}
           </ListItem>
-          <Divider light variant="middle" />
+          <Divider component="hr" light variant="middle" />
         </div>
       ))}
       {isCart ? (
@@ -123,7 +133,7 @@ const CartItems = ({
         </>
       )}
 
-      {status !== "Delivered" ? (
+      {status !== "Delivered" && status !== "Cancelled" && !isCart ? (
         <ListItem>
           <Button
             variant="contained"

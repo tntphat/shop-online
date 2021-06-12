@@ -1,6 +1,5 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
 import { useHistory, useLocation } from "react-router-dom";
 import { formatNumber } from "../../helpers/number";

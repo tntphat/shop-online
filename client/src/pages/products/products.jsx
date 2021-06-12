@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Hidden } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import Card from "../../components/card/card.component";
 
 import { useLocation, useHistory } from "react-router-dom";
-
-import { connect } from "react-redux";
 
 import { selectProductsByFiler } from "../../redux/product/product.selector";
 import { selectCategories } from "../../redux/categories/category.selector";
@@ -24,11 +23,28 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-const ProductsPage = ({ selectProductsByFiler, selectCategories }) => {
+const ProductsPage = () => {
   let query = useQuery();
   let history = useHistory();
   const classes = useStyles();
   const first = useRef(0);
+
+  const categorySlug = query.get("category");
+  const subSlug = query.get("sub");
+  const kwQuery = query.get("kw");
+
+  const { products, max } = useSelector((state) =>
+    selectProductsByFiler(
+      categorySlug,
+      subSlug,
+      kwQuery,
+      query.get("sort"),
+      query.get("from"),
+      query.get("to")
+    )(state)
+  );
+
+  const categories = useSelector((state) => selectCategories(state));
 
   const [notify, setNotify] = useState({
     isOpen: false,
@@ -36,32 +52,26 @@ const ProductsPage = ({ selectProductsByFiler, selectCategories }) => {
     type: "",
   });
 
-  const { products, max } = selectProductsByFiler(
-    query.get("category"),
-    query.get("sub"),
-    query.get("kw"),
-    query.get("sort"),
-    query.get("from"),
-    query.get("to")
-  );
-
   useEffect(() => {
-    if (first.current) {
+    function handleClearQuery() {
       query.delete("from");
       query.delete("to");
       query.delete("sort");
+      history.replace({
+        search: query.toString(),
+      });
+    }
+    if (first.current) {
+      handleClearQuery();
     } else first.current = 1;
-    history.replace({
-      search: query.toString(),
-    });
-  }, [query.get("category"), query.get("kw")]);
+  }, [categorySlug, kwQuery, subSlug]);
 
   return (
     <Grid container className={classes.paper} spacing={1}>
       <Grid container item xs={12} sm={3}>
         <Grid item md={3} sm={0} />
         <Grid item md={9} xs={12}>
-          <ListCategory categories={selectCategories} />
+          <ListCategory categories={categories} />
         </Grid>
       </Grid>
       <Grid item xs={12} sm={8} style={{ marginTop: "16px" }}>
@@ -83,10 +93,4 @@ const ProductsPage = ({ selectProductsByFiler, selectCategories }) => {
   );
 };
 
-const mapStateToProp = (state, ownProps) => ({
-  selectProductsByFiler: (category, sub, kw, sort, from, to) =>
-    selectProductsByFiler(category, sub, kw, sort, from, to)(state),
-  selectCategories: selectCategories(state),
-});
-
-export default connect(mapStateToProp)(ProductsPage);
+export default ProductsPage;

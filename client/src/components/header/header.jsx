@@ -175,11 +175,11 @@ const HideAppBar = ({ currentUser, signOutStart, location, history }) => {
             </IconButton>
           </Hidden>
           <Box display="flex" flexDirection="row" flex={1}>
-            <IconButton>
-              <Link className={classes.link} to="/">
+            <Link className={classes.link} to="/">
+              <IconButton>
                 <i className="fas fa-home"></i>
-              </Link>
-            </IconButton>
+              </IconButton>
+            </Link>
 
             <Link className={classes.link} to="/products">
               <Typography variant="h5">Products</Typography>

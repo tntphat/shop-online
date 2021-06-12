@@ -1,5 +1,4 @@
 import { makeStyles, fade } from "@material-ui/core/styles";
-import IconButton from "@material-ui/core/IconButton";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 

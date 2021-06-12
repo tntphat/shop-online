@@ -5,7 +5,6 @@ import {
   DialogContent,
   makeStyles,
   Typography,
-  IconButton,
   Box,
   Button,
 } from "@material-ui/core";

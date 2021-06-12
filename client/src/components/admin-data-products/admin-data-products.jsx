@@ -7,7 +7,7 @@ import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import { connect } from "react-redux";
-import { Box, IconButton, makeStyles, Typography } from "@material-ui/core";
+import { Box, makeStyles, Typography } from "@material-ui/core";
 import PopUp from "../popUp";
 import ConfirmDialog from "../ConfirmDialog";
 import Notification from "../../components/Notification";

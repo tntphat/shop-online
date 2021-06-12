@@ -70,10 +70,7 @@ function useQuery() {
 function NestedList(props) {
   const classes = useStyles();
   let query = useQuery();
-  const { categories, history, match } = props;
-  const handleCLick = (e) => {
-    e.stopPropagation();
-  };
+  const { categories, history } = props;
   const clearQuery = (e) => {
     e.stopPropagation();
     query.delete("sub");

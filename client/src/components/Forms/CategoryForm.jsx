@@ -9,7 +9,6 @@ import {
   editCategoryStart,
   addSubCategoryStart,
 } from "../../redux/categories/category.actions";
-import { useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
   formWidth: {
@@ -59,7 +58,7 @@ const AdminCategoryAdd = ({
           defaultValue={defaultName}
           inputRef={register({ required: true })}
           name="name"
-          label="Name" 
+          label="Name"
           fullWidth
           error={errors.name}
         />

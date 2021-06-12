@@ -1,5 +1,6 @@
 import { takeLatest, put, all, call, select } from "redux-saga/effects";
-import axios from "axios";
+import axiosInstance from "../../helpers/axiosInstance";
+
 import Cookies from "js-cookie";
 
 import UserActionTypes from "./user.types";
@@ -20,10 +21,6 @@ import {
 } from "./user.actions";
 
 import { selectCurrentUser } from "./user.selector";
-
-const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000",
-});
 
 export function* signIn({
   payload: { email, password, isEmployee, setOpenPopup },
@@ -50,17 +47,18 @@ export function* signIn({
 export function* signUp({ payload }) {
   try {
     console.log("helo from saga SIGN Up ");
-    const { notClient, ...others } = payload;
-    const path = notClient ? "employee" : "user";
+    const { isEmployee, setOpenPopup, ...others } = payload;
+    const path = isEmployee ? "employee" : "user";
     console.log(path);
     const { data } = yield axiosInstance.post(`/${path}/register`, others);
-    if (!notClient) {
+    if (!isEmployee) {
       yield Cookies.set("user", JSON.stringify(data));
       yield put(signUpSuccess(data));
     } else {
       console.log("emloyee: ", data);
       yield put(addEmployeeSuccess(data));
     }
+    yield setOpenPopup(false);
   } catch (error) {
     yield put(signUpFailure(error.response.data));
   }

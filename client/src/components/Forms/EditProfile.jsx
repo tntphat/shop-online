@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const EditForm = ({ currentUser, editUserStart }) => {
-  const { register, handleSubmit, errors, setError, control } = useForm();
+  const { register, handleSubmit, errors, control } = useForm();
   const classes = useStyles();
   console.log("user: ", currentUser);
   const onSubmit = (data) => {

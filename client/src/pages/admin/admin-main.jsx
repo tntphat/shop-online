@@ -72,6 +72,8 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
+    color: theme.palette.text.main,
+
     [theme.breakpoints.up("md")]: {
       display: "none",
     },
@@ -88,10 +90,6 @@ const useStyles = makeStyles((theme) => ({
   },
   homeIcon: {
     fontSize: "4rem",
-  },
-  menuButton: {
-    marginRight: 36,
-    color: theme.palette.text.main,
   },
   menuButtonHidden: {
     display: "none",

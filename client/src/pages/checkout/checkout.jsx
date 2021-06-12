@@ -2,18 +2,10 @@ import React, { useContext, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Button,
-  Grid,
-  IconButton,
-  isMuiElement,
-  Paper,
-  Typography,
-} from "@material-ui/core";
+import { Button, Grid, IconButton, Paper, Typography } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 
@@ -83,16 +75,14 @@ const ProductContainer = ({ name }) => {
     const products = [];
     const productsPurchased = [];
     const productsQuantityLeft = [];
-    const data = cartItems.forEach(
-      ({ quantity, _id, quantity_left, purchased }) => {
-        products.push({
-          quantity,
-          product_id: _id,
-        });
-        productsQuantityLeft.push(quantity_left);
-        productsPurchased.push(purchased);
-      }
-    );
+    cartItems.forEach(({ quantity, _id, quantity_left, purchased }) => {
+      products.push({
+        quantity,
+        product_id: _id,
+      });
+      productsQuantityLeft.push(quantity_left);
+      productsPurchased.push(purchased);
+    });
     dispatch(
       addInvoiceStart({
         products,

@@ -133,7 +133,7 @@ export const selectProductsByProduct = (product) =>
     var productsData = JSON.parse(JSON.stringify(productsState));
     productsData = filterByCategory(productsData, product.category_id.slug);
     productsData = filterBySort(productsData, 1);
-    productsData = selectTopExcept(productsData, product._id, 3);
+    productsData = selectTopExcept(productsData, product._id, 4);
     console.log("product: ", productsData);
 
     return productsData;

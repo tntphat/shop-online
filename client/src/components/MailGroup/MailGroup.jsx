@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Box, Hidden, makeStyles } from "@material-ui/core";
 import BoxMails from "../box-mails";
 import CardMail from "../CardMail";

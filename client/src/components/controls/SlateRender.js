@@ -7,11 +7,11 @@ const RichTextExample = ({ content, notFormat }) => {
   const value = JSON.parse(content);
   const renderElement = useCallback(
     (props) => (notFormat ? <Normal {...props} /> : <Element {...props} />),
-    []
+    [notFormat]
   );
   const renderLeaf = useCallback(
     (props) => (notFormat ? <Normal {...props} /> : <Leaf {...props} />),
-    []
+    [notFormat]
   );
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
 

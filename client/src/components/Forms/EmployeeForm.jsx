@@ -19,14 +19,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MailForm = ({ setOpenPopup, authorities, signUpStart }) => {
-  const { register, handleSubmit, errors, setError, control } = useForm({
+  const { register, handleSubmit, errors, control } = useForm({
     mode: "all",
   });
   const classes = useStyles();
   const onSubmit = (data) => {
-    signUpStart({ ...data, notClient: 1 });
-    console.log(data);
-    setOpenPopup(false);
+    signUpStart({ ...data, isEmployee: 1, setOpenPopup });
   };
 
   return (

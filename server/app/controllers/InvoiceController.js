@@ -38,10 +38,12 @@ class InvoiceController {
     try {
       const invoices = await Invoice.find({
         customer: req.user._id,
-      }).populate({
-        path: "products.product_id",
-        select: "name price imgs",
-      });
+      })
+        .sort("-createdAt")
+        .populate({
+          path: "products.product_id",
+          select: "name price imgs",
+        });
       console.log(invoices);
       res.status(200).send(invoices);
     } catch (error) {
@@ -55,6 +57,7 @@ class InvoiceController {
   async getAll(req, res) {
     try {
       const invoices = await Invoice.find()
+        .sort("-createdAt")
         .populate({
           path: "customer",
           select: "firstName lastName email",

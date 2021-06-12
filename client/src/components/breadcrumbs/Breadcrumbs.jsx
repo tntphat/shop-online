@@ -16,6 +16,7 @@ export default function SimpleBreadcrumbs({ arr, present }) {
     <Breadcrumbs aria-label="breadcrumb">
       {arr.map((ele) => (
         <Link
+          href="#"
           color="inherit"
           onClick={(e) => handleClick(e, ele.link, history)}
         >

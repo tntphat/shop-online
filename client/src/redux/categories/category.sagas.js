@@ -1,5 +1,5 @@
-import { takeLatest, put, all, call, select } from "redux-saga/effects";
-import axios from "axios";
+import { takeLatest, put, all, call } from "redux-saga/effects";
+import axiosInstance from "../../helpers/axiosInstance";
 
 import CategoryActionTypes from "./category.types";
 
@@ -15,10 +15,6 @@ import {
   fetchCategoriesSuccess,
   fetchCategoriesFailure,
 } from "./category.actions";
-
-const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000",
-});
 
 export function* addCategory({ payload }) {
   try {
@@ -74,7 +70,7 @@ export function* fetchCategories() {
     console.log(data);
     yield put(fetchCategoriesSuccess(data));
   } catch (error) {
-    yield put(addCategoryFailure(error.response.data));
+    yield put(fetchCategoriesFailure(error.response.data));
   }
 }
 

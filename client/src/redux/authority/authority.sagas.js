@@ -1,5 +1,5 @@
-import { takeLatest, put, all, call, select } from "redux-saga/effects";
-import axios from "axios";
+import { takeLatest, put, all, call } from "redux-saga/effects";
+import axiosInstance from "../../helpers/axiosInstance";
 
 import AuthorityActionTypes from "./authority.types";
 
@@ -9,10 +9,6 @@ import {
   fetchAuthoritiesSuccess,
   fetchAuthoritiesFailure,
 } from "./authority.actions";
-
-const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000",
-});
 
 export function* addAuthority({ payload }) {
   try {

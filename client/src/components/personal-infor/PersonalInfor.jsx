@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IconButton, Paper, Typography } from "@material-ui/core";
+import { IconButton, Typography } from "@material-ui/core";
 import Popup from "../popUp";
 import MailForm from "../Forms/mail-form";
 import MailIcon from "@material-ui/icons/Mail";

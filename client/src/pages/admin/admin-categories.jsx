@@ -1,9 +1,6 @@
 import React, { useEffect } from "react";
-import { Button, Typography } from "@material-ui/core";
 import CategoriesTable from "../../components/categories-table";
 // import Popup from "../../components/popUp";
-import { useState } from "react";
-import FormCategoryAdd from "../../components/Forms/CategoryForm";
 import { connect } from "react-redux";
 
 import { fetchCategoriesStart } from "../../redux/categories/category.actions";

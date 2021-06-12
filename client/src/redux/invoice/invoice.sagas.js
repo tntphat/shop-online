@@ -1,5 +1,5 @@
 import { takeLatest, put, all, call, select } from "redux-saga/effects";
-import axios from "axios";
+import axiosInstance from "../../helpers/axiosInstance";
 
 import { selectCurrentUser } from "../user/user.selector";
 
@@ -13,11 +13,6 @@ import {
   editInvoiceSuccess,
   editInvoiceFailure,
 } from "./invoice.actions";
-
-const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000",
-});
-
 export function* addInvoice({ payload }) {
   try {
     console.log("helo from saga Invoice ADD", payload);

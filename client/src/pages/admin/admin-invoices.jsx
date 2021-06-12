@@ -1,11 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import { Typography } from "@material-ui/core";
-import {
-  fetchInvoicesStart,
-  editInvoiceStart,
-} from "../../redux/invoice/invoice.actions";
+import { fetchInvoicesStart } from "../../redux/invoice/invoice.actions";
 
 import ListInvoices from "../../components/list-invoice/list-invoice";
 
@@ -18,7 +13,7 @@ const AdminInvoices = () => {
 
   useEffect(() => {
     dispatch(fetchInvoicesStart());
-  }, [fetchInvoicesStart]);
+  }, [dispatch]);
 
   const { invoices } = useSelector((state) => state.invoice);
 

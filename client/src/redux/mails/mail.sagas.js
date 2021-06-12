@@ -1,5 +1,5 @@
 import { takeLatest, put, all, call, select } from "redux-saga/effects";
-import axios from "axios";
+import axiosInstance from "../../helpers/axiosInstance";
 
 import { selectCurrentUser } from "../user/user.selector";
 
@@ -13,10 +13,6 @@ import {
   repMailSuccess,
   repMailFailure,
 } from "./mail.actions";
-
-const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000",
-});
 
 export function* addMail({ payload }) {
   try {
@@ -58,7 +54,7 @@ export function* fetchUserMails() {
     console.log(data);
     yield put(fetchMailsSuccess(data));
   } catch (error) {
-    yield put(addMailFailure(error.response.data));
+    yield put(fetchMailsFailure(error.response.data));
   }
 }
 

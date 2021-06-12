@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
+import { useHistory } from "react-router-dom";
 import { Typography, Button } from "@material-ui/core";
-import {} from "../../redux/user/user.actions";
 
 const AdminAddproduct = () => {
+  const history = useHistory();
   return (
     <>
-      <Button variant="contained">Hihi</Button>
+      <Button onClick={() => history.push("/")} variant="contained">
+        Home
+      </Button>
       <Typography variant="h2">Admin Page</Typography>
     </>
   );

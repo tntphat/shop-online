@@ -74,7 +74,6 @@ const AccordionItem = ({ subCategory, handleEditSub }) => {
 };
 
 const Row = ({ row, handleAddSubCategory, handleEditSub }) => {
-  const classes = useStyles();
   return (
     <>
       <TableCell style={{ width: "100%" }} component="th" scope="row">

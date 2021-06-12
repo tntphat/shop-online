@@ -106,6 +106,8 @@ class ProductController {
       });
       const newRate = await rate.save();
 
+      console.log();
+
       const newProduct = await Product.findOneAndUpdate(
         { _id: req.params.id },
         {
