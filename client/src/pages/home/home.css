@@ -7,3 +7,8 @@
 .blank {
   height: 100vh;
 }
+
+.red {
+  height: 20vh;
+  background-color: red;
+}

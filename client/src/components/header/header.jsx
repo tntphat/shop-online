@@ -10,7 +10,8 @@ import Badge from "@material-ui/core/Badge";
 import Hidden from "@material-ui/core/Hidden";
 import Cookies from "js-cookie";
 import { withRouter } from "react-router-dom";
-import Cart from "../cart/cart";
+// import Cart from "../cart/cart";
+import Cart from "../cart/cart.outside";
 
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
@@ -222,7 +223,12 @@ const HideAppBar = ({ currentUser, signOutStart, location, history }) => {
               <Typography className={classes.link} variant="h6">
                 Contact
               </Typography>
-              <IconButton onClick={() => toggleHidden()}>
+              <IconButton
+                style={{ zIndex: 4 }}
+                onClick={(e) => {
+                  toggleHidden();
+                }}
+              >
                 <Badge badgeContent={`${cartItemsCount}`} color="secondary">
                   <ShoppingCartOutlinedIcon />
                 </Badge>

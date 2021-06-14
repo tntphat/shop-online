@@ -1,18 +1,14 @@
-import { connect } from "react-redux";
-import { compose } from "redux";
-import { createStructuredSelector } from "reselect";
-
-import { selectIsProductsLoaded } from "../../redux/product/product.selector";
+import { useSelector } from "react-redux";
 import WithSpinner from "../../components/with-spinner/with-spinner";
 import ProductDetail from "./product-detail";
+const ProductDetailWithSpinner = WithSpinner(ProductDetail);
 
-const mapStateToProps = createStructuredSelector({
-  isLoading: selectIsProductsLoaded,
-});
-
-const ProductDetailPageContainer = compose(
-  connect(mapStateToProps),
-  WithSpinner
-)(ProductDetail);
+const ProductDetailPageContainer = () => {
+  return (
+    <ProductDetailWithSpinner
+      isLoading={useSelector((state) => state.product.isFetching)}
+    />
+  );
+};
 
 export default ProductDetailPageContainer;

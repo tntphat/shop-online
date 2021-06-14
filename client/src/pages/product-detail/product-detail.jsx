@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
-import { connect, useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -85,12 +86,17 @@ const labels = {
   5: "Excellent+",
 };
 
-const ProductDetail = (props) => {
+const ProductDetail = () => {
   const dispatch = useDispatch();
+  const { productId } = useParams();
   const currUser = useSelector((state) => state.user.currentUser);
-
-  const { product, selectTopProducts } = props;
-  const topProducts = selectTopProducts(product);
+  const product = useSelector((state) =>
+    selectProductSpecified(productId)(state)
+  );
+  const topProducts = useSelector((state) =>
+    selectProductsByProduct(product)(state)
+  );
+  // const topProducts = selectTopProducts(product);
   const classes = useStyles();
   const { addItem } = useContext(CartContext);
 
@@ -295,11 +301,11 @@ const ProductDetail = (props) => {
   );
 };
 
-const mapStateToProp = (state, ownProps) => ({
-  product: selectProductSpecified(ownProps.match.params.productId)(state),
-  selectTopProducts: (product) => selectProductsByProduct(product)(state),
-});
+// const mapStateToProp = (state, ownProps) => ({
+//   product: selectProductSpecified(ownProps.match.params.productId)(state),
+//   selectTopProducts: (product) => selectProductsByProduct(product)(state),
+// });
 
-export default connect(mapStateToProp)(ProductDetail);
+// export default connect(mapStateToProp)(ProductDetail);
 
-// export default ProductDetail;
+export default ProductDetail;

@@ -14,6 +14,7 @@ export const CartContext = createContext({
   removeItem: () => {},
   clearItemFromCart: () => {},
   clearCart: () => {},
+  hideCart: () => {},
   cartItemsCount: 0,
 });
 
@@ -35,6 +36,9 @@ const CartProvider = ({ children }) => {
     setCartItems([]);
   };
   const toggleHidden = () => setHidden(!hidden);
+  const hideCart = () => {
+    if (!hidden) setHidden(true);
+  };
 
   useEffect(() => {
     setCartItemsCount(getCartItemsCount(cartItems));
@@ -56,6 +60,7 @@ const CartProvider = ({ children }) => {
         removeItem,
         clearItemFromCart,
         cartItemsCount,
+        hideCart,
       }}
     >
       {children}

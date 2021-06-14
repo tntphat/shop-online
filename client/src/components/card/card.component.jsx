@@ -6,6 +6,8 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import Rating from "@material-ui/lab/Rating";
 import Tooltip from "@material-ui/core/Tooltip";
 
 import { CartContext } from "../../providers/cart/cart.provider";
@@ -100,6 +102,15 @@ export default function SimpleCard({ product, setNotify, hideBtn }) {
             {product.name}
           </Typography>
         </Tooltip>
+        <Box my={1} display="flex" flexDirection="row">
+          <Rating value={product.star} precision={0.5} readOnly />
+          <Box ml={1}>
+            <Typography component="span" variant="body2">
+              ({product.rates.length})
+            </Typography>
+          </Box>
+        </Box>
+
         <Typography className={classes.pos} color="textSecondary">
           {formatNumber(product.price)} VND
         </Typography>

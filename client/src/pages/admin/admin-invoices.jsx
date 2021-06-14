@@ -7,10 +7,6 @@ import ListInvoices from "../../components/list-invoice/list-invoice";
 const AdminInvoices = () => {
   const dispatch = useDispatch();
 
-  // const handleChangeStatusInvoice = (title, status) => {
-  //   dispatch(editInvoiceStart({ title, status }));
-  // };
-
   useEffect(() => {
     dispatch(fetchInvoicesStart());
   }, [dispatch]);

@@ -3,7 +3,7 @@ import { Route } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Paper } from "@material-ui/core";
 
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { fetchProductsStart } from "../../redux/product/product.actions";
 import { fetchCategoriesStart } from "../../redux/categories/category.actions";
@@ -30,18 +30,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProductContainer = ({
-  fetchProductsStart,
-  fetchCategoriesStart,
-  match,
-}) => {
+const ProductContainer = ({ match }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   useEffect(() => {
-    fetchProductsStart();
-  }, [fetchProductsStart]);
-  useEffect(() => {
-    fetchCategoriesStart();
-  }, [fetchCategoriesStart]);
+    dispatch(fetchProductsStart());
+    dispatch(fetchCategoriesStart());
+  }, [dispatch]);
   return (
     <Paper className={classes.paper}>
       <Suspense fallback={<Spinner />}>
@@ -61,8 +56,4 @@ const mapDispatchToProp = (dispatch) => ({
   fetchCategoriesStart: () => dispatch(fetchCategoriesStart()),
 });
 
-const mapStateToProp = (state) => ({
-  selectProducts: selectProducts(state),
-});
-
-export default connect(mapStateToProp, mapDispatchToProp)(ProductContainer);
+export default ProductContainer;

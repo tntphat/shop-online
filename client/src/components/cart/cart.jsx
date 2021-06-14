@@ -17,6 +17,16 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     zIndex: 5,
     border: "1px solid #636e72",
+    // "&::before": {
+    //   content: '""',
+    //   position: "absolute",
+    //   display: "block",
+    //   height: "40px",
+    //   width: "40px",
+    //   top: "-48px",
+    //   left: "96px",
+    //   backgroundColor: "transparent",
+    // },
   },
   name: {
     display: "-webkit-box",

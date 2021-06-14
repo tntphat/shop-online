@@ -4,6 +4,7 @@ import { addSubCategory } from "./category.utils";
 
 const INITIAL_STATE = {
   categories: [],
+  isFetching: false,
   error: null,
 };
 
@@ -55,8 +56,14 @@ const mailReducer = (state = INITIAL_STATE, action) => {
     case CategoryActionTypes.FETCH_CATEGORIES_SUCCESS:
       return {
         ...state,
+        isFetching: false,
         categories: action.payload,
         error: null,
+      };
+    case CategoryActionTypes.FETCH_CATEGORIES_START:
+      return {
+        ...state,
+        isFetching: true,
       };
 
     case CategoryActionTypes.ADD_SUBCATEGORY_SUCCESS:
@@ -75,6 +82,7 @@ const mailReducer = (state = INITIAL_STATE, action) => {
     case CategoryActionTypes.FETCH_CATEGORIES_FAILURE:
       return {
         ...state,
+        isFetching: false,
         error: action.payload,
       };
     default:

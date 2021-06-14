@@ -102,7 +102,8 @@ export const selectProductsByFiler = (
   kw,
   sortValue,
   from,
-  to
+  to,
+  quantity
 ) =>
   createSelector([selectProducts], (productsState) => {
     var productsData = JSON.parse(JSON.stringify(productsState));
@@ -113,6 +114,10 @@ export const selectProductsByFiler = (
       (from && to && filterByRange(productsData, from, to)) || productsData;
     productsData =
       (sortValue && filterBySort(productsData, sortValue)) || productsData;
+
+    productsData =
+      (quantity && productsData.slice(0, quantity)) || productsData;
+
     return { products: productsData, max };
   });
 
@@ -137,6 +142,32 @@ export const selectProductsByProduct = (product) =>
     console.log("product: ", productsData);
 
     return productsData;
+  });
+
+const selectProductsByCategory = (categoryId, productsState) => {
+  var productsData = JSON.parse(JSON.stringify(productsState));
+  productsData = filterByCategory(productsData, categoryId);
+  productsData = filterBySort(productsData, 1);
+  // productsData = selectTopExcept(productsData, null, 6);
+
+  return productsData.slice(0, 6);
+};
+
+export const selectTopsProductsByCategories = (categories) =>
+  createSelector([selectProducts], (productsState) => {
+    // var productsData = JSON.parse(JSON.stringify(productsState));
+    const arrsProducts = [];
+    // for (let i = 0; i < categories.length; ++i) arrsProducts.push([]);
+    categories.forEach((category, i) => {
+      arrsProducts.push(selectProductsByCategory(category.slug, productsState));
+      // console.log("test: ", category._id, arrsProducts[i]);
+    });
+    // productsData = filterByCategory(productsData, product.category_id.slug);
+    // productsData = filterBySort(productsData, 1);
+    // productsData = selectTopExcept(productsData, product._id, 4);
+    // console.log("product: ", productsData);
+
+    return arrsProducts;
   });
 
 export const selectErrors = createSelector(
