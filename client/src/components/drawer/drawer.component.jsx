@@ -14,7 +14,7 @@ import Drawer from "@material-ui/core/Drawer";
 import { makeStyles } from "@material-ui/core/styles";
 // import { } from '../'
 
-import DrawerData from "./drawer.data";
+import DrawerData from "../../constants/authorities.data";
 
 const useStyles = makeStyles((theme) => ({
   toolbarIcon: {

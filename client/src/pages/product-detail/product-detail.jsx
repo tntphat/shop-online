@@ -32,6 +32,8 @@ import Rate from "../../components/rating/rating";
 
 import { rateProductStart } from "../../redux/product/product.actions";
 
+import labels from "../../constants/labels-rating.data";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "100vw",
@@ -73,19 +75,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const labels = {
-  0.5: "Useless",
-  1: "Useless+",
-  1.5: "Poor",
-  2: "Poor+",
-  2.5: "Ok",
-  3: "Ok+",
-  3.5: "Good",
-  4: "Good+",
-  4.5: "Excellent",
-  5: "Excellent+",
-};
-
 const ProductDetail = () => {
   const dispatch = useDispatch();
   const { productId } = useParams();
@@ -102,7 +91,7 @@ const ProductDetail = () => {
 
   const [quantity, setQuantity] = useState(1);
 
-  const [value, setValue] = React.useState(2);
+  const [value, setValue] = React.useState(0);
   const [comment, setComment] = React.useState("");
 
   const [hover, setHover] = React.useState(-1);

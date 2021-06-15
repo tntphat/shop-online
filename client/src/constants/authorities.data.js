@@ -6,6 +6,7 @@ import BarChartIcon from "@material-ui/icons/BarChart";
 import CategoryIcon from "@material-ui/icons/Category";
 import LayersIcon from "@material-ui/icons/Layers";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
+import NoteIcon from "@material-ui/icons/Note";
 
 const data = [
   { id: 1, link: "/admin", name: "Dasboard", icon: <DashboardIcon /> },
@@ -40,6 +41,12 @@ const data = [
     link: "/admin/invoices",
     name: "Invoices",
     icon: <MonetizationOnIcon />,
+  },
+  {
+    id: 19,
+    link: "/admin/notes",
+    name: "Notes",
+    icon: <NoteIcon />,
   },
 ];
 

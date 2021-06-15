@@ -3,18 +3,25 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { FormControl } from "@material-ui/core";
 import { Controller } from "react-hook-form";
-import dataDrawer from "../drawer/drawer.data";
 
-export default function AutoComplete({ control }) {
+export default function AutoComplete({
+  control,
+  defaultValue,
+  name,
+  error,
+  options,
+  ...rest
+}) {
   return (
     <FormControl fullWidth margin="normal">
       <Controller
-        defaultValue={[]}
+        defaultValue={defaultValue}
         render={(props) => (
           <Autocomplete
             {...props}
-            options={dataDrawer}
-            multiple
+            {...rest}
+            options={options}
+            // multiple
             getOptionLabel={(option) => option.name}
             renderInput={(params) => (
               <TextField
@@ -26,7 +33,7 @@ export default function AutoComplete({ control }) {
             onChange={(_, data) => props.onChange(data)}
           />
         )}
-        name="authorities"
+        name={name}
         control={control}
       />
     </FormControl>

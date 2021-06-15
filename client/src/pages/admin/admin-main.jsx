@@ -11,6 +11,7 @@ import AdminCategories from "./admin-categories";
 import AdminAuthorities from "./admin-authorities";
 import AdminEmployees from "./admin-employees";
 import AdminInvoices from "./admin-invoices";
+import AdminNotes from "./admin-notes";
 
 import PropTypes from "prop-types";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -170,9 +171,7 @@ function AdminPage({ window, selectCurrentEmployee, ...rest }) {
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
-            className={`${classes.menuButton}  ${
-              open && classes.menuButtonHidden
-            } `}
+            className={` ${open && classes.menuButtonHidden} `}
           >
             <MenuIcon />
           </IconButton>
@@ -239,6 +238,7 @@ function AdminPage({ window, selectCurrentEmployee, ...rest }) {
           <Route exact path="/admin/authorities" component={AdminAuthorities} />
           <Route exact path="/admin/employees" component={AdminEmployees} />
           <Route exact path="/admin/invoices" component={AdminInvoices} />
+          <Route exact path="/admin/notes" component={AdminNotes} />
         </Switch>
       </main>
 

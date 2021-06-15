@@ -8,7 +8,7 @@ import {
 } from "../../redux/categories/category.selector";
 import Menu from "../menu/menu";
 import RangeSlider from "../range-slider/rangeSlider";
-import arraySort from "./data-sort";
+import arraySort from "../../constants/data-sort";
 import { formatNumber } from "../../helpers/number";
 import CloseIcon from "@material-ui/icons/Close";
 
