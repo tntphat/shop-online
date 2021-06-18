@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import WithSpinner from "../../components/with-spinner/with-spinner";
+import WithSpinner from "../../features/with-spinner";
 import ProductDetail from "./product-detail";
 const ProductDetailWithSpinner = WithSpinner(ProductDetail);
 

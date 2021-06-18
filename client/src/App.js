@@ -12,15 +12,14 @@ import Footer from "./components/footer/footer";
 import { ThemeProvider } from "@material-ui/core/styles";
 import ThemeContext from "./contexts/theme.context";
 import { darkTheme, lightTheme } from "./helpers/theme";
+import ScrollToTop from "./components/scroll-to-top/scroll-to-top";
 
 import { Divider } from "@material-ui/core";
 
 import { selectCurrentUser, selectChecking } from "./redux/user/user.selector";
 import { checkUserSession } from "./redux/user/user.actions";
 
-import Spinner from "../src/components/Spinner/Spinner";
-
-// const RegisterPage = lazy(() => import("./pages/register/register"));
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const App = ({ currUser, checkUserSession, checking }) => {
   console.log("RENDER APP.JS");
@@ -44,8 +43,7 @@ const App = ({ currUser, checkUserSession, checking }) => {
     return { night, setNight };
   }, [night, setNight]);
   const theme = night ? darkTheme : lightTheme;
-  console.log("CURRENT USER IN APP : ", currUser, checking);
-  if (checking) return <Spinner />;
+  if (checking) return <CircularProgress />;
   else
     return (
       <div>
@@ -53,7 +51,7 @@ const App = ({ currUser, checkUserSession, checking }) => {
           <ThemeContext.Provider value={themeValue}>
             <Header />
           </ThemeContext.Provider>
-
+          <ScrollToTop />
           <Switch>
             <Route exact path="/" component={HomePage} />
             <Route path="/products" component={ProductContainer} />

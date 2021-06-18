@@ -9,11 +9,11 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
-import Popup from "../popUp";
-import ConfirmDialog from "../ConfirmDialog";
-import Notification from "../Notification";
+import Popup from "../../features/popUp";
+import ConfirmDialog from "../../features/ConfirmDialog";
+import Notification from "../../features/Notification";
 
-import AuthorityForm from "../../components/Forms/Admin-Authority";
+import AuthorityForm from "../Forms/Admin-Authority";
 
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
@@ -106,20 +106,3 @@ export default function BasicTable({ authorities }) {
     </>
   );
 }
-
-// import React from "react";
-// import { Button } from "@material-ui/core";
-// import { useForm } from "react-hook-form";
-// import Countries, { countries } from "./Countries";
-
-// export default function App() {
-//   const { control, handleSubmit, reset } = useForm({});
-//   return (
-//     <form onSubmit={handleSubmit((data) => console.log(data))}>
-//       <Countries control={control} />
-//       <Button variant="contained" color="primary" type="submit">
-//         Get country code
-//       </Button>
-//     </form>
-//   );
-// }

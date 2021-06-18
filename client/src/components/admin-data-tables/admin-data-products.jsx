@@ -7,25 +7,13 @@ import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import { connect } from "react-redux";
-import { Box, makeStyles, Typography } from "@material-ui/core";
-import PopUp from "../popUp";
-import ConfirmDialog from "../ConfirmDialog";
-import Notification from "../../components/Notification";
+import { Box, Typography } from "@material-ui/core";
+import PopUp from "../../features/popUp";
+import ConfirmDialog from "../../features/ConfirmDialog";
+import Notification from "../../features/Notification";
 import ProductForm from "../Forms/Admin-product";
 
-const useStyles = makeStyles((theme) => ({
-  dltButton: {
-    marginBottom: theme.spacing(1),
-    marginRight: theme.spacing(2),
-  },
-  addBtn: {
-    height: "36px",
-    marginBottom: theme.spacing(1),
-  },
-}));
-
 const DataTable = ({ data, categories, delProductStart }) => {
-  const classes = useStyles();
   const rows = data;
   console.log("RENDER DATA TABLE AGAIN");
   const [openPopup, setOpenPopup] = useState(false);
@@ -152,32 +140,32 @@ const DataTable = ({ data, categories, delProductStart }) => {
     <div style={{ height: 500, width: "100%" }}>
       <Box display="flex" justifyContent="space-between" alignItems="flex-end">
         <Typography variant="h2">Product</Typography>
-        <Box display="flex">
-          <Button
-            onClick={() =>
-              setConfirmDialog({
-                isOpen: true,
-                title: "Are u sure to delete?",
-                subTitle: "U cant undo this operation",
-                onConfirm: () => {
-                  submitDelete();
-                },
-              })
-            }
-            className={classes.dltButton}
-            startIcon={<DeleteIcon />}
-            variant="contained"
-            color="primary"
-          >
-            Delete
-          </Button>
+        <Box display="flex" mb={1}>
+          <Box mr={1}>
+            <Button
+              onClick={() =>
+                setConfirmDialog({
+                  isOpen: true,
+                  title: "Are u sure to delete?",
+                  subTitle: "U cant undo this operation",
+                  onConfirm: () => {
+                    submitDelete();
+                  },
+                })
+              }
+              startIcon={<DeleteIcon />}
+              variant="contained"
+              color="primary"
+            >
+              Delete
+            </Button>
+          </Box>
           <Button
             onClick={() => {
               setTargetRow(null);
               setOpenPopup(true);
             }}
             variant="contained"
-            className={classes.addBtn}
             color="primary"
             startIcon={<AddIcon />}
           >

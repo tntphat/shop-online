@@ -6,6 +6,7 @@ import { mailSagas } from "./mails/mail.sagas";
 import { invoiceSagas } from "./invoice/invoice.sagas";
 import { categorySagas } from "./categories/category.sagas";
 import { authoritySagas } from "./authority/authority.sagas";
+import { noteSagas } from "./note/note.sagas";
 
 export default function* rootSaga() {
   yield all([
@@ -14,6 +15,7 @@ export default function* rootSaga() {
     call(mailSagas),
     call(invoiceSagas),
     call(categorySagas),
+    call(noteSagas),
     call(authoritySagas),
   ]);
 }

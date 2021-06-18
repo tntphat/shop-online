@@ -23,7 +23,7 @@ import { formatNumber } from "../../helpers/number";
 import { Divider, IconButton } from "@material-ui/core";
 
 import { CartContext } from "../../providers/cart/cart.provider";
-import Notification from "../../components/Notification";
+import Notification from "../../features/Notification";
 
 import Card from "../../components/card/card.component";
 

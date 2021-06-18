@@ -11,9 +11,9 @@ import Paper from "@material-ui/core/Paper";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 
-import Popup from "../popUp";
-import ConfirmDialog from "../ConfirmDialog";
-import Notification from "../Notification";
+import Popup from "../../features/popUp";
+import ConfirmDialog from "../../features/ConfirmDialog";
+import Notification from "../../features/Notification";
 import EmployeeForm from "../Forms/EmployeeForm";
 
 const useStyles = makeStyles({

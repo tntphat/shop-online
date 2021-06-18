@@ -3,7 +3,7 @@ import UserActionTypes from "./user.types";
 const INITIAL_STATE = {
   currentUser: null,
   currentEmployee: null,
-  checking: true,
+  checking: false,
   employees: [],
   error: null,
 };

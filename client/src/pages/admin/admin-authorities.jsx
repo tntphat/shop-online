@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography } from "@material-ui/core";
 import { connect } from "react-redux";
-import AuthoritiesTable from "../../components/admin-data-authorities/admin-data-authorities";
+import AuthoritiesTable from "../../components/admin-data-tables/admin-data-authorities";
 import { fetchAuthoritiesStart } from "../../redux/authority/authority.actions";
 import { selectAuthorities } from "../../redux/authority/authority.selector";
 import { useEffect } from "react";

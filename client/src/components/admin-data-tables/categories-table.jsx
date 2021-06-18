@@ -16,13 +16,13 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 
-import FormCategoryAdd from "./Forms/CategoryForm";
+import FormCategoryAdd from "../Forms/CategoryForm";
 
-import { deleteCategoryStart } from "../redux/categories/category.actions";
+import { deleteCategoryStart } from "../../redux/categories/category.actions";
 
-import Popup from "./popUp";
-import ConfirmDialog from "./ConfirmDialog";
-import Notification from "./Notification";
+import Popup from "../../features/popUp";
+import ConfirmDialog from "../../features/ConfirmDialog";
+import Notification from "../../features/Notification";
 import { useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({

@@ -3,18 +3,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 import { useHistory, useLocation } from "react-router-dom";
 import { formatNumber } from "../../helpers/number";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useRef } from "react";
+import { useEffect, useCallback } from "react";
 
 const useStyles = makeStyles({
   root: {
     width: "100%",
   },
 });
-
-function valuetext(value) {
-  return `${value}°C`;
-}
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -25,7 +21,12 @@ export default function RangeSlider({ max }) {
   let query = useQuery();
   let history = useHistory();
 
+  const firstRange = useRef([+query.get("from") ?? 0, +query.get("to") ?? max]);
+
   const [range, setRange] = useState([0, max]);
+
+  // const queryFrom = query.get("from");
+  // const queryTo = query.get("to");
 
   const handleChange = function (e, newValue) {
     query.set("from", newValue[0]);
@@ -43,9 +44,9 @@ export default function RangeSlider({ max }) {
   // let defaultTo = max;
 
   useEffect(() => {
-    setRange([+query.get("from") ?? 0, +query.get("to") ?? max]);
-    console.log(range, "first");
-  }, []);
+    console.log("first range: ", firstRange);
+    setRange(firstRange.current);
+  }, [firstRange]);
 
   useEffect(() => {
     if (!query.get("from")) {
@@ -72,7 +73,6 @@ export default function RangeSlider({ max }) {
         valueLabelDisplay="auto"
         onChangeCommitted={handleChange}
         aria-labelledby="range-slider"
-        getAriaValueText={valuetext}
       />
     </div>
   );

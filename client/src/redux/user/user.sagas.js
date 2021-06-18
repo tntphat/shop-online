@@ -101,6 +101,7 @@ export function* isUserAuthenticated() {
       yield put(checkUserSessionDone());
       return;
     }
+
     const user = JSON.parse(data);
     if (user.authority) yield put(signInSuccessEmployee(user));
     else yield put(signInSuccess(user));

@@ -25,7 +25,7 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import DrawerChildren from "../../components/drawer/drawer.component";
 import NavBar from "../../components/appbar-admin/appbar-admin";
 
-import Popup from "../../components/popUp";
+import Popup from "../../features/popUp";
 import SignInForm from "../../components/Forms/Auth";
 
 import { selectCurrentEmployee } from "../../redux/user/user.selector";

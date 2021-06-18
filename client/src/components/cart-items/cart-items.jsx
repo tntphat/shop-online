@@ -1,6 +1,5 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
 import { Box, Button, Typography } from "@material-ui/core";
 
 import { formatNumber } from "../../helpers/number";
@@ -10,33 +9,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Divider from "@material-ui/core/Divider";
 
-const useStyles = makeStyles((theme) => ({
-  name: {
-    display: "-webkit-box",
-    boxOrient: "vertical",
-    lineClamp: "1",
-    overflow: "hidden",
-  },
-  image: {
-    width: "100%",
-    height: "60px",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-  },
-  text: {
-    margin: "0 6px",
-  },
-  btnCheckOut: {
-    margin: "0 40px",
-  },
-  sect: {
-    // backgroundColor: "red",
-    border: `1px solid ${theme.palette.text.main}`,
-    marginBottom: "20px",
-    borderRadius: "10px",
-    // padding: "0",
-  },
-}));
+import useStyles from "./cart-item.styles";
 
 const CartItems = ({
   cartItems,
@@ -53,7 +26,7 @@ const CartItems = ({
   const classes = useStyles();
   const history = useHistory();
   return (
-    <List className={!isCart && classes.sect}>
+    <List className={!isCart || ("" && classes.sect)}>
       <ListItem key={1}>
         {isCart ? (
           <Typography component="span" variant="h5">

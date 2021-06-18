@@ -14,8 +14,8 @@ import ArrowForwardIosOutlinedIcon from "@material-ui/icons/ArrowForwardIosOutli
 import ClearOutlinedIcon from "@material-ui/icons/ClearOutlined";
 import { CartContext } from "../../providers/cart/cart.provider";
 import { formatNumber } from "../../helpers/number";
-import ConfirmDialog from "../../components/ConfirmDialog";
-import Notification from "../../components/Notification";
+import ConfirmDialog from "../../features/ConfirmDialog";
+import Notification from "../../features/Notification";
 
 import { addInvoiceStart } from "../../redux/invoice/invoice.actions";
 

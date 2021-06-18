@@ -11,7 +11,7 @@ import { selectCategories } from "../../redux/categories/category.selector";
 import ListCategory from "../../components/list-category";
 import FilterBar from "../../components/filter-bar/FilterBar";
 
-import Notification from "../../components/Notification";
+import Notification from "../../features/Notification";
 
 const useStyles = makeStyles((theme) => ({
   paper: {

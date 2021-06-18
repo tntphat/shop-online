@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { connect } from "react-redux";
 
-import EmployeesTable from "../../components/admin-data-employees/admin-data-employees";
+import EmployeesTable from "../../components/admin-data-tables/admin-data-employees";
 import { fetchAuthoritiesStart } from "../../redux/authority/authority.actions";
 import { fetchEmployeesStart } from "../../redux/user/user.actions";
 import { selectAuthorities } from "../../redux/authority/authority.selector";

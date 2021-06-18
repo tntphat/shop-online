@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import moment from "moment";
 
-import Popup from "./popUp";
+import Popup from "./../features/popUp";
 import MailForm from "./Forms/mail-form";
 import SlateRender from "./controls/SlateRender";
 

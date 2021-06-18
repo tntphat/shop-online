@@ -1,5 +1,4 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Divider from "@material-ui/core/Divider";
@@ -8,42 +7,10 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import moment from "moment";
-import SlateRender from "./controls/SlateRender";
+import SlateRender from "../controls/SlateRender";
 import { Box } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    // width: "100%",
-    width: "36ch",
-    minWidth: "36ch",
-    overflow: "auto",
-    backgroundColor: theme.palette.background.paper,
-    [theme.breakpoints.down("sm")]: {
-      minWidth: "24ch",
-    },
-  },
-  inline: {
-    display: "inline",
-  },
-  description: {
-    display: "-webkit-box",
-    boxOrient: "vertical",
-    lineClamp: "2",
-    overflow: "hidden",
-  },
-  title: {
-    display: "-webkit-box",
-    boxOrient: "vertical",
-    lineClamp: "1",
-    overflow: "hidden",
-  },
-  active: {
-    backgroundColor: "#84817a",
-  },
-  repped: {
-    backgroundColor: "#3867d6",
-  },
-}));
+import useStyles from "./box-mails.styles";
 
 export default function AlignItemsList({ curMail, mails, setCurMail }) {
   const classes = useStyles();

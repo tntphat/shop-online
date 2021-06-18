@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import CategoriesTable from "../../components/categories-table";
+import CategoriesTable from "../../components/admin-data-tables/categories-table";
 // import Popup from "../../components/popUp";
 import { connect } from "react-redux";
 

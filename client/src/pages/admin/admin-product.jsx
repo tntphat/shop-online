@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import DataTable from "../../components/admin-data-products/admin-data-products";
+import DataTable from "../../components/admin-data-tables/admin-data-products";
 import { fetchProductsStart } from "../../redux/product/product.actions";
 import { selectProducts } from "../../redux/product/product.selector";
 import { fetchCategoriesStart } from "../../redux/categories/category.actions";

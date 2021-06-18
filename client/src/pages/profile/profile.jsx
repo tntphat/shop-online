@@ -13,7 +13,7 @@ import { useEffect } from "react";
 import MailGroup from "../../components/MailGroup/MailGroup";
 import EditProfile from "../../components/Forms/EditProfile";
 import Invoices from "../../components/invoices/invoices";
-import Popup from "../../components/popUp";
+import Popup from "../../features/popUp";
 import MailForm from "../../components/Forms/mail-form";
 
 const useStyles = makeStyles((theme) => ({

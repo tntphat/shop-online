@@ -10,7 +10,6 @@ import Badge from "@material-ui/core/Badge";
 import Hidden from "@material-ui/core/Hidden";
 import Cookies from "js-cookie";
 import { withRouter } from "react-router-dom";
-// import Cart from "../cart/cart";
 import Cart from "../cart/cart.outside";
 
 import Button from "@material-ui/core/Button";
@@ -25,7 +24,7 @@ import { CartContext } from "../../providers/cart/cart.provider";
 
 import SignInForm from "../Forms/Auth";
 
-import Popup from "../popUp";
+import Popup from "../../features/popUp";
 
 import { signOutStart, testHeader } from "../../redux/user/user.actions";
 

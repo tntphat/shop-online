@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 
-import WithSpinner from "../../components/with-spinner/with-spinner";
+import WithSpinner from "../../features/with-spinner";
 import Products from "./products";
 const ProductsWithSpinner = WithSpinner(Products);
 
