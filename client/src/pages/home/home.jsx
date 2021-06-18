@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
-import { Paper, Grid } from "@material-ui/core";
+import { Paper, Grid, Typography, Box } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 
 import { fetchProductsStart } from "../../redux/product/product.actions";
 import { fetchCategoriesStart } from "../../redux/categories/category.actions";
 import CategoriesOverviewWithSpinner from "../../components/categories-overview/categories-overview.container";
-
-import "./home.css";
+import Posters from "../../components/posters/posters";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -17,13 +16,17 @@ const HomePage = () => {
 
   const categories = useSelector((state) => state.category.categories);
   console.log("categories", categories);
-
   return (
-    <Paper>
-      <section className="hero"></section>
+    <Paper square>
       <Grid container>
+        <Posters />
         <Grid item sm={2} />
         <Grid item sm={8}>
+          <Box my={4}>
+            <Typography variant="h2" align="center">
+              Top products of us
+            </Typography>
+          </Box>
           <CategoriesOverviewWithSpinner />
         </Grid>
         <Grid item sm={2} />

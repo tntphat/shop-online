@@ -21,6 +21,8 @@ import { checkUserSession } from "./redux/user/user.actions";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 
+import ErrorBoundary from "./features/error-boundary";
+
 const App = ({ currUser, checkUserSession, checking }) => {
   console.log("RENDER APP.JS");
   useEffect(() => {
@@ -47,36 +49,38 @@ const App = ({ currUser, checkUserSession, checking }) => {
   else
     return (
       <div>
-        <ThemeProvider theme={theme}>
-          <ThemeContext.Provider value={themeValue}>
-            <Header />
-          </ThemeContext.Provider>
-          <ScrollToTop />
-          <Switch>
-            <Route exact path="/" component={HomePage} />
-            <Route path="/products" component={ProductContainer} />
-            <Route
-              path="/checkout"
-              render={() => (
-                <CheckoutPage
-                  name={
-                    currUser && currUser.firstName + " " + currUser.lastName
-                  }
-                />
-              )}
-            />
-            <AdminRoute path="/admin" />
-            <Route
-              exact
-              path="/profiles"
-              render={() =>
-                currUser ? <ProfilePage /> : <Redirect to="/sign-in" />
-              }
-            />
-          </Switch>
-          <Divider />
-          <Footer />
-        </ThemeProvider>
+        <ErrorBoundary>
+          <ThemeProvider theme={theme}>
+            <ThemeContext.Provider value={themeValue}>
+              <Header />
+            </ThemeContext.Provider>
+            <ScrollToTop />
+            <Switch>
+              <Route exact path="/" component={HomePage} />
+              <Route path="/products" component={ProductContainer} />
+              <Route
+                path="/checkout"
+                render={() => (
+                  <CheckoutPage
+                    name={
+                      currUser && currUser.firstName + " " + currUser.lastName
+                    }
+                  />
+                )}
+              />
+              <AdminRoute path="/admin" />
+              <Route
+                exact
+                path="/profiles"
+                render={() =>
+                  currUser ? <ProfilePage /> : <Redirect to="/sign-in" />
+                }
+              />
+            </Switch>
+            <Divider />
+            <Footer />
+          </ThemeProvider>
+        </ErrorBoundary>
       </div>
     );
 };

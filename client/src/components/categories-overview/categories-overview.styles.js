@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
     margin: `10px 8px`,
     position: "relative",
     cursor: "pointer",
+    fontWeight: "300",
     "&:hover": {
       // color: theme.palette.table.main,
       // textDecoration: "underlined",
