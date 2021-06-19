@@ -26,7 +26,10 @@ import SignInForm from "../Forms/Auth";
 
 import Popup from "../../features/popUp";
 
+import DrawerHeader from "../drawer-header/drawer-header";
 import { signOutStart, testHeader } from "../../redux/user/user.actions";
+
+import dataHeaderDrawer from "../../constants/header.data";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -114,7 +117,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-console.log("RE RENDERRRR");
 
 const HideAppBar = ({ currentUser, signOutStart, location, history }) => {
   const [reach, setReach] = useState(true);
@@ -151,6 +153,19 @@ const HideAppBar = ({ currentUser, signOutStart, location, history }) => {
     setAnchorEl(null);
   };
 
+  const [openDrawer, setOpenDrawer] = React.useState(false);
+
+  const toggleDrawer = (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setOpenDrawer((prev) => !prev);
+  };
+
   if (location.pathname.includes("/admin")) return <> </>;
 
   return (
@@ -161,6 +176,12 @@ const HideAppBar = ({ currentUser, signOutStart, location, history }) => {
         <> </>
       )}
 
+      <DrawerHeader
+        openDrawer={openDrawer}
+        toggleDrawer={toggleDrawer}
+        items={dataHeaderDrawer}
+      />
+
       <Box className={`${classes.navBar}  ${reach ? classes.navBar2 : ""}`}>
         <Box
           mx={4}
@@ -170,24 +191,19 @@ const HideAppBar = ({ currentUser, signOutStart, location, history }) => {
           justifyContent="space-between"
         >
           <Hidden smUp>
-            <IconButton edge="start" aria-label="menu">
+            <IconButton edge="start" aria-label="menu" onClick={toggleDrawer}>
               <i className="fas fa-bars"></i>
             </IconButton>
           </Hidden>
           <Box display="flex" flexDirection="row" flex={1}>
-            <Link className={classes.link} to="/">
-              <IconButton>
-                <i className="fas fa-home"></i>
-              </IconButton>
-            </Link>
+            <Hidden xsDown>
+              {dataHeaderDrawer.map((item) => (
+                <Link className={classes.link} to={item.link}>
+                  <Typography variant="h5">{item.name}</Typography>
+                </Link>
+              ))}
+            </Hidden>
 
-            <Link className={classes.link} to="/products">
-              <Typography variant="h5">Products</Typography>
-            </Link>
-
-            <Link className={classes.link} to="/admin">
-              <Typography variant="h5">Admin</Typography>
-            </Link>
             <form
               style={{ margin: "auto 0" }}
               onSubmit={(e) => {
@@ -214,36 +230,30 @@ const HideAppBar = ({ currentUser, signOutStart, location, history }) => {
               </div>
             </form>
           </Box>
-          <Hidden xsDown>
-            <Box display="flex" flexDirection="row">
-              <Typography className={classes.link} variant="h6">
-                Liên hệ
-              </Typography>
-              <Typography className={classes.link} variant="h6">
-                Contact
-              </Typography>
-              <IconButton
-                style={{ zIndex: 4 }}
-                onClick={(e) => {
-                  toggleHidden();
-                }}
-              >
-                <Badge badgeContent={`${cartItemsCount}`} color="secondary">
-                  <ShoppingCartOutlinedIcon />
-                </Badge>
-              </IconButton>
+          <Box display="flex" flexDirection="row">
+            <IconButton
+              style={{ zIndex: 4 }}
+              onClick={(e) => {
+                toggleHidden();
+              }}
+            >
+              <Badge badgeContent={`${cartItemsCount}`} color="secondary">
+                <ShoppingCartOutlinedIcon />
+              </Badge>
+            </IconButton>
 
-              {!currentUser ? (
-                <>
-                  <Button
-                    style={{ margin: "auto 20px" }}
-                    onClick={() => {
-                      setIsIn(true);
-                      setOpenPopup(true);
-                    }}
-                  >
-                    Sign in
-                  </Button>
+            {!currentUser ? (
+              <>
+                <Button
+                  style={{ margin: "auto 20px" }}
+                  onClick={() => {
+                    setIsIn(true);
+                    setOpenPopup(true);
+                  }}
+                >
+                  Log in
+                </Button>
+                <Hidden smDown>
                   <Button
                     style={{ margin: "auto 20px" }}
                     onClick={() => {
@@ -253,49 +263,49 @@ const HideAppBar = ({ currentUser, signOutStart, location, history }) => {
                   >
                     Sign up
                   </Button>
-                </>
-              ) : (
-                <>
-                  <Button
-                    aria-controls="simple-menu"
-                    aria-haspopup="true"
-                    onClick={handleClick}
+                </Hidden>
+              </>
+            ) : (
+              <>
+                <Button
+                  aria-controls="simple-menu"
+                  aria-haspopup="true"
+                  onClick={handleClick}
+                >
+                  {(currentUser && currentUser.firstName) || "Name"}
+                </Button>
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItem
+                    onClick={() => {
+                      handleClose();
+                      history.push("/profiles");
+                    }}
                   >
-                    {(currentUser && currentUser.firstName) || "Name"}
-                  </Button>
-                  <Menu
-                    id="simple-menu"
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
+                    Profile
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>My account</MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      handleClose();
+                      signOutStart({ history });
+                    }}
                   >
-                    <MenuItem
-                      onClick={() => {
-                        handleClose();
-                        history.push("/profiles");
-                      }}
-                    >
-                      Profile
-                    </MenuItem>
-                    <MenuItem onClick={handleClose}>My account</MenuItem>
-                    <MenuItem
-                      onClick={() => {
-                        handleClose();
-                        signOutStart({ history });
-                      }}
-                    >
-                      Logout
-                    </MenuItem>
-                  </Menu>
-                </>
-              )}
+                    Logout
+                  </MenuItem>
+                </Menu>
+              </>
+            )}
 
-              <IconButton onClick={switchTheme}>
-                <i className="fas fa-adjust"></i>
-              </IconButton>
-            </Box>
-          </Hidden>
+            <IconButton onClick={switchTheme}>
+              <i className="fas fa-adjust"></i>
+            </IconButton>
+          </Box>
         </Box>
         {hidden ? null : <Cart />}
       </Box>
