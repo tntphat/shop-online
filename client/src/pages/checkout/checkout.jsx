@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
 import { Button, Grid, IconButton, Paper, Typography } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -19,38 +18,7 @@ import Notification from "../../features/Notification";
 
 import { addInvoiceStart } from "../../redux/invoice/invoice.actions";
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    padding: "60px 0",
-    minHeight: "100vh",
-  },
-  table: {
-    marginTop: "20px",
-    backgroundColor: theme.palette.table.main,
-    minWidth: "100%",
-  },
-  label: {
-    margin: "15px 0 0 15px",
-  },
-  image: {
-    width: "100%",
-    height: "106px",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-  },
-  nameItem: {
-    width: "160px",
-  },
-  quantity: {
-    display: "inline-block",
-    margin: "auto 0",
-  },
-  total: {
-    textAlign: "right",
-    fontSize: "1.25rem",
-    fontWeight: "300",
-  },
-}));
+import useStyles from "./checkout.styles";
 
 const ProductContainer = ({ name }) => {
   const dispatch = useDispatch();

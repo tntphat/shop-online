@@ -69,7 +69,7 @@ const ProductsPage = () => {
   return (
     <Grid container className={classes.paper} spacing={1}>
       <Grid container item xs={12} sm={3}>
-        <Grid item md={3} sm={0} />
+        <Grid item md={3} sm={false} />
         <Grid item md={9} xs={12}>
           <ListCategory categories={categories} />
         </Grid>

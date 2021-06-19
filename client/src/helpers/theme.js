@@ -20,12 +20,12 @@ const darkTheme = createMuiTheme({
       main: "#2d3436",
     },
     poster: {
-      poster1: "#2ed573",
+      poster1: "#05c46b",
       poster2: "#b33939",
       indicator: "#a4b0be",
       indicatorHover: "#747d8c",
       indicatorActive: "#57606f",
-      poster3: "#cd6133",
+      poster3: "#3867d6",
     },
     text: {
       main: "#f1f2f6",
@@ -44,10 +44,9 @@ const lightTheme = createMuiTheme({
       main: "#f1f2f6",
     },
     poster: {
-      poster1: "#7bed9f",
-
+      poster1: "#0be881",
       poster2: "#ff5252",
-      poster3: "#ff793f",
+      poster3: "#4b7bec",
       indicator: "#747d8c",
       indicatorHover: "#a4b0be",
       indicatorActive: "#2f3542",

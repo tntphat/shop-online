@@ -17,9 +17,6 @@ const ProductDetailContainer = lazy(() =>
   import("../product-detail/product-detail.container")
 );
 
-// import ProductsPage from "../products/products";
-// import ProductDetailContainer from "../product-detail/product-detail";
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     paddingTop: "60px",

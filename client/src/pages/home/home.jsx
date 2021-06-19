@@ -20,7 +20,7 @@ const HomePage = () => {
     <Paper square>
       <Grid container>
         <Posters />
-        <Grid item md={2} xs={0} />
+        <Grid item md={2} xs={false} />
         <Grid item md={8} xs={12}>
           <Box my={4}>
             <Typography variant="h2" align="center">
@@ -29,7 +29,7 @@ const HomePage = () => {
           </Box>
           <CategoriesOverviewWithSpinner />
         </Grid>
-        <Grid item md={2} xs={0} />
+        <Grid item md={2} xs={false} />
       </Grid>
     </Paper>
   );

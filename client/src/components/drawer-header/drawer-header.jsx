@@ -17,7 +17,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function TemporaryDrawer({
+export default function DrawerHeader({
   openDrawer,
   toggleDrawer,
   items,
@@ -36,17 +36,15 @@ export default function TemporaryDrawer({
         >
           <List>
             {items.map((item) => (
-              <ListItem
-                button
-                key={item}
-                onClick={() => history.push(item.link)}
-              >
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.name} />
-              </ListItem>
+              <div key={item.name}>
+                <ListItem button onClick={() => history.push(item.link)}>
+                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemText primary={item.name} />
+                </ListItem>
+                <Divider />
+              </div>
             ))}
           </List>
-          <Divider />
         </div>
       </Drawer>
     </div>

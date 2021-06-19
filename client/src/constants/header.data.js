@@ -1,18 +1,13 @@
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline";
-import DashboardIcon from "@material-ui/icons/Dashboard";
-import BarChartIcon from "@material-ui/icons/BarChart";
-import CategoryIcon from "@material-ui/icons/Category";
-import LayersIcon from "@material-ui/icons/Layers";
-import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
-import NoteIcon from "@material-ui/icons/Note";
+import HomeIcon from "@material-ui/icons/Home";
+import StoreIcon from "@material-ui/icons/Store";
+import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
+import ContactSupportIcon from "@material-ui/icons/ContactSupport";
 
 const data = [
-  { name: "Home", icon: <DashboardIcon />, link: "/" },
-  { name: "Products", icon: <InboxIcon />, link: "/products" },
-  { name: "Admin", icon: <InboxIcon />, link: "/admin" },
-  { name: "Contact", icon: <BarChartIcon />, link: "/" },
+  { name: "Home", icon: <HomeIcon />, link: "/" },
+  { name: "Products", icon: <StoreIcon />, link: "/products" },
+  { name: "Admin", icon: <SupervisorAccountIcon />, link: "/admin" },
+  { name: "Contact", icon: <ContactSupportIcon />, link: "/" },
 ];
 
 export default data;

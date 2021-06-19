@@ -30,7 +30,7 @@ function Posters() {
       }}
     >
       {dataPosters.map((poster, ind) => (
-        <Paper square className={`${classes.poster} ${arrPost[ind]}`}>
+        <Paper key={ind} square className={`${classes.poster} ${arrPost[ind]}`}>
           <Box className={classes.box}>
             <Typography className={classes.title} variant="h2">
               {poster.title}
