@@ -1,26 +1,70 @@
 import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import FormHelperText from "@material-ui/core/FormHelperText";
 
-export default function ErrroMessage({ error, minL, min, max, params }) {
+const useStyles = makeStyles((theme) => ({
+  errMsg: {
+    minWidth: "100%",
+    color: " #bf1650",
+    "&::before": {
+      display: "inline",
+      content: '"⚠ "',
+    },
+  },
+}));
+
+export default function ErrroMessage({ error, minL, maxL, min, max, params }) {
+  const classes = useStyles();
   if (error) {
     switch (error.type) {
       case "required":
-        return <span className="error-msg">This is required</span>;
+        return (
+          <FormHelperText className={classes.errMsg}>
+            This is required
+          </FormHelperText>
+        );
       case "minLength":
         return (
-          <span className="error-msg">
-            Your last name need minmium {minL || 2} charcaters
-          </span>
+          <FormHelperText className={classes.errMsg}>
+            This field needs min {minL || 2} characters
+          </FormHelperText>
+        );
+      case "maxLength":
+        return (
+          <FormHelperText className={classes.errMsg}>
+            This field needs max {maxL || 2} characters
+          </FormHelperText>
         );
       case "pattern":
-        return <span className="error-msg">Enter a valid email address</span>;
+        return (
+          <FormHelperText className={classes.errMsg}>
+            Enter a valid email address
+          </FormHelperText>
+        );
       case "min":
-        return <span className="error-msg">Min val is {min} </span>;
+        return (
+          <FormHelperText className={classes.errMsg}>
+            Min val is {min}
+          </FormHelperText>
+        );
       case "max":
-        return <span className="error-msg">Max val is {max} </span>;
+        return (
+          <FormHelperText className={classes.errMsg}>
+            Max val is {max}
+          </FormHelperText>
+        );
       case "validate":
-        return <span className="error-msg">Username is already used</span>;
+        return (
+          <FormHelperText className={classes.errMsg}>
+            Username is already used
+          </FormHelperText>
+        );
       case "myErr":
-        return <span className="error-msg">{error.message}</span>;
+        return (
+          <FormHelperText className={classes.errMsg}>
+            {error.message}
+          </FormHelperText>
+        );
       default:
         return null;
     }

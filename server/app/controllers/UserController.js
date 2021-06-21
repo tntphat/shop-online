@@ -2,6 +2,9 @@ const User = require("../models/User");
 const jwtConvert = require("../../auth/jwtConvert");
 
 class UserController {
+  test = async (req, res) => {
+    console.log("hello");
+  };
   getInfo = async (req, res) => {
     try {
       const user = await User.findById(req.params.id);

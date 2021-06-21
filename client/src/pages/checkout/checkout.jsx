@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Button, Grid, IconButton, Paper, Typography } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
@@ -18,9 +18,12 @@ import Notification from "../../features/Notification";
 
 import { addInvoiceStart } from "../../redux/invoice/invoice.actions";
 
+import Popup from "../../features/popUp";
+import FormPay from "../../components/checkout-form/order-pay";
 import useStyles from "./checkout.styles";
 
 const ProductContainer = ({ name }) => {
+  const user = useSelector((state) => state.user.currentUser);
   const dispatch = useDispatch();
   const classes = useStyles();
   const { cartItems, addItem, removeItem, clearItemFromCart, clearCart } =
@@ -36,10 +39,21 @@ const ProductContainer = ({ name }) => {
     message: "",
     type: "",
   });
+  const [openPopup, setOpenPopup] = useState(false);
 
   const totalPrice = cartItems.reduce((a, b) => a + b.price * b.quantity, 0);
   const history = useHistory();
-  const handlePay = () => {
+
+  const handleCheckout = () => {
+    user
+      ? setOpenPopup(true)
+      : setNotify({
+          isOpen: true,
+          message: "Pls sign in before paying",
+          type: "error",
+        });
+  };
+  const handlePay = (obj) => {
     const products = [];
     const productsPurchased = [];
     const productsQuantityLeft = [];
@@ -59,6 +73,7 @@ const ProductContainer = ({ name }) => {
         productsPurchased,
         clearCart,
         setNotify,
+        obj,
         history,
       })
     );
@@ -140,15 +155,16 @@ const ProductContainer = ({ name }) => {
                     fullWidth
                     variant="contained"
                     size="large"
-                    onClick={() =>
-                      setConfirmDialog({
-                        isOpen: true,
-                        title: "Are u sure to pay?",
-                        subTitle: "U cant undo this operation",
-                        onConfirm: () => {
-                          handlePay();
-                        },
-                      })
+                    onClick={
+                      () => handleCheckout()
+                      // setConfirmDialog({
+                      //   isOpen: true,
+                      //   title: "Are u sure to pay?",
+                      //   subTitle: "U cant undo this operation",
+                      //   onConfirm: () => {
+                      //     setOpenPopup(true);
+                      //   },
+                      // })
                     }
                   >
                     Checkout
@@ -171,6 +187,15 @@ const ProductContainer = ({ name }) => {
         confirmDialog={confirmDialog}
         setConfirmDialog={setConfirmDialog}
       />
+
+      <Popup title="Checkout" openPopup={openPopup} setOpenPopup={setOpenPopup}>
+        <FormPay
+          user={user}
+          handlePay={handlePay}
+          cartItems={cartItems}
+          total={totalPrice}
+        />
+      </Popup>
     </Paper>
   );
 };

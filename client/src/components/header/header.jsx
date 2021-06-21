@@ -27,7 +27,7 @@ import SignInForm from "../Forms/Auth";
 import Popup from "../../features/popUp";
 
 import DrawerHeader from "../drawer-header/drawer-header";
-import { signOutStart, testHeader } from "../../redux/user/user.actions";
+import { signOutStart } from "../../redux/user/user.actions";
 
 import dataHeaderDrawer from "../../constants/header.data";
 
@@ -242,7 +242,6 @@ const mapStateToProp = (state) => ({
 
 const mapDispatchToProp = (dispatch) => ({
   signOutStart: (history) => dispatch(signOutStart(history)),
-  testHeader: () => dispatch(testHeader()),
 });
 
 export default withRouter(

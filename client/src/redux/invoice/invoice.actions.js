@@ -30,6 +30,20 @@ export const editInvoiceFailure = (error) => ({
   payload: error,
 });
 
+export const payInvoiceStart = (data) => ({
+  type: InvoiceActionTypes.PAY_INVOICE_START,
+  payload: data,
+});
+
+// export const payInvoiceSuccess = () => ({
+//   type: InvoiceActionTypes.FETCH_INVOICES_SUCCESS,
+// });
+
+// export const payInvoiceFailure = (error) => ({
+//   type: InvoiceActionTypes.FETCH_INVOICES_FAILURE,
+//   payload: error,
+// });
+
 export const fetchInvoicesStart = () => ({
   type: InvoiceActionTypes.FETCH_INVOICES_START,
 });

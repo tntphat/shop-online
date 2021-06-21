@@ -17,6 +17,12 @@ import {
 import { selectErrors } from "../../redux/user/user.selector";
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    width: "40vw",
+    [theme.breakpoints.down("sm")]: {
+      width: "90vw",
+    },
+  },
   containSwitch: {
     margin: "8px 0",
   },
@@ -60,7 +66,7 @@ const Form = ({
   };
 
   return (
-    <form className="App" onSubmit={handleSubmit(onSubmit)}>
+    <form className={classes.root} onSubmit={handleSubmit(onSubmit)}>
       {!isIn && !isEmployee ? (
         <>
           <Control.Input

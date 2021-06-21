@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 3,
   },
   navBar2: {
+    opacity: 0.9,
     boxShadow:
       "0 1px 5px -1px rgb(51 62 73 / 14%), 0 4px 10px 0 rgb(51 62 73 / 8%)",
     background: theme.palette.navBar.main,

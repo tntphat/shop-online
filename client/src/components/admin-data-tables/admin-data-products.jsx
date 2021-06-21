@@ -64,14 +64,14 @@ const DataTable = ({ data, categories, delProductStart }) => {
       field: "category_id",
       headerName: "Category ",
       flex: 1,
-      valueGetter: (params) => "" ?? params.row.category_id.name,
+      valueGetter: (params) => params.row?.category_id.name,
     },
 
     {
       field: "sub_category_id",
       headerName: "Sub Name",
       flex: 1,
-      valueGetter: (params) => "" ?? params.row.sub_category_id.name,
+      valueGetter: (params) => params.row?.sub_category_id.name,
     },
     {
       field: "createdAt",

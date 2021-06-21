@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Paper, Grid, Typography, Box } from "@material-ui/core";
+import { Paper, Grid, Typography, Box, Divider } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 
 import { fetchProductsStart } from "../../redux/product/product.actions";
@@ -22,10 +22,11 @@ const HomePage = () => {
         <Posters />
         <Grid item md={2} xs={false} />
         <Grid item md={8} xs={12}>
-          <Box my={4}>
-            <Typography variant="h2" align="center">
+          <Box mt={4}>
+            <Typography variant="h3" align="center">
               Top products of us
             </Typography>
+            <Divider style={{ margin: "20px 120px" }} />
           </Box>
           <CategoriesOverviewWithSpinner />
         </Grid>

@@ -90,7 +90,3 @@ export const addEmployeeSuccess = (employee) => ({
   type: UserActionTypes.ADD_EMPLOYEE_SUCCESS,
   payload: employee,
 });
-
-export const testHeader = () => ({
-  type: UserActionTypes.TEST_HEADER,
-});

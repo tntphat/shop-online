@@ -9,6 +9,7 @@ router.get("/activated", InvoiceController.getActivated);
 router.get("/user", isAuth, InvoiceController.getInvoicesByUser);
 router.get("/:id", InvoiceController.get);
 router.post("/", isAuth, InvoiceController.addInvoice);
+router.post("/pay", InvoiceController.payInvoice);
 router.patch("/", InvoiceController.changeStatus);
 
 module.exports = router;

@@ -18,6 +18,12 @@ const InvoiceSchema = new Schema(
     ],
     status: { type: String, default: "Pending" },
     address: { type: String },
+    firstName: { type: String },
+    lastName: { type: String },
+    email: { type: String },
+    phone: { type: String },
+    address: { type: String },
+    paid: { type: Boolean },
     total_price: { type: Number, default: 0 },
   },
   {

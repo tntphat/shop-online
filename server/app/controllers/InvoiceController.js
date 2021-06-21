@@ -4,6 +4,10 @@ const Product = require("../models/Product");
 const mongoose = require("mongoose");
 const { appendInvoice } = require("./UserController");
 
+const stripe = require("stripe")(
+  "sk_test_51J44goHv3poLQbEVzq9OWy9st51uVT0sqRYcuRsSGvIfexmA2kwBSBJicj5WCYV5hbLuL3E7YtoNvYmd32K0EbyX00NEg8cqAJ"
+);
+
 const statuses = [
   "Pending",
   "Accepted",
@@ -93,13 +97,34 @@ class InvoiceController {
     }
   }
 
+  async payInvoice(req, res) {
+    try {
+      const { total } = req.body;
+      console.log(total);
+      // Create a PaymentIntent with the order amount and currency
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: +total,
+        currency: "vnd",
+      });
+      res.send({
+        clientSecret: paymentIntent.client_secret,
+      });
+    } catch (e) {
+      console.log(e);
+      res.status(500).send({ msg: "Server error" });
+    }
+  }
+
   //@router POST /invoice
   async addInvoice(req, res) {
     try {
-      console.log(req.body.productsPurchased);
+      console.log(req.body);
+
+      const { obj, ...rest } = req.body;
 
       const newInvoice = new Invoice({
-        ...req.body,
+        ...obj,
+        ...rest,
         address: req.user.address,
         customer: req.user._id,
       });

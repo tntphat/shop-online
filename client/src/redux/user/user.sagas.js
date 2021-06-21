@@ -134,25 +134,6 @@ export function* fetchEmployees() {
   }
 }
 
-export function* testHeader() {
-  try {
-    const data = yield select(selectCurrentUser);
-    console.log(data);
-    yield axiosInstance.post(
-      "/test",
-      { data: 1 },
-      {
-        headers: {
-          Authorization: "Bearer " + data.token,
-        },
-      }
-    );
-  } catch (error) {
-    console.log(error);
-    // yield put(signOutFailure(error));
-  }
-}
-
 export function* onSignInStart() {
   yield takeLatest(UserActionTypes.SIGN_IN_START, signIn);
 }
@@ -177,10 +158,6 @@ export function* onFetchEmployeesStart() {
   yield takeLatest(UserActionTypes.FETCH_EMPLOYEES_START, fetchEmployees);
 }
 
-export function* onTestHeader() {
-  yield takeLatest(UserActionTypes.TEST_HEADER, testHeader);
-}
-
 export function* userSagas() {
   yield all([
     call(onSignInStart),
@@ -188,7 +165,6 @@ export function* userSagas() {
     call(onSignUpStart),
     call(onCheckUserSession),
     call(onSignOutStart),
-    call(onTestHeader),
     call(onFetchEmployeesStart),
   ]);
 }

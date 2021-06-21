@@ -13,6 +13,27 @@ import {
   editInvoiceSuccess,
   editInvoiceFailure,
 } from "./invoice.actions";
+
+export function* payInvoice({ payload }) {
+  try {
+    const { setClientSecret, total } = payload;
+    // const data = yield select(selectCurrentUser);
+    const { data: clientSecret } = yield axiosInstance.post(
+      "/invoice/pay",
+      { total },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    setClientSecret(clientSecret.clientSecret);
+  } catch (error) {
+    console.log(error);
+    // yield put(signOutFailure(error));
+  }
+}
+
 export function* addInvoice({ payload }) {
   try {
     console.log("helo from saga Invoice ADD", payload);
@@ -23,6 +44,7 @@ export function* addInvoice({ payload }) {
       clearCart,
       setNotify,
       productsPurchased,
+      obj,
       history,
     } = payload;
     const curUser = yield select(selectCurrentUser);
@@ -33,9 +55,10 @@ export function* addInvoice({ payload }) {
         type: "error",
       });
     } else {
+      obj.paid = Boolean(+obj.paid);
       const { data } = yield axiosInstance.post(
         "/invoice",
-        { products, total_price, productsQuantityLeft, productsPurchased },
+        { products, total_price, productsQuantityLeft, productsPurchased, obj },
         {
           headers: {
             Authorization: "Bearer " + curUser.token,
@@ -49,8 +72,10 @@ export function* addInvoice({ payload }) {
         type: "success",
       });
       yield clearCart();
-      yield history.push("/products");
       yield put(addInvoiceSuccess(data));
+      yield setTimeout(() => {
+        history.push("/products");
+      }, 1000);
     }
   } catch (error) {
     yield put(addInvoiceFailure(error.response.data));
@@ -114,11 +139,16 @@ export function* onFetchUserInvoicesStart() {
   );
 }
 
+export function* onPayInvoiceStart() {
+  yield takeLatest(InvoiceActionTypes.PAY_INVOICE_START, payInvoice);
+}
+
 export function* invoiceSagas() {
   yield all([
     call(onAddInvoiceStart),
     call(onFetchInvoicesStart),
     call(onEditInvoiceStart),
+    call(onPayInvoiceStart),
     call(onFetchUserInvoicesStart),
   ]);
 }
