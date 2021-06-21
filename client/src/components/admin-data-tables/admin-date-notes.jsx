@@ -107,7 +107,10 @@ function NotesTable({ notes, handleImportNote }) {
                 <TableCell>{row.orderer.firstName}</TableCell>
                 <TableCell>{formatNumber(row.total_price)}</TableCell>
                 <TableCell>
-                  <IconButton onClick={() => handleImportNote(row)}>
+                  <IconButton
+                    disabled={row.status}
+                    onClick={() => handleImportNote(row)}
+                  >
                     <EditIcon />
                   </IconButton>
                 </TableCell>

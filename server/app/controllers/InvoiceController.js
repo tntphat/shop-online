@@ -4,9 +4,7 @@ const Product = require("../models/Product");
 const mongoose = require("mongoose");
 const { appendInvoice } = require("./UserController");
 
-const stripe = require("stripe")(
-  "sk_test_51J44goHv3poLQbEVzq9OWy9st51uVT0sqRYcuRsSGvIfexmA2kwBSBJicj5WCYV5hbLuL3E7YtoNvYmd32K0EbyX00NEg8cqAJ"
-);
+const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 const statuses = [
   "Pending",

@@ -23,9 +23,7 @@ const noteReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         notes: state.notes.map((note) =>
-          note._id === action.payload._id
-            ? { ...note, import_notes: action.payload.import_notes }
-            : note
+          note._id === action.payload._id ? action.payload : note
         ),
         error: null,
       };

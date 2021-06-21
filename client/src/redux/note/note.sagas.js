@@ -32,7 +32,13 @@ export function* addNote({ payload }) {
 }
 
 export function* editNote({ payload }) {
-  const { dataToNote, dataToImportNote, setNotify, setOpenPopup } = payload;
+  const {
+    dataToNote,
+    dataProducts,
+    dataToImportNote,
+    setNotify,
+    setOpenPopup,
+  } = payload;
   try {
     const curEmployee = yield select(selectCurrentEmployee);
 
@@ -41,6 +47,7 @@ export function* editNote({ payload }) {
       {
         dataNote: dataToNote,
         dataImportNote: dataToImportNote,
+        dataProducts: dataProducts,
       },
       {
         headers: {
@@ -53,6 +60,7 @@ export function* editNote({ payload }) {
       message: "Added import note success",
       type: "success",
     });
+    console.log("data: ", data);
     yield setOpenPopup(false);
     yield put(editNoteSuccess(data));
   } catch (e) {

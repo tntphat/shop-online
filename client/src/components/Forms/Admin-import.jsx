@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ImportNoteFrom = ({ setOpenPopup, note, setNotify }) => {
+  console.log("not:", note);
   const dispatch = useDispatch();
   const { register, handleSubmit, errors, control } = useForm({
     mode: "all",
@@ -26,22 +27,28 @@ const ImportNoteFrom = ({ setOpenPopup, note, setNotify }) => {
   const classes = useStyles();
   const dataToNote = [];
   const dataToImportNote = [];
+  const dataProducts = [];
   const onSubmit = (data) => {
     note.goods.forEach((prod, ind) => {
       dataToImportNote.push({
         product_id: prod.product_id._id,
         quantity: data[`quantity${ind}`],
       });
+      dataProducts.push(
+        +prod.product_id.quantity_left + +data[`quantity${ind}`]
+      );
       dataToNote.push({
         product_id: prod.product_id._id,
         quantity: prod.quantity,
         quantityLeft: prod.quantityLeft - data[`quantity${ind}`],
       });
     });
+    console.log(dataProducts);
     dispatch(
       editNoteStart({
         dataToImportNote,
         dataToNote,
+        dataProducts,
         setOpenPopup,
         setNotify,
         id: note._id,

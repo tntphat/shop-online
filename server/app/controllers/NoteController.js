@@ -1,6 +1,7 @@
 const Note = require("../models/Note");
 const { addNewGoods } = require("./ProductController");
 const ImportNote = require("../models/ImportNote");
+const Product = require("../models/Product");
 
 class NoteController {
   //@router GET /note/total-price
@@ -59,16 +60,40 @@ class NoteController {
         orderer: req.user._id,
         note: req.params.id,
       });
+      let done = true;
+      for (let i = 0; i < req.body.dataProducts.length; ++i) {
+        if (req.body.dataNote[i].quantityLeft) {
+          done = false;
+          break;
+        }
+      }
+      for (let i = 0; i < req.body.dataProducts.length; ++i) {
+        await Product.findOneAndUpdate(
+          { _id: req.body.dataImportNote[i].product_id },
+          { quantity_left: req.body.dataProducts[i] }
+        );
+      }
       const newImportNote = await importNote.save();
       const note = await Note.findOneAndUpdate(
         { _id: req.params.id },
         {
           goods: req.body.dataNote,
+          status: done,
           $push: { import_notes: newImportNote._id },
         },
         { new: true }
       );
-      res.status(200).send(note);
+      const dataSent = await Note.findOne({ _id: note._id })
+        .populate("goods.product_id orderer")
+        .populate({
+          path: " import_notes ",
+          select: "goods createdAt",
+          populate: {
+            path: "goods.product_id",
+            select: "name",
+          },
+        });
+      res.status(200).send(dataSent);
     } catch (error) {
       console.error(error.message);
       res.status(500).send({ msg: "Server Error" });
