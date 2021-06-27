@@ -49,7 +49,11 @@ const Form = ({
   // const [isIn, setIsIn] = useState(true);
   const onSubmit = (data) => {
     if (!isIn && !isEmployee)
-      signUpStart({ ...data, setOpenPopup, isEmployee: isEmployee });
+      signUpStart({
+        ...data,
+        setOpenPopup,
+        isEmployee: isEmployee,
+      });
     else signInStart({ ...data, isEmployee: isEmployee || 0, setOpenPopup });
   };
 
@@ -116,7 +120,7 @@ const Form = ({
         fullWidth
         inputRef={register({
           required: true,
-          pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+          pattern: isEmployee || /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
         })}
         name="email"
         label="Email"

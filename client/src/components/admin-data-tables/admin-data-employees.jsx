@@ -95,7 +95,11 @@ function EmployeesTable({ authorities, employees }) {
         </Table>
       </TableContainer>
       <Popup openPopup={openPopup} setOpenPopup={setOpenPopup}>
-        <EmployeeForm authorities={authorities} setOpenPopup={setOpenPopup} />
+        <EmployeeForm
+          setConfirmDialog={setConfirmDialog}
+          authorities={authorities}
+          setOpenPopup={setOpenPopup}
+        />
       </Popup>
       <Notification notify={notify} setNotify={setNotify}></Notification>
 

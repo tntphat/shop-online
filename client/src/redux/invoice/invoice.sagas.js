@@ -97,18 +97,42 @@ export function* fetchUserInvoices() {
         Authorization: "Bearer " + curUser.token,
       },
     });
+    if (process.env.NODE_ENV !== "development") {
+      data.forEach((invoice) => {
+        invoice.products.forEach((product) => {
+          if (product.product_id)
+            product.product_id.imgs = product.product_id.imgs.replace(
+              "http://localhost:5000",
+              "https://shop-onl-tntp.herokuapp.com"
+            );
+        });
+      });
+    }
     yield put(fetchInvoicesSuccess(data));
   } catch (error) {
-    yield put(fetchInvoicesFailure(error.response.data));
+    yield put(fetchInvoicesFailure(error));
   }
 }
 
 export function* fetchInvoices() {
   try {
     const { data } = yield axiosInstance.get("/invoice");
+    console.log("data: ", data);
+    if (process.env.NODE_ENV !== "development") {
+      data.forEach((invoice) => {
+        invoice.products.forEach((product) => {
+          if (product.product_id)
+            product.product_id.imgs = product.product_id.imgs.replace(
+              "http://localhost:5000",
+              "https://shop-onl-tntp.herokuapp.com"
+            );
+        });
+      });
+    }
+
     yield put(fetchInvoicesSuccess(data));
   } catch (error) {
-    yield put(addInvoiceFailure(error.response.data));
+    yield put(error);
   }
 }
 

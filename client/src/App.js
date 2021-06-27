@@ -74,7 +74,7 @@ const App = ({ currUser, checkUserSession, checking }) => {
                 exact
                 path="/profiles"
                 render={() =>
-                  currUser ? <ProfilePage /> : <Redirect to="/sign-in" />
+                  currUser ? <ProfilePage /> : <Redirect to="/" />
                 }
               />
             </Switch>

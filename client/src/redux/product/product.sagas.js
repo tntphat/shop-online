@@ -24,6 +24,13 @@ export function* addProduct({ payload }) {
       fd.append(field, payload[field]);
     }
     const { data } = yield axiosInstance.post("/products/add", fd);
+
+    if (process.env.NODE_ENV !== "development") {
+      data.imgs = data.imgs.replace(
+        "http://localhost:5000",
+        "https://shop-onl-tntp.herokuapp.com"
+      );
+    }
     yield put(addProductSuccess(data));
   } catch (error) {
     yield put(addProductFailure(error.response.data));
@@ -83,6 +90,14 @@ export function* delProduct({ payload }) {
 export function* fetchProducts() {
   try {
     const { data } = yield axiosInstance.get("/products");
+    if (process.env.NODE_ENV !== "development") {
+      data.forEach((product) => {
+        product.imgs = product.imgs.replace(
+          "http://localhost:5000",
+          "https://shop-onl-tntp.herokuapp.com"
+        );
+      });
+    }
     yield put(fetchProductsSuccess(data));
   } catch (error) {
     yield put(fetchProductsFailure(error));

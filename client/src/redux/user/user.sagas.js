@@ -44,13 +44,18 @@ export function* signIn({
 
 export function* signUp({ payload }) {
   try {
-    const { isEmployee, setOpenPopup, ...others } = payload;
+    const { isEmployee, setConfirmDialog, setOpenPopup, ...others } = payload;
     const path = isEmployee ? "employee" : "user";
     const { data } = yield axiosInstance.post(`/${path}/register`, others);
     if (!isEmployee) {
       yield Cookies.set("user", JSON.stringify(data));
       yield put(signUpSuccess(data));
     } else {
+      setConfirmDialog({
+        isOpen: true,
+        title: "New Employee Infor",
+        subTitle: `user: ${data.email} & password: ${data.password}`,
+      });
       yield put(addEmployeeSuccess(data));
     }
     yield setOpenPopup(false);

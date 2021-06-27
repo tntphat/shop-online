@@ -23,7 +23,7 @@ const HomePage = () => {
         <Grid item md={8} xs={12}>
           <Box mt={4}>
             <Typography variant="h3" align="center">
-              Top products of us
+              Top products
             </Typography>
             <Divider style={{ margin: "20px 120px" }} />
           </Box>

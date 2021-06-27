@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const compression = require("compression");
 const db = require("./config/db");
+const path = require("path");
 
 db.connect();
 
@@ -21,6 +22,8 @@ const corsOption = {
   exposedHeaders: ["x-auth-token"],
 };
 app.use(cors(corsOption));
+
+app.use(express.static(path.join(__dirname, "public")));
 
 require("./app/middlewares/session.mdw")(app);
 require("./routes")(app);

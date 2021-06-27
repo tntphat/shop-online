@@ -53,7 +53,11 @@ class MailController {
         { _id: req.user._id },
         { $push: { sent_mails: newMail._id } }
       );
-      res.status(200).send(mail);
+      const dataSent = await Mail.populate(newMail, {
+        path: "mail_author",
+        select: "_id firstName lastName email createdAt",
+      });
+      res.status(200).send(dataSent);
     } catch (error) {
       console.error(error.message);
       res.status(500).send({ msg: "Server error" });

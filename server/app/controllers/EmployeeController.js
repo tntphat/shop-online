@@ -39,9 +39,7 @@ class EmployeeController {
       });
       const authority = await Authority.findOne({ _id: req.body.authority });
       req.body.email =
-        toSlug(authority.name) +
-        (kiemKhos.length + 1).toString() +
-        "@gmail.com";
+        toSlug(authority.name) + (kiemKhos.length + 1).toString();
       const user = new Employee(req.body);
       const newEmployee = await user.save();
       const dataSent = await Employee.populate(newEmployee, {
