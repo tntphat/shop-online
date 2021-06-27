@@ -79,6 +79,8 @@ const ProductDetail = () => {
         id: product._id,
         starProduct: product.star,
         ratesLength: product.rates.length,
+        setComment,
+        setNotify,
       })
     );
   };

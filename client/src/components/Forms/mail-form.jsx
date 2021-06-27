@@ -28,7 +28,6 @@ const MailForm = ({ setOpenPopup, addMailStart, repMailStart, idMail }) => {
 
     idMail ? repMailStart({ ...data, idMail }) : addMailStart(data);
 
-    console.log("Mail: ", data);
     setOpenPopup(false);
   };
 

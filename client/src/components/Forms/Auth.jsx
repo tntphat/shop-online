@@ -18,7 +18,7 @@ import { selectErrors } from "../../redux/user/user.selector";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "40vw",
+    width: "30vw",
     [theme.breakpoints.down("sm")]: {
       width: "90vw",
     },
@@ -48,7 +48,6 @@ const Form = ({
 
   // const [isIn, setIsIn] = useState(true);
   const onSubmit = (data) => {
-    console.log(data);
     if (!isIn && !isEmployee)
       signUpStart({ ...data, setOpenPopup, isEmployee: isEmployee });
     else signInStart({ ...data, isEmployee: isEmployee || 0, setOpenPopup });

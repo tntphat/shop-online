@@ -29,14 +29,12 @@ export function* payInvoice({ payload }) {
     );
     setClientSecret(clientSecret.clientSecret);
   } catch (error) {
-    console.log(error);
     // yield put(signOutFailure(error));
   }
 }
 
 export function* addInvoice({ payload }) {
   try {
-    console.log("helo from saga Invoice ADD", payload);
     const {
       products,
       total_price,
@@ -84,9 +82,7 @@ export function* addInvoice({ payload }) {
 
 export function* editInvoice({ payload }) {
   try {
-    console.log("edit invoice: ", payload);
     const { data } = yield axiosInstance.patch("/invoice", payload);
-    console.log(data);
     yield put(editInvoiceSuccess(data));
   } catch (e) {
     yield put(editInvoiceFailure());
@@ -96,13 +92,11 @@ export function* editInvoice({ payload }) {
 export function* fetchUserInvoices() {
   try {
     const curUser = yield select(selectCurrentUser);
-    console.log("helo from saga FETCH USER InvoiceLLLS");
     const { data } = yield axiosInstance.get("/invoice/user", {
       headers: {
         Authorization: "Bearer " + curUser.token,
       },
     });
-    console.log("invoices: ", data);
     yield put(fetchInvoicesSuccess(data));
   } catch (error) {
     yield put(fetchInvoicesFailure(error.response.data));
@@ -111,9 +105,7 @@ export function* fetchUserInvoices() {
 
 export function* fetchInvoices() {
   try {
-    console.log("helo from saga FETCH InvoiceLLLS");
     const { data } = yield axiosInstance.get("/invoice");
-    console.log(data);
     yield put(fetchInvoicesSuccess(data));
   } catch (error) {
     yield put(addInvoiceFailure(error.response.data));

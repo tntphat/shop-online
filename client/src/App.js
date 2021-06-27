@@ -5,6 +5,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import HomePage from "./pages/home/home";
 import ProductContainer from "./pages/product/product";
 import ProfilePage from "./pages/profile/profile";
+import AboutUs from "./pages/about-us/about-us";
 import CheckoutPage from "./pages/checkout/checkout";
 import AdminRoute from "./pages/admin/admin-main";
 import Header from "./components/header/header";
@@ -24,9 +25,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import ErrorBoundary from "./features/error-boundary";
 
 const App = ({ currUser, checkUserSession, checking }) => {
-  console.log("RENDER APP.JS");
   useEffect(() => {
-    console.log("run Effect Check User S");
     checkUserSession();
   }, [checkUserSession]);
 
@@ -56,6 +55,8 @@ const App = ({ currUser, checkUserSession, checking }) => {
             </ThemeContext.Provider>
             <ScrollToTop />
             <Switch>
+              <Route exact path="/" component={HomePage} />
+              <Route exact path="/about-us" component={AboutUs} />
               <Route exact path="/" component={HomePage} />
               <Route path="/products" component={ProductContainer} />
               <Route

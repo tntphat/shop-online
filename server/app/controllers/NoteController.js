@@ -23,6 +23,7 @@ class NoteController {
   async getAll(req, res) {
     try {
       const notes = await Note.find()
+        .sort("status")
         .populate("goods.product_id orderer")
         .populate({
           path: " import_notes ",

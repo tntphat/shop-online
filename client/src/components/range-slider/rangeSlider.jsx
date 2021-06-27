@@ -44,7 +44,6 @@ export default function RangeSlider({ max }) {
   // let defaultTo = max;
 
   useEffect(() => {
-    console.log("first range: ", firstRange);
     setRange(firstRange.current);
   }, [firstRange]);
 

@@ -25,6 +25,7 @@ import { CartContext } from "../../providers/cart/cart.provider";
 import SignInForm from "../Forms/Auth";
 
 import Popup from "../../features/popUp";
+import StoreOutlinedIcon from "@material-ui/icons/StoreOutlined";
 
 import DrawerHeader from "../drawer-header/drawer-header";
 import { signOutStart } from "../../redux/user/user.actions";
@@ -42,7 +43,6 @@ const HideAppBar = ({ currentUser, signOutStart, location, history }) => {
   const switchTheme = () => {
     setNight(!night);
     Cookies.set("isNight", night);
-    console.log(Cookies.get("isNight"));
   };
   const test = (node) => {
     const test2 = new IntersectionObserver((entries) => {
@@ -110,20 +110,16 @@ const HideAppBar = ({ currentUser, signOutStart, location, history }) => {
               <i className="fas fa-bars"></i>
             </IconButton>
           </Hidden>
-          <Box display="flex" flexDirection="row" flex={1}>
-            <Hidden xsDown>
-              {dataHeaderDrawer.map((item) => (
-                <Link key={item.name} className={classes.link} to={item.link}>
-                  <Typography variant="h5">{item.name}</Typography>
-                </Link>
-              ))}
+          <Box className={classes.firstRow} display="flex" flexDirection="row">
+            <Hidden smDown>
+              <IconButton onClick={() => history.push("/")}>
+                <StoreOutlinedIcon />
+              </IconButton>
             </Hidden>
-
             <form
               style={{ margin: "auto 0" }}
               onSubmit={(e) => {
                 e.preventDefault();
-                console.log(searchValue);
                 history.push(`/products?kw=${searchValue}`);
                 setSearchValue("");
               }}
@@ -146,6 +142,23 @@ const HideAppBar = ({ currentUser, signOutStart, location, history }) => {
             </form>
           </Box>
           <Box display="flex" flexDirection="row">
+            <Hidden xsDown>
+              {dataHeaderDrawer.map((item) => (
+                <Link key={item.name} className={classes.link} to={item.link}>
+                  <Typography className={classes.headerTitle} variant="body1">
+                    {item.name}
+                  </Typography>
+                </Link>
+              ))}
+            </Hidden>
+          </Box>
+
+          <Box
+            className={classes.thirdRow}
+            justifyContent="space-between"
+            display="flex"
+            flexDirection="row"
+          >
             <IconButton
               style={{ zIndex: 4 }}
               onClick={(e) => {
@@ -160,7 +173,7 @@ const HideAppBar = ({ currentUser, signOutStart, location, history }) => {
             {!currentUser ? (
               <>
                 <Button
-                  style={{ margin: "auto 20px" }}
+                  className={classes.btnAuth}
                   onClick={() => {
                     setIsIn(true);
                     setOpenPopup(true);
@@ -170,7 +183,7 @@ const HideAppBar = ({ currentUser, signOutStart, location, history }) => {
                 </Button>
                 <Hidden smDown>
                   <Button
-                    style={{ margin: "auto 20px" }}
+                    className={classes.btnAuth}
                     onClick={() => {
                       setIsIn(false);
                       setOpenPopup(true);

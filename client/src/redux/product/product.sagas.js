@@ -19,14 +19,11 @@ import {
 
 export function* addProduct({ payload }) {
   try {
-    console.log("helo from saga");
-    console.log(payload.file);
     const fd = new FormData();
     for (const field in payload) {
       fd.append(field, payload[field]);
     }
     const { data } = yield axiosInstance.post("/products/add", fd);
-    console.log("data:", data);
     yield put(addProductSuccess(data));
   } catch (error) {
     yield put(addProductFailure(error.response.data));
@@ -35,12 +32,10 @@ export function* addProduct({ payload }) {
 
 export function* editProduct({ payload }) {
   try {
-    console.log("helo from saga edit");
     // const { data } = yield axiosInstance.post("/products/edit", { name, type });
     yield axiosInstance.put("/products/edit", {
       data: payload,
     });
-    // console.log(updatedProduct);
     yield put(editProductSuccess(payload));
   } catch (error) {
     yield put(editProductFailure(error.response.data));
@@ -48,9 +43,8 @@ export function* editProduct({ payload }) {
 }
 
 export function* rateProduct({ payload }) {
+  const { id, setComment, setNotify, ...rest } = payload;
   try {
-    console.log("helo from saga rate", payload);
-    const { id, ...rest } = payload;
     const curUser = yield select(selectCurrentUser);
     const { data } = yield axiosInstance.patch(
       `/products/rate/${id}`,
@@ -61,15 +55,20 @@ export function* rateProduct({ payload }) {
         },
       }
     );
+    setComment("");
     yield put(rateProductSuccess(data));
   } catch (error) {
+    setNotify({
+      isOpen: true,
+      message: "Opps...Sth wrong happened",
+      type: "error",
+    });
     yield put(rateProductFailure(error.response.data));
   }
 }
 
 export function* delProduct({ payload }) {
   try {
-    console.log("helo from saga", payload._ids);
     yield axiosInstance.delete("/products/del", {
       data: {
         ids: payload._ids,
@@ -83,7 +82,6 @@ export function* delProduct({ payload }) {
 
 export function* fetchProducts() {
   try {
-    console.log("helo from saga FETCH PRODOCUYT");
     const { data } = yield axiosInstance.get("/products");
     yield put(fetchProductsSuccess(data));
   } catch (error) {

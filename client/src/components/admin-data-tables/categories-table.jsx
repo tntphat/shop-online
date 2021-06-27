@@ -102,7 +102,6 @@ const Row = ({ row, handleAddSubCategory, handleEditSub }) => {
 };
 
 function CategoriesTable({ selectCategories, deleteCategoryStart }) {
-  console.log("check categories table: ", selectCategories);
   const classes = useStyles();
   const [openPopup, setOpenPopup] = useState(false);
   const [addSub, setAddSub] = useState(null);
@@ -122,7 +121,6 @@ function CategoriesTable({ selectCategories, deleteCategoryStart }) {
   });
 
   const submitDelete = (id) => {
-    console.log("clicked dlt", id);
     setConfirmDialog({
       ...confirmDialog,
       isOpen: false,

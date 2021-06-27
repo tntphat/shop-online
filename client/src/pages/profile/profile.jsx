@@ -45,7 +45,6 @@ const styles = (theme) => ({
 
 const ProfilePage = ({ currentUser, fetchUserMailsStart, mails }) => {
   const classes = useStyles();
-  console.log("user: ", currentUser);
   useEffect(() => {
     fetchUserMailsStart();
   }, [fetchUserMailsStart]);

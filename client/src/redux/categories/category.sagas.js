@@ -18,9 +18,7 @@ import {
 
 export function* addCategory({ payload }) {
   try {
-    console.log("helo from saga CATEGORY ADD", payload);
     const { data } = yield axiosInstance.post("/categories/add", payload);
-    console.log(data);
     yield put(addCategorySuccess(data));
   } catch (error) {
     yield put(addCategoryFailure(error.response.data));
@@ -29,7 +27,6 @@ export function* addCategory({ payload }) {
 
 export function* editCategory({ payload }) {
   try {
-    console.log("helo from saga CATEGORY Edit", payload);
     const { data } = yield axiosInstance.patch("/categories/edit", payload);
     yield put(editCategorySuccess(data));
   } catch (error) {
@@ -39,13 +36,11 @@ export function* editCategory({ payload }) {
 
 export function* deleteCategory({ payload }) {
   try {
-    console.log("helo from saga CATEGORY Delete", payload);
     const { data } = yield axiosInstance.delete("/categories/delete", {
       data: {
         id: payload,
       },
     });
-    console.log(data);
     yield put(deleteCategorySuccess(payload));
   } catch (error) {
     yield put(deleteCategoryFailure(error.response.data));
@@ -54,9 +49,7 @@ export function* deleteCategory({ payload }) {
 
 export function* addSubCategory({ payload }) {
   try {
-    console.log("helo from saga SUB CATEGORY ADD", payload);
     const { data } = yield axiosInstance.post("/sub-categories/add", payload);
-    console.log(data);
     yield put(addSubCategorySuccess(data));
   } catch (error) {
     yield put(addSubCategoryFailure(error.response.data));
@@ -65,9 +58,7 @@ export function* addSubCategory({ payload }) {
 
 export function* fetchCategories() {
   try {
-    console.log("helo from saga FETCH CATEGORIESS");
     const { data } = yield axiosInstance.get("/categories");
-    console.log(data);
     yield put(fetchCategoriesSuccess(data));
   } catch (error) {
     yield put(fetchCategoriesFailure(error.response.data));

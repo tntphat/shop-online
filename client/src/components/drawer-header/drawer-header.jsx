@@ -7,6 +7,7 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import HomeIcon from "@material-ui/icons/Home";
 
 const useStyles = makeStyles({
   list: {
@@ -35,6 +36,13 @@ export default function DrawerHeader({
           onKeyDown={toggleDrawer}
         >
           <List>
+            <ListItem button onClick={() => history.push("/")}>
+              <ListItemIcon>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText primary="Home" />
+            </ListItem>
+            <Divider />
             {items.map((item) => (
               <div key={item.name}>
                 <ListItem button onClick={() => history.push(item.link)}>

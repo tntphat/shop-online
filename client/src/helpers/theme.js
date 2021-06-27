@@ -33,6 +33,9 @@ const darkTheme = createMuiTheme({
     table: {
       main: "#2d3436",
     },
+    doneNote: {
+      main: "#57606f",
+    },
   },
 });
 
@@ -56,6 +59,9 @@ const lightTheme = createMuiTheme({
     },
     table: {
       main: "#f1f2f6",
+    },
+    doneNote: {
+      main: "#d1ccc0",
     },
   },
 });

@@ -1,13 +1,8 @@
-import HomeIcon from "@material-ui/icons/Home";
 import StoreIcon from "@material-ui/icons/Store";
-import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
-import ContactSupportIcon from "@material-ui/icons/ContactSupport";
-
+import InfoIcon from "@material-ui/icons/Info";
 const data = [
-  { name: "Home", icon: <HomeIcon />, link: "/" },
-  { name: "Products", icon: <StoreIcon />, link: "/products" },
-  { name: "Admin", icon: <SupervisorAccountIcon />, link: "/admin" },
-  { name: "Contact", icon: <ContactSupportIcon />, link: "/" },
+  { name: "Store", icon: <StoreIcon />, link: "/products" },
+  { name: "About Us", icon: <InfoIcon />, link: "/about-us" },
 ];
 
 export default data;

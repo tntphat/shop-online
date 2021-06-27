@@ -4,6 +4,18 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+  firstRow: {
+    width: "20%",
+    [theme.breakpoints.down("sm")]: {
+      width: "50%",
+    },
+  },
+  thirdRow: {
+    width: "20%",
+    [theme.breakpoints.down("sm")]: {
+      width: "50%",
+    },
+  },
   menuButton: {
     marginRight: theme.spacing(2),
     background: "red",
@@ -12,6 +24,11 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     textDecoration: "none",
     color: theme.palette.text.main,
+  },
+  headerTitle: {
+    fontWeight: "300",
+    textTransform: "uppercase",
+    fontSize: "1rem",
   },
   navBar: {
     background: "transparent",
@@ -24,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 3,
   },
   navBar2: {
-    opacity: 0.9,
+    opacity: 0.96,
     boxShadow:
       "0 1px 5px -1px rgb(51 62 73 / 14%), 0 4px 10px 0 rgb(51 62 73 / 8%)",
     background: theme.palette.navBar.main,
@@ -33,6 +50,11 @@ const useStyles = makeStyles((theme) => ({
   btn: {
     background: "red",
     color: theme.palette.text.main,
+  },
+  btnAuth: {
+    margin: "auto 0",
+    textTransform: "capitalize",
+    fontWeight: "300",
   },
   link: {
     margin: "auto 20px",

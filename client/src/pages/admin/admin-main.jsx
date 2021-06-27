@@ -134,7 +134,6 @@ const styles = (theme) => ({
 });
 
 function AdminPage({ window, selectCurrentEmployee, ...rest }) {
-  console.log("RENDER ADMIN MAIN", selectCurrentEmployee);
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -155,7 +154,6 @@ function AdminPage({ window, selectCurrentEmployee, ...rest }) {
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
-  console.log(open);
   return (
     <div className={classes.root}>
       <CssBaseline />

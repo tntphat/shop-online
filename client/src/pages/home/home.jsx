@@ -15,7 +15,6 @@ const HomePage = () => {
   }, [dispatch]);
 
   const categories = useSelector((state) => state.category.categories);
-  console.log("categories", categories);
   return (
     <Paper square>
       <Grid container>

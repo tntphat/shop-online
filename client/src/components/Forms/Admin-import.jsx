@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ImportNoteFrom = ({ setOpenPopup, note, setNotify }) => {
-  console.log("not:", note);
   const dispatch = useDispatch();
   const { register, handleSubmit, errors, control } = useForm({
     mode: "all",
@@ -43,7 +42,6 @@ const ImportNoteFrom = ({ setOpenPopup, note, setNotify }) => {
         quantityLeft: prod.quantityLeft - data[`quantity${ind}`],
       });
     });
-    console.log(dataProducts);
     dispatch(
       editNoteStart({
         dataToImportNote,

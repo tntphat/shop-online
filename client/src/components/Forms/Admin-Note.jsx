@@ -67,7 +67,6 @@ const AdminNoteAdd = ({ setOpenPopup, products }) => {
               )}
               onChange={(_, data) => {
                 props.onChange(data);
-                console.log(arrObjs.current);
                 if (arrObjs.current[i] && data) {
                   arrObjs.current[i].product_id = data._id;
                   arrObjs.current[i].price = +data.price;

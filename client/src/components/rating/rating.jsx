@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Rate({ user, rating }) {
-  console.log(user, rating);
   const classes = useStyles();
   return (
     <>

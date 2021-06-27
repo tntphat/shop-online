@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 
 import CartItems from "../cart-items/cart-items";
 
-import { Typography } from "@material-ui/core";
+import { Typography, Box, Divider } from "@material-ui/core";
 
 import { CartContext } from "../../providers/cart/cart.provider";
 
@@ -17,7 +17,6 @@ export default function Cart() {
     toggleHidden();
     history.push("/checkout");
   };
-  console.log(cartItems);
   return (
     <div className={classes.root}>
       {cartItemsCount ? (
@@ -28,7 +27,22 @@ export default function Cart() {
           handleCheckout={handleCheckout}
         />
       ) : (
-        <Typography variant="h5">Ur cart is empry</Typography>
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyItems="center"
+          className={classes.emptyContainer}
+        >
+          <Typography style={{ margin: "10px 0" }} variant="h5">
+            Ur cart is empty
+          </Typography>
+          <img
+            src="https://www.rphbuddy.com/public/img/empty-cart-2.png"
+            alt=""
+            className="img"
+          />
+        </Box>
       )}
     </div>
   );

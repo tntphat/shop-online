@@ -7,8 +7,10 @@ const subCategoryRouter = require("./subCategory");
 const invoiceRouter = require("./invoice");
 const noteRouter = require("./note");
 const employeeRouter = require("./employee");
+const siteRouter = require("./site");
 
 function route(app) {
+  app.use("/", siteRouter);
   app.use("/user", userRouter);
   app.use("/products", productRouter);
   app.use("/mails", mailRouter);

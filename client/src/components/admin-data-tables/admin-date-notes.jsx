@@ -16,11 +16,14 @@ import EditIcon from "@material-ui/icons/Edit";
 import { formatDateByString } from "../../helpers/date-time";
 import { formatNumber } from "../../helpers/number";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 650,
   },
-});
+  done: {
+    backgroundColor: theme.palette.doneNote.main,
+  },
+}));
 
 const Row = ({ row }) => {
   return (
@@ -80,7 +83,6 @@ function NotesTable({ notes, handleImportNote }) {
   return (
     <>
       <TableContainer component={Paper}>
-        <Typography>Notes </Typography>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
@@ -94,7 +96,7 @@ function NotesTable({ notes, handleImportNote }) {
           </TableHead>
           <TableBody>
             {notes.map((row, index) => (
-              <TableRow key={index}>
+              <TableRow key={index} className={row.status && classes.done}>
                 <TableCell component="th" scope="row">
                   {index}
                 </TableCell>

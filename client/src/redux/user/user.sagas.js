@@ -26,7 +26,6 @@ export function* signIn({
   payload: { email, password, isEmployee, setOpenPopup },
 }) {
   try {
-    console.log("helo from saga SIGN IN ");
     const { data } = yield axiosInstance.post(
       `/${(isEmployee && "employee") || "user"}/sign-in`,
       {
@@ -34,7 +33,6 @@ export function* signIn({
         password,
       }
     );
-    console.log(data);
     yield Cookies.set("user", JSON.stringify(data));
     if (isEmployee) yield put(signInSuccessEmployee(data));
     else yield put(signInSuccess(data));
@@ -46,16 +44,13 @@ export function* signIn({
 
 export function* signUp({ payload }) {
   try {
-    console.log("helo from saga SIGN Up ");
     const { isEmployee, setOpenPopup, ...others } = payload;
     const path = isEmployee ? "employee" : "user";
-    console.log(path);
     const { data } = yield axiosInstance.post(`/${path}/register`, others);
     if (!isEmployee) {
       yield Cookies.set("user", JSON.stringify(data));
       yield put(signUpSuccess(data));
     } else {
-      console.log("emloyee: ", data);
       yield put(addEmployeeSuccess(data));
     }
     yield setOpenPopup(false);
@@ -66,10 +61,8 @@ export function* signUp({ payload }) {
 
 export function* editUser({ payload }) {
   try {
-    console.log("helo from saga EDIT USER ");
     const { notClient, ...others } = payload;
     const path = notClient ? "employee" : "user";
-    console.log(path, payload);
     const curUser = yield select(selectCurrentUser);
 
     const { data } = yield axiosInstance.put(`/${path}/edit`, others, {
@@ -77,13 +70,11 @@ export function* editUser({ payload }) {
         Authorization: "Bearer " + curUser.token,
       },
     });
-    console.log(data);
     if (!notClient) {
       yield Cookies.set("user", JSON.stringify(data));
       yield put(editUserSuccess(data));
       // history.push("/");
     } else {
-      // console.log("emloyee: ", data);
       // yield put(addEmployeeSuccess(data));
     }
   } catch (error) {
@@ -94,7 +85,6 @@ export function* editUser({ payload }) {
 export function* isUserAuthenticated() {
   try {
     const data = yield Cookies.get("user");
-    console.log(!data);
     const curUser = yield select(selectCurrentUser);
     if (!data) {
       if (curUser) yield signOut();
@@ -126,7 +116,6 @@ export function* signOut({ payload }) {
 
 export function* fetchEmployees() {
   try {
-    console.log("helo from saga FETCH EMPLOYEES");
     const { data } = yield axiosInstance.get("/employee");
     yield put(fetchEmployeesSuccess(data));
   } catch (error) {

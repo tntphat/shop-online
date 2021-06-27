@@ -16,15 +16,12 @@ import {
 
 export function* addNote({ payload }) {
   try {
-    console.log("helo from saga note ADD");
     const curEmployee = yield select(selectCurrentEmployee);
-    console.log(payload, curEmployee);
     const { data } = yield axiosInstance.post("/note", payload, {
       headers: {
         Authorization: "Bearer " + curEmployee.token,
       },
     });
-    console.log("data: ", data);
     yield put(addNoteSuccess(data));
   } catch (error) {
     yield put(addNoteFailure(error.response.data));
@@ -60,7 +57,6 @@ export function* editNote({ payload }) {
       message: "Added import note success",
       type: "success",
     });
-    console.log("data: ", data);
     yield setOpenPopup(false);
     yield put(editNoteSuccess(data));
   } catch (e) {
@@ -75,9 +71,7 @@ export function* editNote({ payload }) {
 
 export function* fetchNotes() {
   try {
-    console.log("helo from saga FETCH NOTELLLS");
     const { data } = yield axiosInstance.get("/note");
-    console.log(data);
     yield put(fetchNotesSuccess(data));
   } catch (error) {
     yield put(fetchNotesFailure(error.response.data));

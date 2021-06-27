@@ -53,7 +53,6 @@ function AppbarAdmin({ children, signOutStart, user, setOpenPopup, ...rest }) {
     </Menu>
   );
   const classes = useStyles();
-  console.log(children);
   return (
     <div className={classes.root}>
       <AppBar {...rest}>

@@ -13,7 +13,6 @@ const Invoices = () => {
     dispatch(fetchUserInvoicesStart());
   }, [dispatch]);
   const invoices = useSelector((state) => state.invoice).invoices;
-  console.log(invoices);
   return <ListInvoices invoices={invoices} />;
 };
 

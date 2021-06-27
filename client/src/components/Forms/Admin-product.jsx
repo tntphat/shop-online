@@ -29,7 +29,6 @@ const AdminProductAdd = ({
   targetRow,
   categories,
 }) => {
-  console.log("categories in product form : ", categories);
   const { register, handleSubmit, errors, control } = useForm({
     mode: "all",
   });
@@ -39,20 +38,15 @@ const AdminProductAdd = ({
 
   const onFileChanged = (event) => {
     setSelectedFile(event.target.files[0]);
-    console.log(event.target.files[0]);
   };
 
   const onSubmit = (data) => {
     data.description = JSON.stringify(data.description);
     data = { ...data, file: selectedFile };
-    console.log(data);
     if (targetRow) editProductStart({ ...data, _id: targetRow._id });
     else addProductStart(data);
     setOpenPopup(false);
   };
-
-  console.log(targetRow, "aaaaaaa");
-  console.log(curCategory, "rerendered");
 
   return (
     <>

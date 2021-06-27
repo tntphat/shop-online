@@ -69,7 +69,6 @@ export default function CheckoutForm({ cartItems, total, handlePay, user }) {
   const onSubmit = async (data) => {
     // ev.preventDefault();
     setProcessing(true);
-    console.log("dâta: ", data);
     if (+paid) {
       const payload = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {

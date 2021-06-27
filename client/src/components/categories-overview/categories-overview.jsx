@@ -14,7 +14,6 @@ export default function CategoriesOverview() {
   const topsProducts = useSelector((state) =>
     selectTopsProductsByCategories(categories)(state)
   );
-  console.log("RENDER AGAIN", topsProducts);
   return (
     <div className={classes.root}>
       {topsProducts.map((products, i) => (

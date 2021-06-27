@@ -15,7 +15,6 @@ import ProductForm from "../Forms/Admin-product";
 
 const DataTable = ({ data, categories, delProductStart }) => {
   const rows = data;
-  console.log("RENDER DATA TABLE AGAIN");
   const [openPopup, setOpenPopup] = useState(false);
   const [notify, setNotify] = useState({
     isOpen: false,
@@ -33,7 +32,6 @@ const DataTable = ({ data, categories, delProductStart }) => {
   const selectedRow = React.useRef([]);
 
   const submitDelete = (ind) => {
-    console.log("clicked dlt", ind);
     setConfirmDialog({
       ...confirmDialog,
       isOpen: false,
@@ -47,7 +45,6 @@ const DataTable = ({ data, categories, delProductStart }) => {
       indexByRows.push(...selectedRow.current);
       selectedRow.current.forEach((id) => selectedByRow.push(rows[id]._id));
     }
-    console.log("idxRws", indexByRows, ind);
     delProductStart({ _ids: selectedByRow, ids: indexByRows });
     setNotify({
       isOpen: true,
@@ -189,7 +186,6 @@ const DataTable = ({ data, categories, delProductStart }) => {
 
       <PopUp
         title="Add Product"
-        fullScreen={true}
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
       >

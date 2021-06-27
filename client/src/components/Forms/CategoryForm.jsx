@@ -34,11 +34,8 @@ const AdminCategoryAdd = ({
   });
   const classes = useStyles();
   const onSubmit = (data) => {
-    console.log(data, targetRow);
     if (addSub) {
       if (addSub.category_id) {
-        // editSubCategoryStart({...addSub,...data})
-        console.log("ok nha", { ...addSub, ...data });
       } else addSubCategoryStart({ category_id: addSub, ...data });
     } else {
       if (targetRow) editCategoryStart({ ...data, _id: targetRow._id });

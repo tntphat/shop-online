@@ -30,14 +30,13 @@ const AdminAddproduct = () => {
   const [selectedNote, setSelectedNote] = useState(null);
 
   const handleImportNote = (note) => {
-    console.log(note);
     setSelectedNote(note);
     setOpenPopup2(true);
   };
   return (
     <>
       <Button onClick={() => setOpenPopup(true)} variant="contained">
-        Home
+        Add
       </Button>
       <Typography variant="h2">Notes</Typography>
       <NotesTable handleImportNote={handleImportNote} notes={notes} />
