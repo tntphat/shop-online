@@ -1,12 +1,14 @@
 # Store Online
 ## Introduction
 **A project of team SD1, HCMUS K18**
+
  A website that store owner can manage their products, employees, orders from 
 customers,… and customers can order items, ...
 
 ## Instruction
 
 We've deployed it on website: https://shop-onl-tntp.netlify.app/
+
 Account for testing:
 
 - Customer:
@@ -23,6 +25,7 @@ Account for testing:
 ```bash
 git clone https://github.com/tntphat/shop-onine.git
 ```
+
 2. Install necessary packages of client side by running following commands:
 ```bash
 cd shop-online
@@ -36,6 +39,7 @@ cd ..
 cd server
 npm i 
 ```
+
 4. Start both client and server by following commands:
 ```sh
 cd ..
