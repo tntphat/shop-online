@@ -13,15 +13,12 @@ class ProductController {
           select: "user detail star createdAt",
           populate: { path: "user", select: "firstName lastName" },
         });
-      if (process.env.ENV !== "develop") {
-        products.map((product) => ({
-          ...product,
-          imgs: product.imgs.replace(
-            "http://localhost:5000",
-            "https://shop-onl-tntp.herokuapp.com"
-          ),
-        }));
-      }
+      products.forEach((product) => {
+        product.imgs = product.imgs.replace(
+          "http://localhost:5000",
+          "https://shop-onl-tntp.herokuapp.com"
+        );
+      });
       res.status(200).send(products);
     } catch (error) {
       console.error(error.message);
@@ -69,12 +66,12 @@ class ProductController {
         const dataSent = await Product.populate(newProduct, {
           path: "category_id sub_category_id",
         });
-        if (process.env.ENV !== "develop") {
-          dataSent.imgs = dataSent.imgs.replace(
-            "http://localhost:5000",
-            "https://shop-onl-tntp.herokuapp.com"
-          );
-        }
+
+        dataSent.imgs = dataSent.imgs.replace(
+          "http://localhost:5000",
+          "https://shop-onl-tntp.herokuapp.com"
+        );
+
         res.status(200).send(dataSent);
       });
     } catch (error) {
@@ -137,12 +134,12 @@ class ProductController {
         select: "user detail star createdAt",
         populate: { path: "user", select: "firstName lastName" },
       });
-      if (process.env.ENV !== "develop") {
-        dataSent.imgs = dataSent.imgs.replace(
-          "http://localhost:5000",
-          "https://shop-onl-tntp.herokuapp.com"
-        );
-      }
+
+      dataSent.imgs = dataSent.imgs.replace(
+        "http://localhost:5000",
+        "https://shop-onl-tntp.herokuapp.com"
+      );
+
       res.status(200).send(dataSent);
     } catch (error) {
       console.error(error.message);
